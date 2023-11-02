@@ -4,7 +4,7 @@ use WHMCS\Database\Capsule;
 
 function autovm_config()
 {
-    return ['name' => 'AutoVM', 'version' => 'dev', 'author' => 'autovm.net'];
+    return ['name' => 'AutoVM', 'version' => 'V05.08.00', 'author' => 'autovm.net'];
 }
 
 function autovm_activate()
