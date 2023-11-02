@@ -144,3 +144,4 @@ whois.php
 
 #config
 includes/hooks/autovm/config.php
+includes/hooks/autovm/config.php
