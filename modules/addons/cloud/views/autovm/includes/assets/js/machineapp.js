@@ -12,6 +12,8 @@ app = createApp({
                 DefaultBalanceDecimal: 0,
             },
 
+            systemurl: null,
+
             WhmcsCurrencies: null,
             userCreditinWhmcs: null,
 
@@ -108,6 +110,7 @@ app = createApp({
         
         // load Whmcs Data
         this.loadCredit()
+        this.loadSystemUrl()
         this.loadWhCurrencies()
     },
 
@@ -535,6 +538,21 @@ app = createApp({
             }
         },
 
+        async loadSystemUrl() {
+            let response = await axios.get('/index.php?m=cloud&action=getSystemUrl');
+            if(response.data){
+                systemurl = response.data.systemurl;
+                if(systemurl != 'empty'){
+                    this.systemurl = systemurl
+                } else {
+                    console.log('system URL is null');    
+                }
+            } else {
+                console.log('can not find system URL for console link');
+            }
+        },
+
+
         async loadCredit() {
             let response = await axios.get('/index.php?m=cloud&action=loadCredit');
             
@@ -869,14 +887,21 @@ app = createApp({
         },
 
         openConsole() {
+            let address = null
+            if(this.systemurl != null){
+                let address = this.systemurl
+            } else {
+                console.log('con not find console link');
+                
+            }
 
-            let address = 'https://qweasdvbn.github.io'
-
-            let params = new URLSearchParams({
-                'host': this.console.proxy.proxy, 'port': this.console.proxy.port, 'ticket': this.console.ticket
-            }).toString()
-
-            return window.open([address, params].join('?'))
+            if(address != null){
+                let params = new URLSearchParams({
+                    'host': this.console.proxy.proxy, 'port': this.console.proxy.port, 'ticket': this.console.ticket
+                }).toString()
+    
+                return window.open([address, params].join('?'))
+            }
         },
 
         async doStop() {
