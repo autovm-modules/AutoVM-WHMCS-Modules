@@ -4,11 +4,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Product details</title>
         <script src="/modules/servers/product/views/view/assets/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-        <link rel="icon" type="image/x-icon" href="/modules/servers/product/views/view/assets/img/autovm.svg" sizes="32x32">
+        
         <script>
             var csrfToken = '{$token}',
                 markdownGuide = '{lang|addslashes key="markdown.title"}',

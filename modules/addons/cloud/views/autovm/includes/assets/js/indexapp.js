@@ -366,7 +366,7 @@ app = createApp({
 
             if(id > 0){
                 let response = await axios.post('/index.php?m=cloud&action=chargeCloud', params);
-                if(response.data){
+                if(response.data.data){
                     setTimeout(() => {
                         this.theStepStatus = 22;
                         this.applyTheCredit();

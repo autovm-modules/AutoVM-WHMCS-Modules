@@ -32,7 +32,6 @@ add_hook('ClientAreaPage', 100, function($params) {
     $autovmCloud = constant('AUTOVM_CLOUD');
 
     if (empty($autovmCloud)) {
-
         return false; // We dont need to log anything here
     }
 
@@ -40,7 +39,6 @@ add_hook('ClientAreaPage', 100, function($params) {
     $clientId = autovm_get_session('uid');
 
     if (empty($clientId)) {
-
         return false; // We dont need to log anything here
     }
 
@@ -48,7 +46,6 @@ add_hook('ClientAreaPage', 100, function($params) {
     $client = Client::find($clientId);
 
     if (empty($client)) {
-
         return false; // We dont need to log anything here
     }
 
@@ -56,7 +53,6 @@ add_hook('ClientAreaPage', 100, function($params) {
     $token = autovm_get_user_token($clientId);
 
     if ($token) {
-
         return false; // We dont need to log anything here
     }
 
@@ -64,14 +60,12 @@ add_hook('ClientAreaPage', 100, function($params) {
     $response = autovm_create_user($client);
 
     if (empty($response)) {
-
         return false; // We dont need to log anything here
     }
 
     $message = property_exists($response, 'message');
 
     if ($message) {
-
         return false; // We dont need to log anything here
     }
 

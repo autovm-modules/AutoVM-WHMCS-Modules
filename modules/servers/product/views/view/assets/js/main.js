@@ -2,6 +2,7 @@ const app = Vue.createApp({
     data() {
         return {
 
+            systemurl: null,
             loading: false,
             detailIsLoaded: false,
             machineIsLoaded: false,
@@ -81,6 +82,7 @@ const app = Vue.createApp({
 
         // Load detail
         this.loadMachine()
+        this.loadSystemUrl()
 
         // Load detail
         this.loadDetail()
@@ -831,7 +833,6 @@ const app = Vue.createApp({
             }
         },
 
-
         async doConsole() {
 
             let accept = await this.openConfirmDialog(this.lang('Console'), this.lang('Are you sure about this?'))
@@ -859,18 +860,24 @@ const app = Vue.createApp({
 
         },
 
-
         openConsole() {
 
-            let address = 'https://console.autovm.net'
+            let address = null
+            if(this.systemurl != null){
+                let address = this.systemurl
+            } else {
+                console.log('con not find console link');
+                
+            }
 
-            let params = new URLSearchParams({
-                'host': this.machine.console.proxy.proxy, 'port': this.machine.console.proxy.port, 'ticket': this.machine.console.ticket
-            }).toString()
-
-            return window.open([address, params].join('?'))
+            if(address != null){
+                let params = new URLSearchParams({
+                    'host': this.machine.console.proxy.proxy, 'port': this.machine.console.proxy.port, 'ticket': this.machine.console.ticket
+                }).toString()
+    
+                return window.open([address, params].join('?'))
+            }
         },
-
 
         async doStop() {
 
@@ -900,7 +907,6 @@ const app = Vue.createApp({
             }
         },
 
-
         async doStart() {
 
             let accept = await this.openConfirmDialog(this.lang('Start'), this.lang('Are you sure about this?'))
@@ -926,7 +932,6 @@ const app = Vue.createApp({
                 }
             }
         },
-
 
         async doReboot() {
 
@@ -1008,8 +1013,6 @@ const app = Vue.createApp({
                 }
             }
         },
-
-
 
         async doSoftware(event) {
 
@@ -1158,6 +1161,20 @@ const app = Vue.createApp({
 
                 this.bandwidth = response.data
 
+            }
+        },
+        
+        async loadSystemUrl() {
+            let response = await axios.get('/index.php?m=cloud&action=getSystemUrl');
+            if(response.data){
+                systemurl = response.data.systemurl;
+                if(systemurl != 'empty'){
+                    this.systemurl = systemurl
+                } else {
+                    console.log('system URL is null');    
+                }
+            } else {
+                console.log('can not find system URL for console link');
             }
         },
 
@@ -1806,8 +1823,7 @@ const app = Vue.createApp({
             this.tempIconSetup = templateIcon
 
         },
-
-
+        
         formatdate(time) {
 
             if (this.machineIsLoaded) {

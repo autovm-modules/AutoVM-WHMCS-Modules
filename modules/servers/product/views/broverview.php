@@ -12,9 +12,6 @@
         <!-- Bootstsrap Icon -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-        <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="/modules/servers/product/views/view/assets/img/autovm.svg" sizes="32x32">
-
         <!-- Bootsrtap Bundle -->
         <script src="/modules/servers/product/views/view/assets/js/bootstrap.bundle.min.js"></script>
 
