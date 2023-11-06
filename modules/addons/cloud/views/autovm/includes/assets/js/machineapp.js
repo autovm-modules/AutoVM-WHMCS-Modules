@@ -888,11 +888,12 @@ app = createApp({
 
         openConsole() {
             let address = null
+            let params = null
+            
             if(this.systemurl != null){
-                let address = this.systemurl
+                address = this.systemurl + 'console'
             } else {
-                console.log('con not find console link');
-                
+                console.log('can not find console link');
             }
 
             if(address != null){
