@@ -863,15 +863,15 @@ const app = Vue.createApp({
         openConsole() {
 
             let address = null
+            let params = null
             if(this.systemurl != null){
-                let address = this.systemurl
+                address = this.systemurl + 'console'
             } else {
                 console.log('con not find console link');
-                
             }
 
             if(address != null){
-                let params = new URLSearchParams({
+                params = new URLSearchParams({
                     'host': this.machine.console.proxy.proxy, 'port': this.machine.console.proxy.port, 'ticket': this.machine.console.ticket
                 }).toString()
     
