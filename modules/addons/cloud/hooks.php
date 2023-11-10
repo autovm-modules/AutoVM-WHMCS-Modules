@@ -93,6 +93,12 @@ function admin_handel_usertoken($WhUserId)
 
 add_hook('AdminAreaClientSummaryPage', 1, function($vars) {
     include ('admincontroller.php');
+
+
+    $autovmCloud = constant('AUTOVM_CLOUD');
+    if ($autovmCloud == false) {
+        return false;
+    }
     
     $WhUserId = $vars['userid'];
     $response = admin_handel_usertoken($WhUserId);
