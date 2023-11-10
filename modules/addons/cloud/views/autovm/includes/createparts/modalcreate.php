@@ -162,10 +162,24 @@
                                 </div>
 
                                 <!-- 2 (failed, reload, do again) -->
-                                <div v-if="createActionFailed" class="m-0 p-0">
+                                <div v-else-if="createActionFailed" class="m-0 p-0">
                                     <div class="row m-0 p-0 px-3">
                                         <p class="fs-5 fw-Medium text-dark p-0 m-0">
                                             {{ lang('createmachinefailed') }}  
+                                        </p>
+                                    </div> 
+                                </div>
+
+                                <!-- 3 (Loading) -->
+                                <div v-else-if="! createActionFailed && !createActionSucced" class="m-0 p-0">
+                                    <div class="row m-0 p-0 px-3">
+                                        <p class="fs-5 fw-Medium text-primary p-0 m-0">
+                                            <span>
+                                                {{ lang('loadingmsg') }}  
+                                            </span>
+                                            <span class="ps-2">
+                                                <?php include('./includes/commodules/threespinner.php'); ?>
+                                            </span>
                                         </p>
                                     </div> 
                                 </div>
