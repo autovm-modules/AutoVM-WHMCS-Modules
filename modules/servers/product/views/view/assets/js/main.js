@@ -1,6 +1,7 @@
 const app = Vue.createApp({
     data() {
         return {
+            PanelLanguage: null,
 
             systemurl: null,
             loading: false,
@@ -100,6 +101,7 @@ const app = Vue.createApp({
         this.loadSoftwares()
 
         this.changeTimeVisibilty()
+        this.readLanguageFirstTime()
 
         // Radial Charts
         if (this.$refs.cpuRadial) {
@@ -1859,7 +1861,35 @@ const app = Vue.createApp({
 
                 return (result)
             }
-        }
+        },
+
+        changeLanguage(){
+            let newLang = this.PanelLanguage;
+            document.cookie = `temlangcookie=${newLang}; expires=${new Date(Date.now() + 365 * 86400000).toUTCString()}; path=/`;
+            window.parent.location.reload();
+        },
+
+        readLanguageFirstTime(){
+            this.PanelLanguage = this.getCookieValue('temlangcookie');
+        },
+
+        
+        getCookieValue(cookieName) {
+            const name = cookieName + "=";
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const cookieArray = decodedCookie.split(';');
+          
+            for (let i = 0; i < cookieArray.length; i++) {
+              let cookie = cookieArray[i];
+              while (cookie.charAt(0) === ' ') {
+                cookie = cookie.substring(1);
+              }
+              if (cookie.indexOf(name) === 0) {
+                return cookie.substring(name.length, cookie.length);
+              }
+            }
+            return null; // Return an empty string if the cookie is not found
+          },
 
     },
 

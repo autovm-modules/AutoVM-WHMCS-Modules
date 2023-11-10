@@ -4,7 +4,7 @@
 
 
 <!doctype html>    
-    <html lang="<?php echo($templatelang) ?>" <?php if($templatelang == 'fa'){ echo("dir='rtl'"); } ?> style="font-size: 0.9em !important;">
+    <html lang="<?php echo($templatelang) ?>" <?php if($templatelang == 'Farsi'){ echo("dir='rtl'"); } ?> style="font-size: 0.9em !important;">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +19,7 @@
         <link href="/modules/servers/product/views/view/assets/style.css" rel="stylesheet">
         
         <!-- RTL && LTR -->
-        <?php if ($templatelang == 'fa'): ?>
+        <?php if ($templatelang == 'Farsi'): ?>
             <link href="/modules/servers/product/views/view/assets/css/bootstrap.rtl.min.css" rel="stylesheet">
             <style> * {font-family: 'Vazirmatn' !important;}</style>
         <?php else: ?> 
