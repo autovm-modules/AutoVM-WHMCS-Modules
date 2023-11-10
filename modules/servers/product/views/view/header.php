@@ -1,5 +1,5 @@
 <!doctype html>    
-    <html lang="<?php echo($templatelang) ?>" <?php if($templatelang == 'fa'){ echo("dir='rtl'"); } ?> style="font-size: 0.8em !important;">
+    <html lang="<?php echo($templatelang) ?>" <?php if($templatelang == 'Farsi'){ echo("dir='rtl'"); } ?> style="font-size: 0.8em !important;">
 
     <head>
         <meta charset="utf-8">
@@ -26,7 +26,7 @@
 
         
         <!-- RTL Persian BOOTSTRAP -->
-        <?php if ($templatelang == 'fa'): ?>
+        <?php if ($templatelang == 'Farsi'): ?>
             <link href="/modules/servers/product/views/view/assets/css/bootstrap.rtl.min.css" rel="stylesheet">
             <link href="/modules/servers/product/views/view/assets/style.css" rel="stylesheet">
             <style> * {font-family: 'Vazirmatn' !important;}</style>
