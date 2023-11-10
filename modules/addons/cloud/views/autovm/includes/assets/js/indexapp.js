@@ -10,6 +10,25 @@ app = createApp({
                 AutovmDefaultCurrencySymbol: 'USD',
                 minimumChargeInAutovmCurrency: 5,
                 ActivateRatioFunc: true,
+
+
+                DefaultBalanceDecimalWhmcs: 0,
+                DefaultBalanceDecimalCloud: 0,
+                
+
+                DefaultChargeAmountDecimalWhmcs: 0,
+                DefaultChargeAmountDecimalCloud: 0,
+                
+                
+                DefaultCreditDecimalWhmcs: 0,
+                DefaultCreditDecimalCloud: 0,
+                
+                DefaultMinimumDecimalWhmcs: 0,
+                DefaultMinimumDecimalCloud: 0,
+                
+                
+                DefaultRatioDecimalCloud: 0,
+
             },
             
             machinsLoaded: false,
@@ -220,6 +239,61 @@ app = createApp({
             return null
             }
         },
+
+        formatNumbers(number, decimal) {
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'decimal',
+                minimumFractionDigits: decimal,
+                maximumFractionDigits: decimal,
+            });
+            return formatter.format(number);
+        },
+        
+        showBalanceWhmcsUnit(value){
+            decimal = this.config.DefaultBalanceDecimalWhmcs        
+            return this.formatNumbers(value, decimal)
+        },
+        
+        showBalanceCloudUnit(value){
+            decimal = this.config.DefaultBalanceDecimalCloud        
+            return this.formatNumbers(value, decimal)
+        },
+
+        showChargeAmountWhmcsUnit(value){
+            decimal = this.config.DefaultChargeAmountDecimalWhmcs        
+            return this.formatNumbers(value, decimal)
+        },
+        
+        showChargeAmountCloudUnit(value){
+            decimal = this.config.DefaultChargeAmountDecimalCloud        
+            return this.formatNumbers(value, decimal)
+        },       
+        
+        showCreditWhmcsUnit(value){
+            decimal = this.config.DefaultCreditDecimalWhmcs        
+            return this.formatNumbers(value, decimal)
+        },
+        
+        showCreditCloudUnit(value){
+            decimal = this.config.DefaultCreditDecimalCloud        
+            return this.formatNumbers(value, decimal)
+        },
+        
+        showRatio(value){
+            decimal = this.config.DefaultRatioDecimalCloud        
+            return this.formatNumbers(value, decimal)
+        },
+        
+        showMinimumeWhmcsUnit(value){
+            decimal = this.config.DefaultMinimumDecimalWhmcs        
+            return this.formatNumbers(value, decimal)
+        },
+        
+        showMinimumeCloudUnit(value){
+            decimal = this.config.DefaultMinimumDecimalWhmcs        
+            return this.formatNumbers(value, decimal)
+        },
+
 
         findRationFromId(id){
             if(this.WhmcsCurrencies != null){
