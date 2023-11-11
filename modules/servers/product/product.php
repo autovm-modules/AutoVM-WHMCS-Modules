@@ -45,7 +45,9 @@ function product_ConfigOptions()
         'bandwidth' => ['FriendlyName' => 'deprecated1', 'Type' => 'text'], 
         'bandwidthTx' => ['FriendlyName' => 'deprecated2', 'Type' => 'text'], 
         'bandwidthRx' => ['FriendlyName' => 'deprecated3', 'Type' => 'text'], 
-        'bandwidthDay' => ['FriendlyName' => 'deprecated4', 'Type' => 'text']];
+        'bandwidthDay' => ['FriendlyName' => 'deprecated4', 'Type' => 'text'],
+        'traffic' => ['FriendlyName' => 'Traffic GB', 'Type' => 'text']
+    ];
 
 }
 
