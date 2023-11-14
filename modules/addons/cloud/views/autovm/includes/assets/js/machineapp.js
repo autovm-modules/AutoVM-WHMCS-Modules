@@ -19,6 +19,7 @@ app = createApp({
 
             userCurrencyIdFromWhmcs: null,
             
+            AddressCopied:false,
             detailIsLoaded: false,
             templateId: null,
             softwareId: null,
@@ -452,18 +453,26 @@ app = createApp({
 
         },
 
+        hasalias() {
+            let alias = this.getMachineProperty('reserve.address.alias')
+            if (alias) {
+                return true
+            } else {
+                return false
+            }
+        },
+
+        alias() {
+            return this.getMachineProperty('reserve.address.alias')
+        },
+
         ipaddress() {
-
             let address = this.getMachineProperty('reserve.address.address')
-
             if (address) {
-
                 return address
             } else {
-
-                return '---'
+                return null
             }
-
         },
     },
 
@@ -1077,6 +1086,30 @@ app = createApp({
                 }
             }
         },
+
+        async CopyAddress() {
+            this.AddressCopied = true;
+            let ValueToCopy = null;
+            if(this.hasalias){
+                ValueToCopy = this.alias;
+            } else {
+                ValueToCopy = this.ipaddress;
+            }
+
+            if(ValueToCopy){
+                try {
+                    await navigator.clipboard.writeText(ValueToCopy);
+                } catch (err) {
+                    console.log('Unable to copy Address to clipboard', err);
+                }    
+            }
+
+            setTimeout(() => {
+                this.AddressCopied = false;
+            }, 1000);
+            
+        },
+
 
         async loadDetail() {
 

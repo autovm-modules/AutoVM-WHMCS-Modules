@@ -1795,7 +1795,7 @@ const app = Vue.createApp({
             let ValueToCopy = null;
             if(this.hasalias){
                 ValueToCopy = this.alias;
-            } else if(this.address){
+            } else {
                 ValueToCopy = this.address;
             }
 
