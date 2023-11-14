@@ -36,7 +36,7 @@ const app = Vue.createApp({
             cpuLinearHasData: true,
             RamLinearHasData: true,
 
-            isCopied: false,
+            AddressCopied: false,
             showpassword: 'false',
             actionIsPended: false,
 
@@ -1789,21 +1789,28 @@ const app = Vue.createApp({
         setMachineLoadStatus() {
             this.machineIsLoaded = true
         },
+        
+        async CopyAddress() {
+            this.AddressCopied = true;
+            let ValueToCopy = null;
+            if(this.hasalias){
+                ValueToCopy = this.alias;
+            } else if(this.address){
+                ValueToCopy = this.address;
+            }
 
-        copyToClipboard(the_ref) {
-            let pTag = this.$refs[the_ref];
-            let range = document.createRange();
-            range.selectNode(pTag);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-            document.execCommand("copy");
-            window.getSelection().removeAllRanges();
-
-            this.isCopied = true;
-
-            setTimeout(() => {
-                this.isCopied = false;
-            }, 1000);
+            if(ValueToCopy){
+                try {
+                    await navigator.clipboard.writeText(ValueToCopy);
+                } catch (err) {
+                    console.log('Unable to copy Address to clipboard', err);
+                }
+                
+                setTimeout(() => {
+                    this.AddressCopied = false;
+                }, 1000);
+            }
+            
         },
 
         getSetupOS() {

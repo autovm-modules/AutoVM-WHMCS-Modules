@@ -126,18 +126,18 @@
                             class="text-primary fw-medium m-0 p-0 ps-4 fs-2 align-middle">
                             ---
                         </span>
-                        <span v-if="machineIsLoaded && address && !alias" ref="ipTag" class="text-primary fw-medium m-0 p-0 ps-4 fs-2 align-middle">
+                        <span v-if="machineIsLoaded && address && !alias" class="text-primary fw-medium m-0 p-0 ps-4 fs-2 align-middle">
                             {{ address }}
                         </span>
-                        <span v-if="machineIsLoaded && alias" ref="ipTag" class="text-primary fw-medium m-0 p-0 ps-4 fs-3 align-middle">
+                        <span v-if="machineIsLoaded && alias" class="text-primary fw-medium m-0 p-0 ps-4 fs-3 align-middle">
                             {{ alias }}
                         </span>
                     </div>
-                    <div v-if="!isCopied"class="m-0 p-0" >
-                        <img @click="copyToClipboard('ipTag')"
+                    <div v-show="!AddressCopied"class="m-0 p-0" >
+                        <img @click="CopyAddress"
                             src="/modules/servers/product/views/view/assets/img/ip.svg" alt="ipaddress">
                     </div>
-                    <div v-if="isCopied" class="m-0 p-0">
+                    <div v-show="AddressCopied" class="m-0 p-0">
                         <i class="bi bi-check-all text-primary"></i>
                     </div>
                 </div>
@@ -237,11 +237,9 @@
                 <div class="input-group d-flex flex-row justify-content-between align-items-center m-0 p-0">
                     <div v-if="machineIsLoaded && machineUserPass" class="input-group-text col-10 rounded m-0 p-0 ps-3" style="height: 45px;">
                         <span v-if="showpassword" class="text-dark m-0 p-0 fs-6">
-
                             <?php for ($i = 0; $i <= 10; $i++) : ?>
                                 <i class="bi bi-asterisk text-secondary" style="font-size: 10px !important;"></i>
                             <?php endfor ?>
-
                         </span>
                         <span v-if="!showpassword" class="text-dark m-0 p-0 fs-6">{{ machineUserPass }}</span>
                     </div>
