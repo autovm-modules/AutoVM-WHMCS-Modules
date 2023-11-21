@@ -50,7 +50,7 @@ function autovm_get_admintoken_baseurl_client(){
             }
         }
     } catch (\Exception $e) {
-        $error = '<p><li style="color:red; padding: 5px;">Database ERR ===> Can not find module params table in database</li></p>';
+        $error = 'Database ERR ===> Can not find module params table in database';
         $response['error'] = $error;
         return $response;
     }
@@ -61,19 +61,19 @@ function autovm_get_admintoken_baseurl_client(){
     }
 
     if(empty($BackendUrl)){
-        $message = '<p><li style="color:red; padding: 5px;">Backend URL ERR ===> Go to addons module and insert your backend adrress</li></p>';
+        $message = 'Backend URL ERR ===> Go to addons module and insert your backend adrress';
         $response['message'] = $message;
         return $response;
     }
     
     if(empty($AdminToken)){
-        $message = '<p><li style="color:red; padding: 5px;">Admin Token ERR ===> Go to addons module and insert your Token</li></p>';
+        $message = 'Admin Token ERR ===> Go to addons module and insert your Token';
         $response['message'] = $message;
         return $response;
     }
    
     if(empty($DefLang)){
-        $message = '<p><li style="color:red; padding: 5px;">Defaul Language ERR ===> Go to addons module and select a language</li></p>';
+        $message = 'Defaul Language ERR ===> Go to addons module and select a language';
         $response['message'] = $message;
         return $response;
     }
@@ -83,16 +83,14 @@ function autovm_get_admintoken_baseurl_client(){
         $response['BackendUrl'] = $BackendUrl;
         $response['DefLang'] = $DefLang;
         return $response;
-    }
+    } 
 }
-
 
 
 
 // Hook to generate user and token in data base for cloud in client side
 add_hook('ClientAreaPage', 100, function($params) {
     $response =  autovm_get_admintoken_baseurl_client();
-
     if(!empty($response['error'])){
         return false;
     }
@@ -112,6 +110,7 @@ add_hook('ClientAreaPage', 100, function($params) {
     
     // create token if cloud is active
     if(!empty($CloudActivationStatus) && !empty($AdminToken) && !empty($BackendUrl)){
+        
         $clientId = autovm_get_session('uid');
         if (empty($clientId)) {
             // echo('can not find client ID');
