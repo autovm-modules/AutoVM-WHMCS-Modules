@@ -155,22 +155,27 @@
                                     <div class="d-flex flex-row justify-content-between align-items-center">
                                         <span class="fs-6 p-0 m-0 text-secondary">
                                             {{ lang('ipaddress') }}
-                                            <span v-if="address" class="text-primary">
-                                                <span ref="ipTag" @click="copyToClipboard('ipTag')" class="px-1">
+                                            <span v-if="address && !alias" class="text-primary">
+                                                <span class="px-1">
                                                     {{address}}
                                                 </span>
                                             </span>
-                                            <span v-if="!address" class="text-secondary">
+                                            <span v-if="alias" class="text-primary">
+                                                <span class="px-1">
+                                                    {{ alias }}
+                                                </span>
+                                            </span>
+                                            <span v-if="!address && !alias" class="text-secondary">
                                                 <span class="px-1">
                                                     ---
                                                 </span>
                                             </span>
                                             <span class="m-0 p-0" >
-                                                <button @click="copyToClipboard('ipTag')" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
-                                                    <span v-if="!isCopied" class="small">
+                                                <button @click="CopyAddress" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
+                                                    <span v-if="!AddressCopied" class="small">
                                                         <img src="/modules/servers/product/views/view/assets/img/ip.svg" alt="copy" style="width: 14px;">
                                                     </span>    
-                                                    <span class="d-flex flex-row justify-content-center align-items-end text-primary" v-if="isCopied">
+                                                    <span class="d-flex flex-row justify-content-center align-items-end text-primary" v-if="AddressCopied">
                                                         <i class="bi bi-check-all"></i>
                                                         <span class="small">Copied</span>
                                                     </span>

@@ -21,21 +21,23 @@
                     <span class="text-secondary fs-6 align-middle">
                         {{ lang('ipaddress') }}    
                     </span>
-                    <span v-if="!machineIsLoaded || !address" class="text-primary fw-medium ps-4 fs-4  align-middle">
+                    <span v-if="!machineIsLoaded" class="text-primary fw-medium ps-4 fs-4  align-middle">
                         ---
                     </span>
-                    <span v-if="machineIsLoaded && address && !alias" ref="ipTag" class="text-primary fw-medium m-0 p-0 ps-4 fs-4 align-middle">
+                    <span v-if="machineIsLoaded && address && !alias" class="text-primary fw-medium m-0 p-0 ps-4 fs-4 align-middle">
                         {{ address }}
                     </span>
-                    <span v-if="machineIsLoaded && alias" ref="ipTag" class="text-primary fw-medium m-0 p-0 ps-4 fs-4 align-middle">
+                    <span v-if="machineIsLoaded && alias" class="text-primary fw-medium m-0 p-0 ps-4 fs-4 align-middle">
                         {{ alias }}
                     </span>                    
+                    <span v-if="machineIsLoaded && !address && !alias" class="text-primary fw-medium m-0 p-0 ps-4 fs-4 align-middle">
+                        ---
+                    </span>                    
                 </div>
-                <div v-if="!isCopied">
-                    <img @click="copyToClipboard('ipTag')"
-                        src="/modules/servers/product/views/view/assets/img/ip.svg" alt="ipaddress">
+                <div v-show="!AddressCopied">
+                    <img @click="CopyAddress" src="/modules/servers/product/views/view/assets/img/ip.svg" alt="ipaddress">
                 </div>
-                <div v-if="isCopied">
+                <div v-show="AddressCopied">
                     <i class="bi bi-check-all text-primary"></i>
                 </div>
             </div>

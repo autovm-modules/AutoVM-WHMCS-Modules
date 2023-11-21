@@ -155,8 +155,11 @@
                             {{ lang('ipaddress') }}
                         </span>
                         <span v-if="machineIsLoaded" class="m-0 p-0">
-                            <span v-if="ipaddress != null" class="text-primary fw-medium m-0 p-0 ps-4 fs-2 align-middle">
+                            <span v-if="ipaddress && !alias" class="text-primary fw-medium m-0 p-0 ps-4 fs-2 align-middle">
                                 {{ ipaddress }}
+                            </span>
+                            <span v-if="alias" class="text-primary fw-medium m-0 p-0 ps-4 fs-2 align-middle">
+                                {{ alias }}
                             </span>
                             <span v-if="!ipaddress" class="text-primary fw-medium m-0 p-0 ps-4 fs-2 align-middle">
                                 ---
@@ -169,7 +172,15 @@
                         </span>
                     </div>
                     <div class="m-0 p-0">
-                        <img src="/modules/addons/cloud/views/autovm/includes/assets/img/ip.svg" alt="ipaddress">
+                        <a @click="CopyAddress" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
+                            <span v-if="!AddressCopied" class="small">
+                                <img src="/modules/addons/cloud/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 23px;">
+                            </span>    
+                            <span v-if="AddressCopied" class="d-flex flex-row justify-content-center align-items-end text-primary">
+                                <i class="bi bi-check-all"></i>
+                                <span class="small">Copied</span>
+                            </span>
+                        </a>
                     </div>
                    
                 </div>
