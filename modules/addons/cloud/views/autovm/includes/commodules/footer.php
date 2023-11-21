@@ -46,7 +46,7 @@
                         echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/indexapp.js"></script>';
                         break;
                     case 'machine':
-                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/machineapp.js"></script>';
+                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/machineapp4.js"></script>';
                         break;
                     case 'adminpanel':
                         echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/adminapp.js"></script>';
