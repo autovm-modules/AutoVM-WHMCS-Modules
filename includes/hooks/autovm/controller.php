@@ -6,10 +6,30 @@ use PG\Request\Request;
 class AVMController
 {
     protected $serviceId;
+    protected $BackendUrl;
+    protected $AdminToken;
 
     public function __construct($serviceId)
     {
+        $response =  autovm_get_admintoken_baseurl_client();
+        if(!empty($response['error'])){
+            echo($response['error']);
+            return false;
+        }
+
+        if(!empty($response['message'])){
+            echo($response['message']);
+            return false;
+        }
+        
+        if(isset($response['AdminToken']) && isset($response['BackendUrl'])){
+            $AdminToken = $response['AdminToken'];
+            $BackendUrl = $response['BackendUrl'];
+        }
+        
         $this->serviceId = $serviceId;
+        $this->BackendUrl = $BackendUrl;
+        $this->AdminToken = $AdminToken;
     }
 
     public function getSystemUrl()
@@ -38,10 +58,12 @@ class AVMController
 
     public function sendPoolsRequest()
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'common', 'pools'
+            $BackendUrl, 'candy', 'backend', 'common', 'pools'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -56,10 +78,12 @@ class AVMController
 
     public function sendSoftwaresRequest()
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'frontend', 'common', 'software', 'categories'
+            $BackendUrl, 'candy', 'frontend', 'common', 'software', 'categories'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -74,10 +98,12 @@ class AVMController
 
     public function sendCategoriesRequest()
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'frontend', 'common', 'template', 'categories'
+            $BackendUrl, 'candy', 'frontend', 'common', 'template', 'categories'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -92,10 +118,12 @@ class AVMController
 
     public function sendTemplatesRequest()
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'frontend', 'common', 'templates'
+            $BackendUrl, 'candy', 'frontend', 'common', 'templates'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -107,10 +135,12 @@ class AVMController
             'poolId' => $poolId, 'templateId' => $templateId, 'memorySize' => $memorySize, 'memoryLimit' => $memoryLimit, 'diskSize' => $diskSize, 'cpuCore' => $cpuCore, 'cpuLimit' => $cpuLimit, 'name' => $name, 'email' => $email, 'publicKey' => $publicKey, 'traffic' => $traffic, 'remaining' => $remaining, 'duration' => $duration, 'autoSetup' => true
         ];
 
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'smart', 'pool'
+            $BackendUrl, 'candy', 'backend', 'machine', 'smart', 'pool'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
@@ -128,10 +158,12 @@ class AVMController
 
     public function sendShowRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'show', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'show', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -149,10 +181,12 @@ class AVMController
 
     public function sendDetailRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'detail', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'detail', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -164,10 +198,12 @@ class AVMController
             'traffic' => $traffic, 'remaining' => $remaining, 'duration' => $duration, 'type' => $type
         ];
 
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'traffic', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'traffic', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
@@ -185,10 +221,12 @@ class AVMController
 
     public function sendSetupRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'setup', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'setup', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -206,10 +244,12 @@ class AVMController
 
     public function sendStartRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'start', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'start', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -227,10 +267,12 @@ class AVMController
 
     public function sendStopRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'stop', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'stop', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -248,10 +290,12 @@ class AVMController
 
     public function sendRebootRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'reboot', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'reboot', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -259,10 +303,12 @@ class AVMController
 
     public function sendSuspendRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'suspend', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'suspend', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -270,10 +316,12 @@ class AVMController
 
     public function sendForceSuspendRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'forceSuspend', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'forceSuspend', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -281,10 +329,12 @@ class AVMController
 
     public function sendUnsuspendRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'unsuspend', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'unsuspend', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -292,10 +342,12 @@ class AVMController
 
     public function sendForceUnsuspendRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'forceUnsuspend', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'forceUnsuspend', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -313,10 +365,12 @@ class AVMController
 
     public function sendSnapshotRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'snapshot', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'snapshot', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -334,10 +388,12 @@ class AVMController
 
     public function sendRevertRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'revert', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'revert', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -355,10 +411,12 @@ class AVMController
 
     public function sendConsoleRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'console', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'console', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -366,10 +424,12 @@ class AVMController
 
     public function sendDestroyRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'destroy', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'destroy', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -377,10 +437,12 @@ class AVMController
 
     public function sendForceDestroyRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'forceDestroy', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'forceDestroy', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -401,10 +463,12 @@ class AVMController
 
     public function sendChangeRequest($machineId, $templateId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'change', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'change', $machineId
         ];
 
         $params = ['templateId' => $templateId];
@@ -424,10 +488,12 @@ class AVMController
 
     public function sendCurrentTrafficUsageRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'graph', 'machine', $machineId, 'traffic', 'current'
+            $BackendUrl, 'candy', 'backend', 'graph', 'machine', $machineId, 'traffic', 'current'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -445,10 +511,12 @@ class AVMController
 
     public function sendMemoryUsageRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'graph', 'machine', $machineId, 'memory', 'daily'
+            $BackendUrl, 'candy', 'backend', 'graph', 'machine', $machineId, 'memory', 'daily'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -466,10 +534,12 @@ class AVMController
 
     public function sendCpuUsageRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'graph', 'machine', $machineId, 'cpu', 'daily'
+            $BackendUrl, 'candy', 'backend', 'graph', 'machine', $machineId, 'cpu', 'daily'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -487,10 +557,12 @@ class AVMController
 
     public function sendTrafficUsageRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'graph', 'machine', $machineId, 'traffic', 'daily'
+            $BackendUrl, 'candy', 'backend', 'graph', 'machine', $machineId, 'traffic', 'daily'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -508,10 +580,12 @@ class AVMController
 
     public function sendBandwidthUsageRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'graph', 'machine', $machineId, 'bandwidth', 'daily'
+            $BackendUrl, 'candy', 'backend', 'graph', 'machine', $machineId, 'bandwidth', 'daily'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -529,10 +603,12 @@ class AVMController
 
     public function sendHourlyMemoryUsageRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'graph', 'machine', $machineId, 'memory', 'hourly'
+            $BackendUrl, 'candy', 'backend', 'graph', 'machine', $machineId, 'memory', 'hourly'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -550,10 +626,12 @@ class AVMController
 
     public function sendHourlyCpuUsageRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'graph', 'machine', $machineId, 'cpu', 'hourly'
+            $BackendUrl, 'candy', 'backend', 'graph', 'machine', $machineId, 'cpu', 'hourly'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -571,10 +649,12 @@ class AVMController
 
     public function sendCurrentBandwidthUsageRequest($machineId)
     {
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'graph', 'machine', $machineId, 'bandwidth', 'current'
+            $BackendUrl, 'candy', 'backend', 'graph', 'machine', $machineId, 'bandwidth', 'current'
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
@@ -586,10 +666,12 @@ class AVMController
             'memorySize' => $memorySize, 'memoryLimit' => $memoryLimit, 'diskSize' => $diskSize, 'cpuCore' => $cpuCore, 'cpuLimit' => $cpuLimit, 'reboot' => 'active'
         ];
 
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
+        $BackendUrl = $this->BackendUrl;
         $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'machine', 'upgrade', $machineId
+            $BackendUrl, 'candy', 'backend', 'machine', 'upgrade', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
