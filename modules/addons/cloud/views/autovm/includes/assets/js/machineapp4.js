@@ -12,7 +12,7 @@ app = createApp({
                 DefaultBalanceDecimal: 0,
             },
 
-            systemurl: null,
+            consoleRoute: null,
 
             WhmcsCurrencies: null,
             userCreditinWhmcs: null,
@@ -111,7 +111,7 @@ app = createApp({
         
         // load Whmcs Data
         this.loadCredit()
-        this.loadSystemUrl()
+        this.loadConsoleRoute()
         this.loadWhCurrencies()
         this.readLanguageFirstTime()
     },
@@ -548,17 +548,17 @@ app = createApp({
             }
         },
 
-        async loadSystemUrl() {
-            let response = await axios.get('/index.php?m=cloud&action=getSystemUrl');
+        async loadConsoleRoute() {
+            let response = await axios.get('/index.php?m=cloud&action=getConsoleRoute');
             if(response.data){
-                systemurl = response.data.systemurl;
-                if(systemurl != 'empty'){
-                    this.systemurl = systemurl
+                consoleRoute = response.data;
+                if(consoleRoute != 'empty'){
+                    this.consoleRoute = consoleRoute
                 } else {
-                    console.log('system URL is null');    
+                    console.log('Console Route is null');    
                 }
             } else {
-                console.log('can not find system URL for console link');
+                console.log('can not find console route');
             }
         },
 
@@ -900,10 +900,10 @@ app = createApp({
             let address = null
             let params = null
             
-            if(this.systemurl != null){
-                address = this.systemurl + 'console'
+            if(this.consoleRoute != null){
+                address = this.consoleRoute
             } else {
-                console.log('can not find console link');
+                console.log('can not find console route in open console');
             }
 
             if(address != null){

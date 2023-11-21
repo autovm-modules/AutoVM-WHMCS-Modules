@@ -46,6 +46,10 @@ function autovm_get_admintoken_baseurl_admin(){
                 if($item->setting == 'CloudActivationStatus'){
                     $CloudActivationStatus = $item->value;
                 }
+                
+                if($item->setting == 'ConsoleRoute'){
+                    $ConsoleRoute = $item->value;
+                }
             }
         }
     } catch (\Exception $e) {
@@ -83,6 +87,7 @@ function autovm_get_admintoken_baseurl_admin(){
         $response['AdminToken'] = $AdminToken;
         $response['BackendUrl'] = $BackendUrl;
         $response['DefLang'] = $DefLang;
+        $response['ConsoleRoute'] = $ConsoleRoute;
         return $response;
     }
 }

@@ -32,26 +32,26 @@ class AVMController
         $this->AdminToken = $AdminToken;
     }
 
-    public function getSystemUrl()
+    public function getConsoleRoute()
     {      
-        $command = 'GetConfigurationValue';
-        $postData = array(
-            'setting' => 'SystemURL',
-        );
-
-        $results = localAPI($command, $postData);
-        if($results['result'] == "success"){
-            $systemurl = $results['value'];
-            $response = array(
-                'systemurl' => $systemurl,
-            );
-        } else {
-            $response = array(
-                'systemurl' => 'empty',
-            );
+        $response =  autovm_get_admintoken_baseurl_client();
+        if(!empty($response['error'])){
+            echo($response['error']);
+            return false;
         }
 
-        $this->response($response); 
+        if(!empty($response['message'])){
+            echo($response['message']);
+            return false;
+        }
+        
+        if(isset($response['ConsoleRoute'])){
+            $ConsoleRoute = $response['ConsoleRoute'];
+        } else {
+            echo('please enter the console link in module configuration');
+        }
+
+        $this->response($ConsoleRoute); 
     }
 
 

@@ -3,7 +3,7 @@ const app = Vue.createApp({
         return {
             PanelLanguage: null,
 
-            systemurl: null,
+            consoleRoute: null,
             loading: false,
             detailIsLoaded: false,
             machineIsLoaded: false,
@@ -83,7 +83,7 @@ const app = Vue.createApp({
 
         // Load detail
         this.loadMachine()
-        this.loadSystemUrl()
+        this.loadConsoleRoute()
 
         // Load detail
         this.loadDetail()
@@ -866,10 +866,11 @@ const app = Vue.createApp({
 
             let address = null
             let params = null
-            if(this.systemurl != null){
-                address = this.systemurl + 'console'
+            
+            if(this.consoleRoute != null){
+                address = this.consoleRoute
             } else {
-                console.log('con not find console link');
+                console.log('can not find console route in open console');
             }
 
             if(address != null){
@@ -1166,17 +1167,17 @@ const app = Vue.createApp({
             }
         },
         
-        async loadSystemUrl() {
-            let response = await axios.get('/index.php?m=cloud&action=getSystemUrl');
+        async loadConsoleRoute() {
+            let response = await axios.get('/index.php?m=cloud&action=getConsoleRoute');
             if(response.data){
-                systemurl = response.data.systemurl;
-                if(systemurl != 'empty'){
-                    this.systemurl = systemurl
+                consoleRoute = response.data;
+                if(consoleRoute != 'empty'){
+                    this.consoleRoute = consoleRoute
                 } else {
-                    console.log('system URL is null');    
+                    console.log('Console Route is null');    
                 }
             } else {
-                console.log('can not find system URL for console link');
+                console.log('can not find console route');
             }
         },
 
