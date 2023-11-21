@@ -5,11 +5,16 @@ class AdminController
 {
     protected $userToken;
     protected $WhUserId;
+    protected $BackendUrl;
+    protected $AdminToken;
 
-    public function __construct($userToken, $WhUserId){
+    public function __construct($userToken, $WhUserId, $BackendUrl, $AdminToken){
         $this->userToken = $userToken;
         $this->WhUserId = $WhUserId;
+        $this->BackendUrl = $BackendUrl;
+        $this->AdminToken = $AdminToken;
     }
+
 
     public function admin_getUseIdByToken(){
         $userToken = $this->userToken;
@@ -17,12 +22,12 @@ class AdminController
         $params = [
             'token' => $userToken,
         ];
+        
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
-
-        $address = [
-            AUTOVM_BASE, 'candy', 'frontend', 'auth', 'token', 'login'
-        ];
+        $BackendUrl = $this->BackendUrl;
+        $address = [ $BackendUrl, 'candy', 'frontend', 'auth', 'token', 'login' ];
         
         $response = Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
         return $response->data->id;
@@ -36,10 +41,12 @@ class AdminController
     public function admin_sendShowUserRequest(){
         $AutovmUserId = $this->admin_getUseIdByToken();
         
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
-        $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'user', 'show', $AutovmUserId
-        ];
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
+
+        $BackendUrl = $this->BackendUrl;
+        $address = [ $BackendUrl, 'candy', 'backend', 'user', 'show', $AutovmUserId ];
+
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
     }
     
@@ -64,12 +71,12 @@ class AdminController
             'type' => 'balance',
             'status' => 'paid'
         ];
+        
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
 
-        $headers = ['token' => AUTOVM_ADMIN_TOKEN];
-
-        $address = [
-            AUTOVM_BASE, 'candy', 'backend', 'trans', 'create'
-        ];
+        $BackendUrl = $this->BackendUrl;
+        $address = [ $BackendUrl, 'candy', 'backend', 'trans', 'create' ];
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
     }
 
