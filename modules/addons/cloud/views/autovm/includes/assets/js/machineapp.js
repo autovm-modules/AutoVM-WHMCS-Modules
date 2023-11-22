@@ -29,7 +29,7 @@ app = createApp({
             machine: {},
             detail: {},
             uptimeformated: {},
-            traffic: {},
+            machineTraffic: null,
             categories: [],
             user: {},
 
@@ -139,6 +139,46 @@ app = createApp({
     },
 
     computed: {
+
+        trafficTotal(){
+            const value = this.machineTraffic?.total;
+            if (value === 0 || value === '0') { return 0; }
+            if (value) {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                    const result = numericValue / 1024;
+                    return Number(result.toFixed(1));
+                }
+            }
+            return null;
+        },
+        
+        trafficSend(){
+            const value = this.machineTraffic?.sent;
+            if (value === 0 || value === '0') { return 0; }
+            if (value) {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                    const result = numericValue / 1024;
+                    return Number(result.toFixed(1));
+                }
+            }
+            return null;
+        },
+        
+        trafficReceived(){
+            const value = this.machineTraffic?.received;
+            if (value === 0 || value === '0') { return 0; }
+            if (value) {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                    const result = numericValue / 1024;
+                    return Number(result.toFixed(1));
+                }
+            }
+            return null
+        },
+
         userCurrencySymbolFromWhmcs(){
             if(this.WhmcsCurrencies != null && this.userCurrencyIdFromWhmcs != null){
                 let CurrencyArr = this.WhmcsCurrencies.currency
@@ -1455,15 +1495,12 @@ app = createApp({
             })
 
             response = response.data
-
             if (response.message) {
-
                 // Its not ok to show message here
             }
 
             if (response.data) {
-
-                this.traffic = response.data
+                this.machineTraffic = response.data
             }
         },
 

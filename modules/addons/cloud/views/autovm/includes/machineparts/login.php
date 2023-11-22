@@ -133,7 +133,7 @@
     </div><!-- End finance  -->
 
     <!-- Network -->
-    <div class="col-12 col-md-8 col-lg-6 col-xl-5 m-0 p-0 flex-grow-1 p-0 m-0 mb-3 order-2 order-md-2 order-lg-2 order-xl-2">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-4 m-0 p-0 flex-grow-1 p-0 m-0 mb-3 order-2 order-md-2 order-lg-2 order-xl-2">
         <div class="border border-2 rounded-4 bg-white m-0 p-0 py-4 px-4 mx-0 mx-xl-1  pb-5 h-100">
             <!-- top slice -->
             <div class="m-0 p-0">
@@ -240,7 +240,7 @@
     </div><!-- end Network -->
 
     <!-- Login -->
-    <div class="col-12 col-md-4 col-lg-4 col-xl-3 p-0 m-0 mb-3 order-3 order-md-1 order-lg-1 order-xl-3">
+    <div class="col-12 col-md-4 col-lg-4 col-xl-4 p-0 m-0 mb-3 order-3 order-md-1 order-lg-1 order-xl-3">
         <div class="border border-2 rounded-4 bg-white m-0 p-0 py-4 px-4 mx-0 me-md-2 ms-xl-1 me-xl-0 pb-5 h-100">
             
             <!-- username -->
