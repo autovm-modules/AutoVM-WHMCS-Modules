@@ -161,6 +161,7 @@ let common = {
         "machineisdoingnothing": "Nenhuma ação",
         "accountinformationtitle" : "Account Information",
         "installedsoftware" : "SOFTWARE",
+        "traffic" : "TRAFFIC",
         // end from Product
 
         // Unique for this cloud

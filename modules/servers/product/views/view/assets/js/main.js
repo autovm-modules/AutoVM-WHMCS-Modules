@@ -17,6 +17,7 @@ const app = Vue.createApp({
             detail: {},
             uptimeformated: {},
             softwares: {},
+            machineTraffic: null,
 
             thereisnodata: true,
             memoryChart: {
@@ -84,6 +85,7 @@ const app = Vue.createApp({
         // Load detail
         this.loadMachine()
         this.loadConsoleRoute()
+        this.loadTraffic()
 
         // Load detail
         this.loadDetail()
@@ -174,7 +176,45 @@ const app = Vue.createApp({
     },
 
     computed: {
-
+        trafficTotal(){
+            const value = this.machineTraffic?.total;
+            if (value === 0 || value === '0') { return 0; }
+            if (value) {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                    const result = numericValue / 1024;
+                    return Number(result.toFixed(1));
+                }
+            }
+            return null;
+        },
+        
+        trafficSend(){
+            const value = this.machineTraffic?.sent;
+            if (value === 0 || value === '0') { return 0; }
+            if (value) {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                    const result = numericValue / 1024;
+                    return Number(result.toFixed(1));
+                }
+            }
+            return null;
+        },
+        
+        trafficReceived(){
+            const value = this.machineTraffic?.received;
+            if (value === 0 || value === '0') { return 0; }
+            if (value) {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                    const result = numericValue / 1024;
+                    return Number(result.toFixed(1));
+                }
+            }
+            return null
+        },
+        
         actionMethod() {
             let actionMethod = this.getMachineProperty('action.method');
 
@@ -811,6 +851,24 @@ const app = Vue.createApp({
 
             // Load detail
             setInterval(this.loadDetail, 35000)
+        },
+
+        async loadTraffic() {
+
+            let response = await axios.get('/index.php?avmAction=currentTrafficUsage', {
+                params: {
+                    avmServiceId: this.serviceId
+                }
+            })
+
+            response = response.data
+            if (response.message) {
+                // Its not ok to show message here
+            }
+
+            if (response.data) {
+                this.machineTraffic = response.data
+            }
         },
 
         async loadMachine() {

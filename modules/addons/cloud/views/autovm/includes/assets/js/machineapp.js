@@ -429,7 +429,7 @@ app = createApp({
 
         tempName() {
 
-            let tempName = ''
+            let tempName = null
 
             tempName = this.getMachineProperty('template.name')
 
@@ -439,12 +439,24 @@ app = createApp({
 
         tempIcon() {
 
-            let tempIcon = '';
+            let tempIcon = null;
 
             tempIcon = this.getMachineProperty('template.icon.address')
 
             return tempIcon
 
+        },
+
+        softIcon() {
+            let softIcon = null;
+            softIcon = this.getMachineProperty('software.template.icon.address')
+            return softIcon
+        },
+
+        softName() {
+            let softName = null
+            softName = this.getMachineProperty('software.name')
+            return softName
         },
 
         machineUserName() {
