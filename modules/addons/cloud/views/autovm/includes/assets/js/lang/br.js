@@ -152,6 +152,7 @@ let common = {
         "remainingtime" : "Tempo Restante :",
         "failactionmsg" : "A última ação não foi concluída completamente, o status ainda está falhado, por favor, tente uma nova ação!",
         "snapshot" : "Snapshot",
+        "traffic" : "TRAFFIC",
 
         // end from Product
 

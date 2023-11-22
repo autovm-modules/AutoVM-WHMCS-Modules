@@ -5,7 +5,7 @@
 /* Language */
 /* The language your peak here, will be set as your panel default language : */
 /* Turkish ==>> "Turkish", Farsi   ==>> "Farsi", English ==>> "English", Russian ==>> "Russian" , Deutsch ==>> "Deutsch", French ==>> "French", Italian ==>> "Italian", Brizilian ==>> "Brizilian",*/
-$CloudDefaulLanguage = "Farsi";
+$CloudDefaulLanguage = "English";
 
 
 /* TopUp Link */

@@ -152,6 +152,7 @@ let common = {
         "remainingtime" : "زمان باقیمانده:",
         "failactionmsg" : "آخرین عملیات نتوانسته کامل شود و هنوز در حالت (ناتمام) قرار دارد. لطفا یک بار دیگر برای عملیاتی جدید تلاش کنید",
         "snapshot" : "اسنپ شات",
+        "traffic" : "ترافیک",
     // end from Product
 
     // Unique for this cloud

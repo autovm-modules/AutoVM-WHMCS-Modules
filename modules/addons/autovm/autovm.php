@@ -8,17 +8,19 @@ function autovm_config()
     $AdminTokenLabel = '<span style="padding-left: 30px">Insert your Admin Token here, as an Example "de8fs953k49ho3ellg9x", You can find the Admin Token in AutoVM Frontend Panel/User tab</span>';
     $DefLangLabel = '<span style="padding-left: 30px">Select a language as default language for admin and users panel, this language setting is for AutoVM Module and has nothing to do with WHMCS language setting</span>';
     $CloudActivationStatusLabel = '<span style="padding-left: 30px; color: red;">!!! Please be very careful. Enabling Cloud Module unintentionally or accidentally can be harmful.</span>';
+    $ConsoleRoute = '<span style="padding-left: 30px">This is usually is domain of your WHMCS added to /console e.q. "https://mywhmcs.com/console"</span>';
     
     $configarray = array(
         "name" => "AutoVM",
         "description" => "Main AutoVM Module",
-        "version" => "V05.09.00",
+        "version" => "V05.10.00",
         "author" => "autovm.net",
         "fields" => array(
             "BackendUrl" => array ("FriendlyName" => "Backend Url", "Type" => "text", "Size" => "31", "Description" => $BackendUrlLabel, "Default" => "http://backend.autovm.online"),
             "AdminToken" => array ("FriendlyName" => "Admin Token", "Type" => "text", "Size" => "31", "Description" => $AdminTokenLabel, "Default" => "xxxx"),
             "DefLang" => array ("FriendlyName" => "Default Language", "Type" => "dropdown", "Options" => "English, Farsi, Turkish, Russian, Deutsch, French", "Description" => $DefLangLabel, "Default" => "English"),
-            "CloudActivationStatus" => array ("FriendlyName" => "Enable Cloud Module", "Type" => "yesno", 'Description' => $CloudActivationStatusLabel, "Default" => ""),
+            "CloudActivationStatus" => array ("FriendlyName" => "Enable Cloud Module", "Type" => "yesno", 'Description' => $CloudActivationStatusLabel, "Default" => ""),            
+            "ConsoleRoute" => array ("FriendlyName" => "Console Route", "Type" => "text", "Size" => "50", "Description" => $ConsoleRoute, "Default" => "https://mywhmcs.com/console"),
         ));
         return $configarray;
 }
@@ -96,6 +98,22 @@ function autovm_get_admintoken_baseurl_autovm(){
         return $response;
     }
 
+    // get Default Language
+    if(empty($DefLang)){
+        $DefLang = 'English';
+    }
+    
+    if(($DefLang != 'English' && $DefLang != 'Farsi' && $DefLang != 'Turkish' && $DefLang != 'Russian' && $DefLang != 'Deutsch' && $DefLang != 'French' && $DefLang != 'Brizilian' && $DefLang != 'Italian')){
+        $DefLang = 'English';
+    }
+
+    if(!empty($DefLang)){
+        if(empty($_COOKIE['temlangcookie'])) {
+            setcookie('temlangcookie', $DefLang, time() + (86400 * 30 * 12), '/');
+        }
+    }
+
+    
     if($AdminToken && $BackendUrl && $DefLang){
         $response['AdminToken'] = $AdminToken;
         $response['BackendUrl'] = $BackendUrl;

@@ -12,7 +12,7 @@ app = createApp({
                 DefaultBalanceDecimal: 0,
             },
 
-            systemurl: null,
+            consoleRoute: null,
 
             WhmcsCurrencies: null,
             userCreditinWhmcs: null,
@@ -29,7 +29,7 @@ app = createApp({
             machine: {},
             detail: {},
             uptimeformated: {},
-            traffic: {},
+            machineTraffic: null,
             categories: [],
             user: {},
 
@@ -111,7 +111,7 @@ app = createApp({
         
         // load Whmcs Data
         this.loadCredit()
-        this.loadSystemUrl()
+        this.loadConsoleRoute()
         this.loadWhCurrencies()
         this.readLanguageFirstTime()
     },
@@ -139,6 +139,46 @@ app = createApp({
     },
 
     computed: {
+
+        trafficTotal(){
+            const value = this.machineTraffic?.total;
+            if (value === 0 || value === '0') { return 0; }
+            if (value) {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                    const result = numericValue / 1024;
+                    return Number(result.toFixed(1));
+                }
+            }
+            return null;
+        },
+        
+        trafficSend(){
+            const value = this.machineTraffic?.sent;
+            if (value === 0 || value === '0') { return 0; }
+            if (value) {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                    const result = numericValue / 1024;
+                    return Number(result.toFixed(1));
+                }
+            }
+            return null;
+        },
+        
+        trafficReceived(){
+            const value = this.machineTraffic?.received;
+            if (value === 0 || value === '0') { return 0; }
+            if (value) {
+                const numericValue = Number(value);
+                if (!isNaN(numericValue)) {
+                    const result = numericValue / 1024;
+                    return Number(result.toFixed(1));
+                }
+            }
+            return null
+        },
+
         userCurrencySymbolFromWhmcs(){
             if(this.WhmcsCurrencies != null && this.userCurrencyIdFromWhmcs != null){
                 let CurrencyArr = this.WhmcsCurrencies.currency
@@ -389,7 +429,7 @@ app = createApp({
 
         tempName() {
 
-            let tempName = ''
+            let tempName = null
 
             tempName = this.getMachineProperty('template.name')
 
@@ -399,12 +439,24 @@ app = createApp({
 
         tempIcon() {
 
-            let tempIcon = '';
+            let tempIcon = null;
 
             tempIcon = this.getMachineProperty('template.icon.address')
 
             return tempIcon
 
+        },
+
+        softIcon() {
+            let softIcon = null;
+            softIcon = this.getMachineProperty('software.template.icon.address')
+            return softIcon
+        },
+
+        softName() {
+            let softName = null
+            softName = this.getMachineProperty('software.name')
+            return softName
         },
 
         machineUserName() {
@@ -548,17 +600,17 @@ app = createApp({
             }
         },
 
-        async loadSystemUrl() {
-            let response = await axios.get('/index.php?m=cloud&action=getSystemUrl');
+        async loadConsoleRoute() {
+            let response = await axios.get('/index.php?m=cloud&action=getConsoleRoute');
             if(response.data){
-                systemurl = response.data.systemurl;
-                if(systemurl != 'empty'){
-                    this.systemurl = systemurl
+                consoleRoute = response.data;
+                if(consoleRoute != 'empty'){
+                    this.consoleRoute = consoleRoute
                 } else {
-                    console.log('system URL is null');    
+                    console.log('Console Route is null');    
                 }
             } else {
-                console.log('can not find system URL for console link');
+                console.log('can not find console route');
             }
         },
 
@@ -900,10 +952,10 @@ app = createApp({
             let address = null
             let params = null
             
-            if(this.systemurl != null){
-                address = this.systemurl + 'console'
+            if(this.consoleRoute != null){
+                address = this.consoleRoute
             } else {
-                console.log('can not find console link');
+                console.log('can not find console route in open console');
             }
 
             if(address != null){
@@ -1455,15 +1507,12 @@ app = createApp({
             })
 
             response = response.data
-
             if (response.message) {
-
                 // Its not ok to show message here
             }
 
             if (response.data) {
-
-                this.traffic = response.data
+                this.machineTraffic = response.data
             }
         },
 

@@ -152,6 +152,7 @@ let common = {
     "remainingtime": "Оставшееся время :",
     "failactionmsg": "Последнее действие не было выполнено полностью, статус все еще неудачный. Пожалуйста, попробуйте новое действие!",
     "snapshot": "Snapshot",
+    "traffic" : "TRAFFIC",
     // end from Product
 
     // Unique for this cloud

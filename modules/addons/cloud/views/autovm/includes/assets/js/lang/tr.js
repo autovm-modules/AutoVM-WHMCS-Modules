@@ -152,6 +152,7 @@ let common = {
     "remainingtime" : "Kalan Zaman :",
     "failactionmsg" : "Son işlem tam olarak gerçekleştirilmedi, durum hala başarısız. Lütfen yeni bir işlem deneyin!",
     "snapshot" : "Snapshot",
+    "traffic" : "TRAFFIC",
 // end from Product
 
 // Unique for this cloud
