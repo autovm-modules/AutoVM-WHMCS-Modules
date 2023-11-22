@@ -13,11 +13,10 @@ if(isset($CloudDefaulLanguage)){
 // Check the cookies
 if (isset($_COOKIE['temlangcookie'])) {
     $templatelang = $_COOKIE['temlangcookie'];
-} else {
+} elseif(!headers_sent()) {
     setcookie('temlangcookie', $defLangadmin, time() + (86400 * 30 * 12), '/');     
     $templatelang = $defLangadmin;
 }
-
 
 
 ?>
