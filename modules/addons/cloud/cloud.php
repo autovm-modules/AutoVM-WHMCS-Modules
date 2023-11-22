@@ -9,7 +9,7 @@ function cloud_config()
     $configarray = array(
         "name" => "AutoVM Cloud",
         "description" => "Cloud Module By AutoVM for WHMCS",
-        "version" => "V05.09.00",
+        "version" => "V05.10.00",
         "author" => "AutoVM.net",
     );
     return $configarray;

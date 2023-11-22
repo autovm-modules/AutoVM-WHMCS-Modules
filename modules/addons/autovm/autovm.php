@@ -98,6 +98,22 @@ function autovm_get_admintoken_baseurl_autovm(){
         return $response;
     }
 
+    // get Default Language
+    if(empty($DefLang)){
+        $DefLang = 'English';
+    }
+    
+    if(($DefLang != 'English' && $DefLang != 'Farsi' && $DefLang != 'Turkish' && $DefLang != 'Russian' && $DefLang != 'Deutsch' && $DefLang != 'French' && $DefLang != 'Brizilian' && $DefLang != 'Italian')){
+        $DefLang = 'English';
+    }
+
+    if(!empty($DefLang)){
+        if(empty($_COOKIE['temlangcookie'])) {
+            setcookie('temlangcookie', $DefLang, time() + (86400 * 30 * 12), '/');
+        }
+    }
+
+    
     if($AdminToken && $BackendUrl && $DefLang){
         $response['AdminToken'] = $AdminToken;
         $response['BackendUrl'] = $BackendUrl;

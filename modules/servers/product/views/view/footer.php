@@ -40,6 +40,6 @@
 
 
 
-    <script src="/modules/servers/product/views/view/assets/js/main3.js"></script>
+    <script src="/modules/servers/product/views/view/assets/js/main.js"></script>
     </body>
 </html>
