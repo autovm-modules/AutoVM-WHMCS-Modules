@@ -4,15 +4,8 @@ app = createApp({
     data() {
         return {
             PanelLanguage: null,
-            config: {
-                AutovmDefaultCurrencyID: 1,
-                AutovmDefaultCurrencySymbol: 'USD',
-                DefaultMonthlyDecimal: 0,
-                DefaultHourlyDecimal: 0,
-                DefaultBalanceDecimal: 0,
-            },
-
-            consoleRoute: null,
+            moduleConfig: null,
+            moduleConfigIsLoaded: null,
 
             WhmcsCurrencies: null,
             userCreditinWhmcs: null,
@@ -111,7 +104,7 @@ app = createApp({
         
         // load Whmcs Data
         this.loadCredit()
-        this.loadConsoleRoute()
+        this.loadModuleConfig()
         this.loadWhCurrencies()
         this.readLanguageFirstTime()
     },
@@ -139,6 +132,36 @@ app = createApp({
     },
 
     computed: {
+
+        config() {
+            if(this.moduleConfig != null && this.moduleConfigIsLoaded){
+                return {
+                AutovmDefaultCurrencyID: this.moduleConfig.AutovmDefaultCurrencyID,
+                AutovmDefaultCurrencySymbol: this.moduleConfig.AutovmDefaultCurrencySymbol,
+                ConsoleRoute: this.moduleConfig.ConsoleRoute,
+                DefaultMonthlyDecimal: this.moduleConfig.DefaultMonthlyDecimal,
+                DefaultHourlyDecimal: this.moduleConfig.DefaultHourlyDecimal,
+                DefaultBalanceDecimalWhmcs: this.moduleConfig.DefaultBalanceDecimalWhmcs,
+                // Add more properties as needed
+                };
+            } else {
+                return {
+                    AutovmDefaultCurrencyID: null,
+                    AutovmDefaultCurrencySymbol: null,
+                    DefaultMonthlyDecimal: 0,
+                    DefaultHourlyDecimal: 0,
+                    DefaultBalanceDecimalWhmcs: 0,
+                };
+            }
+        },
+
+        consoleRoute(){
+            if(this.moduleConfig != null && this.moduleConfigIsLoaded){
+                return this.moduleConfig.ConsoleRoute
+            } else {
+                return null
+            }
+        },
 
         trafficTotal(){
             const value = this.machineTraffic?.total;
@@ -572,7 +595,7 @@ app = createApp({
         },
 
         formatBalance(value) {
-            let decimal = this.config.DefaultBalanceDecimal
+            let decimal = this.config.DefaultBalanceDecimalWhmcs
             if(value < 99999999999999  && value != null){
                 return value.toLocaleString('en-US', { minimumFractionDigits: decimal, maximumFractionDigits: decimal })
             } else {
@@ -599,18 +622,28 @@ app = createApp({
                 return null
             }
         },
-
-        async loadConsoleRoute() {
-            let response = await axios.get('/index.php?m=cloud&action=getConsoleRoute');
+        
+        async loadModuleConfig() {
+            let response = await axios.get('/index.php?m=cloud&action=getModuleConfig');
             if(response.data){
-                consoleRoute = response.data;
-                if(consoleRoute != 'empty'){
-                    this.consoleRoute = consoleRoute
+                const answer = response.data
+                const requiredProperties = [
+                    'AutovmDefaultCurrencyID',
+                    'AutovmDefaultCurrencySymbol',
+                    'ConsoleRoute',
+                    'DefaultMonthlyDecimal',
+                    'DefaultHourlyDecimal',
+                    'DefaultBalanceDecimalWhmcs'
+                ];
+                  
+                if (requiredProperties.every(prop => answer.hasOwnProperty(prop))) {
+                this.moduleConfigIsLoaded = true;
+                this.moduleConfig = response.data
                 } else {
-                    console.log('Console Route is null');    
+                console.log('Module properties does not exist');
                 }
             } else {
-                console.log('can not find console route');
+                console.log('can not get config');
             }
         },
 

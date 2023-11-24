@@ -6,16 +6,12 @@ createApp({
     data() {
         return {
             PanelLanguage: null,
-            config: {
-                AutovmDefaultCurrencyID: 1,
-                AutovmDefaultCurrencySymbol: 'USD',
-            },
+            moduleConfig: null,
+            moduleConfigIsLoaded: null,
 
             WhmcsCurrencies: null,
             userCreditinWhmcs: null,
-
             userCurrencyIdFromWhmcs: null,
-
 
             regions: [],
             products: [],
@@ -58,21 +54,39 @@ createApp({
 
         // Load regions
         this.loadRegions()
-
-        // Load categories
         this.loadCategories()
-
-        // Load user
         this.loadUser()
-
+        
         // load Whmcs Data
+        this.loadModuleConfig()
         this.loadCredit()
         this.loadWhCurrencies()
         this.readLanguageFirstTime()
     },
 
     computed: {
-
+        config() {
+            if(this.moduleConfig != null && this.moduleConfigIsLoaded){
+                return {
+                AutovmDefaultCurrencyID: this.moduleConfig.AutovmDefaultCurrencyID,
+                AutovmDefaultCurrencySymbol: this.moduleConfig.AutovmDefaultCurrencySymbol,
+                ConsoleRoute: this.moduleConfig.ConsoleRoute,
+                DefaultMonthlyDecimal: this.moduleConfig.DefaultMonthlyDecimal,
+                DefaultHourlyDecimal: this.moduleConfig.DefaultHourlyDecimal,
+                DefaultBalanceDecimal: this.moduleConfig.DefaultBalanceDecimal,
+                // Add more properties as needed
+                };
+            } else {
+                return {
+                    AutovmDefaultCurrencyID: null,
+                    AutovmDefaultCurrencySymbol: null,
+                    DefaultMonthlyDecimal: 0,
+                    DefaultHourlyDecimal: 0,
+                    DefaultBalanceDecimal: 0,
+                };
+            }
+        },
+        
         userCurrencySymbolFromWhmcs(){
             if(this.WhmcsCurrencies != null && this.userCurrencyIdFromWhmcs != null){
                 let CurrencyArr = this.WhmcsCurrencies.currency
@@ -194,10 +208,13 @@ createApp({
             }
         },
 
-        formatBalance(balance, decimal = 2) {
-
-            return Number(balance).toFixed(decimal)
-
+        formatBalance(value) {
+            let decimal = this.config.DefaultBalanceDecimal
+            if(value < 99999999999999  && value != null){
+                return value.toLocaleString('en-US', { minimumFractionDigits: decimal, maximumFractionDigits: decimal })
+            } else {
+                return null
+            }
         },
         
         validateInput() {
@@ -222,6 +239,30 @@ createApp({
             // Update the previous valid value
             this.SshNamePreviousValue = this.themachinessh;
         }
+        },
+        
+        async loadModuleConfig() {
+            let response = await axios.get('/index.php?m=cloud&action=getModuleConfig');
+            if(response.data){
+                const answer = response.data
+                const requiredProperties = [
+                    'AutovmDefaultCurrencyID',
+                    'AutovmDefaultCurrencySymbol',
+                    'ConsoleRoute',
+                    'DefaultMonthlyDecimal',
+                    'DefaultHourlyDecimal',
+                    'DefaultBalanceDecimal'
+                  ];
+                  
+                  if (requiredProperties.every(prop => answer.hasOwnProperty(prop))) {
+                    this.moduleConfigIsLoaded = true;
+                    this.moduleConfig = response.data
+                  } else {
+                    console.log('Module properties does not exist');
+                  }
+            } else {
+                console.log('can not get config');
+            }
         },
         
         // Load User Credit
@@ -352,8 +393,27 @@ createApp({
         },
 
         formatPrice(price, decimal = 2) {
-
             return Number(price).toFixed(decimal)
+        },
+
+        formatCostMonthly(value) {
+            let decimal = this.config.DefaultMonthlyDecimal
+            if(value < 99999999999999  && value != null){
+                return value.toLocaleString('en-US', { minimumFractionDigits: decimal, maximumFractionDigits: decimal })
+            } else {
+                return null
+            }
+        },
+
+        formatCostHourly(value) {
+            let decimal = this.config.DefaultHourlyDecimal
+            
+            if(value < 99999999999999  && value != null){
+                value = value / (30 * 24)
+                return value.toLocaleString('en-US', { minimumFractionDigits: decimal, maximumFractionDigits: decimal })
+            } else {
+                return null
+            }
         },
 
         async loadRegions() {

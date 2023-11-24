@@ -6,17 +6,53 @@ require $path . '/controller.php';
 
 function cloud_config()
 {
+    $AutovmDefaultCurrencyID = 'Insert Id of your currency for cloud';
+    $AutovmDefaultCurrencySymbol = 'Insert Symbol of your currency for cloud';
+    $ConsoleRoute = 'This is usually is domain of your WHMCS added to /console e.q. "https://www.mywhmcs.com/console"';
+    $minimumChargeInAutovmCurrency = 'The least amount a user can charge its own cloud balance';
+    $DefaultMonthlyDecimal = 'Insert the decimal for Cost Monthly in cloud currency';
+    $DefaultHourlyDecimal = 'Insert the decimal for Cost Hourly in cloud currency';
+    $DefaultBalanceDecimalWhmcs = 'Insert the decimal for Balance in User Currency';
+    $DefaultBalanceDecimalCloud = 'Insert the decimal for Balance in cloud currency';
+    $DefaultChargeAmountDecimalWhmcs = 'Insert the decimal for Charge amount in user currency';
+    $DefaultChargeAmountDecimalCloud = 'Insert the decimal for Charge amount in cloud currency';
+    $DefaultCreditDecimalWhmcs = 'Insert the decimal for Credit in user currency';
+    $DefaultCreditDecimalCloud = 'Insert the decimal for Credit in cloud currency';
+    $DefaultMinimumDecimalWhmcs = 'Insert the decimal for Minimum Charge Amount in user currency';
+    $DefaultMinimumDecimalCloud = 'Insert the decimal for Minimum Charge Amount in cloud currency';
+    $DefaultRatioDecimal = 'Insert the decimal for Ratio';
+    
+    $decimalOptions = array (
+        'option1' => 0,
+        'option2' => 1,
+        'option3' => 2,
+    );
+
+
     $configarray = array(
-        "name" => "AutoVM Cloud",
+        "name" => "AutoVMCloud",
         "description" => "Cloud Module By AutoVM for WHMCS",
         "version" => "V05.10.00",
         "author" => "AutoVM.net",
-    );
-    return $configarray;
-
+        "fields" => array(
+            "AutovmDefaultCurrencyID" => array ("FriendlyName" => "Currency ID", "Type" => "text", "Size" => "31", "Description" => $AutovmDefaultCurrencyID, "Default" => 1),
+            "AutovmDefaultCurrencySymbol" => array ("FriendlyName" => "Currency Symbol", "Type" => "text", "Size" => "31", "Description" => $AutovmDefaultCurrencySymbol, "Default" => "$"),
+            "ConsoleRoute" => array ("FriendlyName" => "Console Route", "Type" => "text", "Size" => "31", "Description" => $ConsoleRoute, "Default" => "https://www.mywhmcs.com/console"),
+            "minimumChargeInAutovmCurrency" => array ("FriendlyName" => "Minumum charge allowed in cloud currency", "Type" => "text", "Size" => "31", "Description" => $minimumChargeInAutovmCurrency, "Default" => "2"),
+            "DefaultMonthlyDecimal" => array ("FriendlyName" => "Cost Decimal Monthly in User Currency", "Type" => "dropdown",'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultMonthlyDecimal),
+            "DefaultHourlyDecimal" => array ("FriendlyName" => "Cost Decimal hourly in User Currency", "Type" => "dropdown",'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultHourlyDecimal),
+            "DefaultBalanceDecimalWhmcs" => array ("FriendlyName" => "Balance Decimal in User Currency", "Type" => "dropdown", 'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultBalanceDecimalWhmcs),
+            "DefaultBalanceDecimalCloud" => array ("FriendlyName" => "Balance Decimal in Cloud Currency", "Type" => "dropdown", 'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultBalanceDecimalCloud),
+            "DefaultChargeAmountDecimalWhmcs" => array ("FriendlyName" => "Charge Amount Decimal in User Currency", "Type" => "dropdown", 'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultChargeAmountDecimalWhmcs),
+            "DefaultChargeAmountDecimalCloud" => array ("FriendlyName" => "Charge Amount Decimal in Cloud Currency", "Type" => "dropdown", 'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultChargeAmountDecimalCloud),
+            "DefaultCreditDecimalWhmcs" => array ("FriendlyName" => "Credit Decimal in User Currency", "Type" => "dropdown", 'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultCreditDecimalWhmcs),
+            "DefaultCreditDecimalCloud" => array ("FriendlyName" => "Credit Decimal in Cloud Currency", "Type" => "dropdown", 'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultCreditDecimalCloud),
+            "DefaultMinimumDecimalWhmcs" => array ("FriendlyName" => "Minimum charge amount Decimal in User Currency", "Type" => "dropdown", 'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultMinimumDecimalWhmcs),
+            "DefaultMinimumDecimalCloud" => array ("FriendlyName" => "Minimum charge amount Decimal in Cloud Currency", "Type" => "dropdown", 'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultMinimumDecimalCloud),
+            "DefaultRatioDecimal" => array ("FriendlyName" => "Exchange Rate Decimal", "Type" => "dropdown", 'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultRatioDecimal),
+        ));
+        return $configarray;
 }
-
-
 
 // Get Token From AutoVm module
 function autovm_get_admintoken_baseurl_cloud(){
@@ -45,7 +81,7 @@ function autovm_get_admintoken_baseurl_cloud(){
             }
         }
     } catch (\Exception $e) {
-        $error = '<p><li style="color:red; padding: 5px;">Database ERR ===> Can not find module params table in database</li></p>';
+        $error = 'Database ERR ===> Can not find module params table in database';
         $response['error'] = $error;
         return $response;
     }
@@ -58,19 +94,19 @@ function autovm_get_admintoken_baseurl_cloud(){
 
 
     if(empty($BackendUrl)){
-        $message = '<p><li style="color:red; padding: 5px;">Backend URL ERR ===> Go to addons module and insert your backend adrress</li></p>';
+        $message = 'Backend URL ERR ===> Go to addons module and insert your backend adrress';
         $response['message'] = $message;
         return $response;
     }
     
     if(empty($AdminToken)){
-        $message = '<p><li style="color:red; padding: 5px;">Admin Token ERR ===> Go to addons module and insert your Token</li></p>';
+        $message = 'Admin Token ERR ===> Go to addons module and insert your Token';
         $response['message'] = $message;
         return $response;
     }
 
     if(empty($DefLang)){
-        $message = '<p><li style="color:red; padding: 5px;">Defaul Language ERR ===> Go to addons module and select a language</li></p>';
+        $message = 'Defaul Language ERR ===> Go to addons module and select a language';
         $response['message'] = $message;
         return $response;
     }
@@ -84,8 +120,57 @@ function autovm_get_admintoken_baseurl_cloud(){
     
 }
 
+// Get Token From AutoVm module
+function autovm_get_config_cloud(){
+    $response = [];
+    $requiredKeys = [
+        'AutovmDefaultCurrencyID' => null,
+        'AutovmDefaultCurrencySymbol' => null,
+        'ConsoleRoute' => null,
+        'minimumChargeInAutovmCurrency' => null,
+        'DefaultMonthlyDecimal' => null,
+        'DefaultHourlyDecimal' => null,
+        'DefaultBalanceDecimalWhmcs' => null,
+        'DefaultBalanceDecimalCloud' => null,
+        'DefaultChargeAmountDecimalWhmcs' => null,
+        'DefaultChargeAmountDecimalCloud' => null,
+        'DefaultCreditDecimalWhmcs' => null,
+        'DefaultCreditDecimalCloud' => null,
+        'DefaultMinimumDecimalWhmcs' => null,
+        'DefaultMinimumDecimalCloud' => null,
+        'DefaultRatioDecimal' => null,
+    ];
 
+    try {
+        $moduleparams = Capsule::table('tbladdonmodules')->get();
+        foreach ($moduleparams as $item) {
+            if($item->module == 'cloud'){
+                foreach ($requiredKeys as $key => $value) {
+                    if ($item->setting == $key) {
+                        if(!empty($item->value)){
+                            $requiredKeys[$key] = $item->value;
+                        } else {
+                            $response['message'] = "$key has no value";
+                            return $response;
+                        }
+                    }
+                }
+            }
+        }
+    } catch (\Exception $e) {
+        $error = 'Cloud Config ERR ===> Can not find module params table in database';
+        $response['error'] = $error;
+        return $response;
+    }
 
+    foreach ($requiredKeys as $key => $value){
+        if(isset($requiredKeys[$key])){
+            $response[$key] = $value;
+        } 
+    }
+    
+    return $response;
+}
 
 // Add functionality to client area env
 function cloud_clientarea($vars)
@@ -154,8 +239,6 @@ function cloud_clientarea($vars)
         }
     }
 }
-
-
 
 
 // Show in admin panel in addon menu page
