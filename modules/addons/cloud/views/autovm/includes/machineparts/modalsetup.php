@@ -186,7 +186,7 @@ aria-hidden="false" style="--bs-modal-width: 800px;">
                 <!-- Completed, Just open (ConfirmDialog=true)-->
                 
                 <!-- Last Action -->
-                <?php include('lastaction.php'); ?>
+                <?php include('pendingdropdown.php'); ?>
 
                 
                 <div class="d-flex flex-row align-items-center">

@@ -5,32 +5,9 @@ app = createApp({
     data() {
         return {
             PanelLanguage: null,
-            config: {
-                AutovmDefaultCurrencyID: 1,
-                AutovmDefaultCurrencySymbol: 'USD',
-                minimumChargeInAutovmCurrency: 5,
-                ActivateRatioFunc: true,
+            moduleConfig: null,
+            moduleConfigIsLoaded: null,
 
-
-                DefaultBalanceDecimalWhmcs: 0,
-                DefaultBalanceDecimalCloud: 0,
-                
-
-                DefaultChargeAmountDecimalWhmcs: 0,
-                DefaultChargeAmountDecimalCloud: 0,
-                
-                
-                DefaultCreditDecimalWhmcs: 0,
-                DefaultCreditDecimalCloud: 0,
-                
-                DefaultMinimumDecimalWhmcs: 0,
-                DefaultMinimumDecimalCloud: 0,
-                
-                
-                DefaultRatioDecimalCloud: 0,
-
-            },
-            
             machinsLoaded: false,
             userHasNoMachine: false,
 
@@ -63,6 +40,7 @@ app = createApp({
 
         // Load machines
         this.loadMachines()
+        this.loadModuleConfig()
 
         // Load user
         this.loadUser()
@@ -77,6 +55,46 @@ app = createApp({
     },
 
     computed: {
+
+        config() {
+            if(this.moduleConfig != null && this.moduleConfigIsLoaded){
+                return {
+                    AutovmDefaultCurrencyID: this.moduleConfig.AutovmDefaultCurrencyID,
+                    AutovmDefaultCurrencySymbol: this.moduleConfig.AutovmDefaultCurrencySymbol,
+                    ConsoleRoute: this.moduleConfig.ConsoleRoute,
+                    minimumChargeInAutovmCurrency: this.moduleConfig.minimumChargeInAutovmCurrency,
+                    DefaultMonthlyDecimal: this.moduleConfig.DefaultMonthlyDecimal,
+                    DefaultHourlyDecimal: this.moduleConfig.DefaultHourlyDecimal,
+                    DefaultBalanceDecimalWhmcs: this.moduleConfig.DefaultBalanceDecimalWhmcs,
+                    DefaultBalanceDecimalCloud: this.moduleConfig.DefaultBalanceDecimalCloud,
+                    DefaultChargeAmountDecimalWhmcs: this.moduleConfig.DefaultChargeAmountDecimalWhmcs,
+                    DefaultChargeAmountDecimalCloud: this.moduleConfig.DefaultChargeAmountDecimalCloud,
+                    DefaultCreditDecimalWhmcs: this.moduleConfig.DefaultCreditDecimalWhmcs,
+                    DefaultCreditDecimalCloud: this.moduleConfig.DefaultCreditDecimalCloud,
+                    DefaultMinimumDecimalWhmcs: this.moduleConfig.DefaultMinimumDecimalWhmcs,
+                    DefaultMinimumDecimalCloud: this.moduleConfig.DefaultMinimumDecimalCloud,
+                    DefaultRatioDecimal: this.moduleConfig.DefaultRatioDecimal,
+                };
+            } else {
+                return {
+                    AutovmDefaultCurrencyID: null,
+                    AutovmDefaultCurrencySymbol: null,
+                    ConsoleRoute: null,
+                    minimumChargeInAutovmCurrency: 2,
+                    DefaultMonthlyDecimal: 0,
+                    DefaultHourlyDecimal: 0,
+                    DefaultBalanceDecimalWhmcs: 0,
+                    DefaultBalanceDecimalCloud: 0,
+                    DefaultChargeAmountDecimalWhmcs: 0,
+                    DefaultChargeAmountDecimalCloud: 0,
+                    DefaultCreditDecimalWhmcs: 0,
+                    DefaultCreditDecimalCloud: 0,
+                    DefaultMinimumDecimalWhmcs: 0,
+                    DefaultMinimumDecimalCloud: 0,
+                    DefaultRatioDecimal: 0,
+                };
+            }
+        },
 
         userCurrencySymbolFromWhmcs(){
             if(this.WhmcsCurrencies != null && this.userCurrencyIdFromWhmcs != null){
@@ -280,7 +298,7 @@ app = createApp({
         },
         
         showRatio(value){
-            decimal = this.config.DefaultRatioDecimalCloud        
+            decimal = this.config.DefaultRatioDecimal        
             return this.formatNumbers(value, decimal)
         },
         
@@ -364,6 +382,41 @@ app = createApp({
             }
         },
 
+
+        async loadModuleConfig() {
+            let response = await axios.get('/index.php?m=cloud&action=getModuleConfig');
+            if(response.data){
+                const answer = response.data
+                const requiredProperties = [
+                    'AutovmDefaultCurrencyID',
+                    'AutovmDefaultCurrencySymbol',
+                    'ConsoleRoute',
+                    'minimumChargeInAutovmCurrency',
+                    'DefaultMonthlyDecimal',
+                    'DefaultHourlyDecimal',
+                    'DefaultBalanceDecimalWhmcs',
+                    'DefaultBalanceDecimalCloud',
+                    'DefaultChargeAmountDecimalWhmcs',
+                    'DefaultChargeAmountDecimalCloud',
+                    'DefaultCreditDecimalWhmcs',
+                    'DefaultCreditDecimalCloud',
+                    'DefaultMinimumDecimalWhmcs',
+                    'DefaultMinimumDecimalCloud',
+                    'DefaultRatioDecimal'
+                ];
+                  
+                if (requiredProperties.every(prop => answer.hasOwnProperty(prop))) {
+                this.moduleConfigIsLoaded = true;
+                this.moduleConfig = response.data
+                } else {
+                console.log('Module properties does not exist');
+                }
+            } else {
+                console.log('can not get config');
+            }
+        },
+
+        
         async loadMachines() {
 
             let response = await axios.get('/index.php?m=cloud&action=machines')

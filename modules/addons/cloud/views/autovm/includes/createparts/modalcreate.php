@@ -131,7 +131,7 @@
                                         <p class="p-0 m-0">
                                             <span class="fw-medium">{{ lang('price') }}</span>
                                             <span v-if="CurrenciesRatioCloudToWhmcs != null" class="text-primary fw-medium m-0 p-0 py-2">
-                                                {{ ConverFromAutoVmToWhmcs(productPrice, 0).toLocaleString() }} {{ userCurrencySymbolFromWhmcs }}
+                                                {{ formatCostMonthly(ConverFromAutoVmToWhmcs(productPrice)) }} {{ userCurrencySymbolFromWhmcs }}
                                             </span>
                                             <span v-else class="text-primary fw-medium m-0 p-0 py-2">
                                                 <?php include('./includes/commodules/threespinner.php'); ?>
@@ -139,6 +139,12 @@
                                             <span class="ps-1">
                                                 {{ lang('monthly') }}
                                             </span>                                        
+                                        </p>
+                                    </div>
+                                    <div v-if="productPrice == 0" class="mt-5 text-end pt-5">
+                                        <p class="p-0 m-0">
+                                            <span class="fw-medium">{{ lang('price') }}</span>
+                                            <span v-if="productPrice == 0" class="text-primary fw-medium m-0 p-0 py-2">{{ lang('free') }}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -197,9 +203,9 @@
                 <!-- Balance -->
                 <div class="m-0 p-0 mx-3">
                     <span class="text-dark fw-medium me-2">{{ lang('balance') }} : </span>
-                    <span v-if="user.balance" class="text-primary fw-medium">
+                    <span v-if="user?.balance" class="text-primary fw-medium">
                         <span v-if="CurrenciesRatioCloudToWhmcs != null">
-                            {{ ConverFromAutoVmToWhmcs(user.balance, 0).toLocaleString() }} {{ userCurrencySymbolFromWhmcs }}
+                            {{ formatBalance(ConverFromAutoVmToWhmcs(user.balance)) }} {{ userCurrencySymbolFromWhmcs }}
                         </span>
                         <span v-else>
                             <?php include('./includes/commodules/threespinner.php'); ?>

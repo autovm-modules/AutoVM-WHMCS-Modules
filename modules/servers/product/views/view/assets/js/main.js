@@ -43,8 +43,8 @@ const app = Vue.createApp({
 
             bandwidth: {},
             confirmDialog: false,
-            confirmTitle: '---',
-            confirmText: '---',
+            confirmTitle: null,
+            confirmText: null,
 
 
             messageDialog: false,
@@ -252,24 +252,10 @@ const app = Vue.createApp({
 
         actionStatus() {
             let actionStatus = this.getMachineProperty('action.status');
-
-            if (actionStatus == 'completed') {
-                return 'completed';
-            }
-            else if (actionStatus == 'pending') {
-                return 'pending';
-            }
-            else if (actionStatus == 'processing') {
-                return 'processing';
-            }
-            else if (actionStatus == 'failed') {
-                return 'failed';
-            }
-            else if (actionStatus == 'canceled') {
-                return 'canceled';
-            }
-            else {
+            if (actionStatus != null) {
                 return actionStatus;
+            } else {
+                return null;
             }
         },
 
@@ -882,8 +868,7 @@ const app = Vue.createApp({
             response = response.data
 
             if (response.message) {
-
-                // Its not ok to show message here
+                this.setMachineLoadStatus()
             }
 
             if (response.data) {

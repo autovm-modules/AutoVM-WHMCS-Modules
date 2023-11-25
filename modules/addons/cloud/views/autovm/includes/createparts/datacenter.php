@@ -104,7 +104,7 @@
 
                                 <div class="flex justify-start items-center space-x-2">
                                     <span v-if="CurrenciesRatioCloudToWhmcs != null" class="h5 m-0 p-0 text-primary">
-                                        {{ ConverFromAutoVmToWhmcs(product.price,).toLocaleString() }} {{ userCurrencySymbolFromWhmcs }}
+                                        {{ formatCostMonthly(ConverFromAutoVmToWhmcs(product.price)) }} {{ userCurrencySymbolFromWhmcs }}
                                     </span>
                                     <span v-else class="h5 m-0 p-0 text-primary">
                                         <?php include('./includes/commodules/threespinner.php'); ?>

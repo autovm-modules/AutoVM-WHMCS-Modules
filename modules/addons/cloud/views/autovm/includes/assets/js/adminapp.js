@@ -32,7 +32,15 @@ app = createApp({
         this.loadCredit()
         this.readLanguageFirstTime()
     },
-
+    
+    watch: {
+        AdminClickOnTrans(){
+            if(this.AdminClickOnTrans == true){
+                this.AdminTransSuccess = null
+                this.adminTransId = null;
+            }
+        },
+    },
     computed: {
         userBalance(){
             let decimals = this.config.decimals
@@ -163,17 +171,13 @@ app = createApp({
                 setTimeout(() => {
                     this.AdminClickOnTrans = null
                     this.chargeAmountAdminInput = 0
-                    this.AdminTransSuccess = null;
-                    this.adminTransId = null;
-                }, 4000);
+                }, 1000);
             } else {
                 this.AdminTransSuccess = false
                 setTimeout(() => {
                     this.AdminClickOnTrans = null
                     this.chargeAmountAdminInput = 0
-                    this.AdminTransSuccess = null;
-                    this.adminTransId = null;
-                }, 4000);
+                }, 1000);
             }
         },
 
