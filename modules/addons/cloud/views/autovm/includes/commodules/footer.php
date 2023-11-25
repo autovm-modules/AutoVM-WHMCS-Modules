@@ -53,7 +53,7 @@
                         break;
                     }
             ?>
-
+<!-- ?v=' . time() . ' -->
         </footer>
     </body>
 </html>

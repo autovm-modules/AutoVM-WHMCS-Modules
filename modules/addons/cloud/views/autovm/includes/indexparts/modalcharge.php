@@ -1,15 +1,13 @@
 <?php 
-    if(isset($DefaultChargeModuleEnable) && $DefaultChargeModuleEnable){
-        $ChargeModuleEnable = true;
-    } else {
+    if(isset($DefaultChargeModuleEnable) && $DefaultChargeModuleEnable == false){
         $ChargeModuleEnable = false;
+    } else {
+        $ChargeModuleEnable = true;
     }
-
-
-    if(!isset($CloudTopupLink)){
-        $CloudTopupLink = "/index.php?m=cloud&action=pageIndex";
+    
+    if(empty($CloudTopupLink)){
+        $CloudTopupLink = '/clientarea.php?action=addfunds';
     }
-
 
     if(isset($DefaultChargeModuleDetailsViews) && $DefaultChargeModuleDetailsViews){
         $ChargeModuleDetailsViews = true;
@@ -17,6 +15,7 @@
         $ChargeModuleDetailsViews = false;
     }
 
+    
 ?>  
 
 <!-- create machine modal -->
@@ -44,20 +43,16 @@
                 <button v-if="!ConstChargeamountInWhmcs" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>    
             <!-- No credit -->
-            <div v-if="userCreditinWhmcs < ConverFromAutoVmToWhmcs(config.minimumChargeInAutovmCurrency)" class="modal-body mt-4 px-3 px-md-4" style="height:150px">
-                <p class="h3 py-2">{{ lang('heretocharge') }}</p>
-                <p class="h5 py-2">
+            <div v-if="userCreditinWhmcs < ConverFromAutoVmToWhmcs(config.minimumChargeInAutovmCurrency)" class="modal-body mt-4 px-3 px-md-4" style="height:210px">
+                <p class="alert alert-warning text-dark">
                     <span>
                         {{ lang('yourcredit') }}
-                    </span>
-                    <span class="text-primary px-1">
-                        ({{ showCreditWhmcsUnit(userCreditinWhmcs) }} {{ userCurrencySymbolFromWhmcs }}) 
                     </span>
                     <span>
                         {{ lang('isnotenough') }}
                     </span>
                 </p>
-                <p class="h5 py-2">
+                <p class="h6 py-2 px-2">
                     <span>
                         {{ lang('minimumis') }}
                     </span>
@@ -66,6 +61,11 @@
                     </span>
                     <span>.</span>
                 </p>
+                <div class="my-5">
+                    <a class="btn btn-primary float-end" target="_top" type="button" href="<?php echo($CloudTopupLink); ?>">
+                        {{ lang('topup') }}
+                    </a>
+                </div>
             </div>
 
             <div v-else class="modal-body mt-4 px-3 px-md-4 pb-5">
@@ -83,7 +83,7 @@
                                     <div class="col-auto">
                                         <table class="table table-borderless">
                                             <tr>
-                                                <td class="bg-body-secondary rounded-3 px-3 py-3 px-4 text-center">
+                                                <td class="bg-body-secondary rounded-3 px-3 py-3 px-4 text-center fs-6">
                                                     <?php include('showcredit.php'); ?> 
                                                 </td>
                                             </tr>

@@ -18,7 +18,7 @@ function autovm_config()
         "fields" => array(
             "BackendUrl" => array ("FriendlyName" => "Backend Url", "Type" => "text", "Size" => "31", "Description" => $BackendUrlLabel, "Default" => "http://backend.autovm.online"),
             "AdminToken" => array ("FriendlyName" => "Admin Token", "Type" => "text", "Size" => "31", "Description" => $AdminTokenLabel, "Default" => "xxxx"),
-            "DefLang" => array ("FriendlyName" => "Default Language", "Type" => "dropdown", "Options" => "English, Farsi, Turkish, Russian, Deutsch, French", "Description" => $DefLangLabel, "Default" => "English"),
+            "DefLang" => array ("FriendlyName" => "Default Language", "Type" => "dropdown", "Options" => "English, Farsi, Turkish, Russian, Deutsch, French, Brizilian, Italian", "Description" => $DefLangLabel, "Default" => "English"),
             "CloudActivationStatus" => array ("FriendlyName" => "Enable Cloud Module", "Type" => "yesno", 'Description' => $CloudActivationStatusLabel, "Default" => ""),            
             "ConsoleRoute" => array ("FriendlyName" => "Console Route", "Type" => "text", "Size" => "50", "Description" => $ConsoleRoute, "Default" => "https://mywhmcs.com/console"),
         ));
@@ -28,6 +28,8 @@ function autovm_config()
 
 function autovm_activate()
 {
+    autovm_get_admintoken_baseurl_autovm();
+
     $hasTable = Capsule::schema()->hasTable('autovm_user');
 
     if (empty($hasTable)) {
@@ -52,6 +54,8 @@ function autovm_activate()
         });
     }
 }
+
+
 
 
 // Get Token From AutoVm module
@@ -124,6 +128,7 @@ function autovm_get_admintoken_baseurl_autovm(){
 }
 
 
+
 // Show in admin panel in addon menu page
 function autovm_output($vars) {
 
@@ -164,3 +169,7 @@ function autovm_output($vars) {
         echo('</pre>');
     } 
 }
+
+add_hook('AddonConfigSave', 1, function($vars) {
+    autovm_get_admintoken_baseurl_autovm();
+});
