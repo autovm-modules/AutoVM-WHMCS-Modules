@@ -9,7 +9,6 @@ app = createApp({
 
             WhmcsCurrencies: null,
             userCreditinWhmcs: null,
-
             userCurrencyIdFromWhmcs: null,
             
             AddressCopied:false,
@@ -138,6 +137,7 @@ app = createApp({
                 return {
                 AutovmDefaultCurrencyID: this.moduleConfig.AutovmDefaultCurrencyID,
                 AutovmDefaultCurrencySymbol: this.moduleConfig.AutovmDefaultCurrencySymbol,
+                PlaceCurrencySymbol: this.moduleConfig.PlaceCurrencySymbol,
                 ConsoleRoute: this.moduleConfig.ConsoleRoute,
                 DefaultMonthlyDecimal: this.moduleConfig.DefaultMonthlyDecimal,
                 DefaultHourlyDecimal: this.moduleConfig.DefaultHourlyDecimal,
@@ -148,6 +148,7 @@ app = createApp({
                 return {
                     AutovmDefaultCurrencyID: null,
                     AutovmDefaultCurrencySymbol: null,
+                    PlaceCurrencySymbol: null,
                     DefaultMonthlyDecimal: 0,
                     DefaultHourlyDecimal: 0,
                     DefaultBalanceDecimalWhmcs: 0,
@@ -203,18 +204,26 @@ app = createApp({
         },
 
         userCurrencySymbolFromWhmcs(){
-            if(this.WhmcsCurrencies != null && this.userCurrencyIdFromWhmcs != null){
-                let CurrencyArr = this.WhmcsCurrencies.currency
-                let id = this.userCurrencyIdFromWhmcs
+            if(this.WhmcsCurrencies != null && this.userCurrencyIdFromWhmcs != null && this.config.PlaceCurrencySymbol != null){
+                let CurrencyArr = this.WhmcsCurrencies.currency;
+                let id = this.userCurrencyIdFromWhmcs;
+                let PlaceCurrencySymbol = this.config.PlaceCurrencySymbol;
+
                 let UserCurrency = null
 
                 CurrencyArr.forEach((item) =>{
                     if(item.id == id){
-                        UserCurrency = item.suffix;
+                        if(PlaceCurrencySymbol == 'suffix'){
+                            UserCurrency = item.suffix;
+                        } else if (PlaceCurrencySymbol == 'prefix'){
+                            UserCurrency = item.prefix;
+                        } else {
+                            UserCurrency = item.code;
+                        }
                     }
                 });
                 
-                if(UserCurrency){
+                if(UserCurrency != null){
                     return UserCurrency    
                 } else {
                     return null
@@ -255,22 +264,11 @@ app = createApp({
         },
 
         actionStatus() {
-
             let status = this.getMachineProperty('action.status')
-
-            if (status) {
-
-                if (status == 'pending' || status == 'processing') {
-
-                    this.isBetweenPending = false
-
-                }
-
+            if (status != null) {
                 return status
-
             } else {
-
-                return 'fetching'
+                return null
             }
 
         },
@@ -513,9 +511,38 @@ app = createApp({
         },
 
         actionMethod() {
+            let actionMethod = this.getMachineProperty('action.method');
 
-            return this.getMachineProperty('action.method')
-
+            if (actionMethod == 'reboot') {
+                return "rebootaction";
+            }
+            else if (actionMethod == 'stop') {
+                return "stopaction";
+            }
+            else if (actionMethod == 'start') {
+                return "startaction";
+            }
+            else if (actionMethod == 'setup') {
+                return "setupaction";
+            }
+            else if (actionMethod == 'console') {
+                return "consoleaction";
+            }
+            else if (actionMethod == 'destroy') {
+                return "destroyaction";
+            }
+            else if (actionMethod == 'suspend') {
+                return "suspend";
+            }
+            else if (actionMethod == 'unsuspend') {
+                return "unsuspend";
+            }
+            else if (actionMethod == 'snapshot') {
+                return "snapshot";
+            }
+            else {
+                return actionMethod;
+            }
         },
 
         traffics() {
@@ -630,6 +657,7 @@ app = createApp({
                 const requiredProperties = [
                     'AutovmDefaultCurrencyID',
                     'AutovmDefaultCurrencySymbol',
+                    'PlaceCurrencySymbol',
                     'ConsoleRoute',
                     'DefaultMonthlyDecimal',
                     'DefaultHourlyDecimal',
@@ -686,16 +714,10 @@ app = createApp({
         },
 
         setLastAction() {
-
             if (this.machineIsLoaded) {
-
                 this.lastAction = this.getMachineProperty('action.method')
-
-
             } else {
-
                 this.lastAction = 'fetching'
-
             }
 
         },
@@ -866,9 +888,9 @@ app = createApp({
         },
 
         openConfirmDialog(title, text) {
-
             // Open dialog
             this.confirmDialog = true
+            this.isBetweenPending = false
 
             // Content
             this.confirmText = text
@@ -880,20 +902,21 @@ app = createApp({
 
         acceptConfirmDialog() {
 
+            this.confirmDialog = false
             this.confirmResolve(true)
 
-
-            this.confirmDialog = false
+            // Close dialog
             this.isBetweenPending = true
+            setTimeout(() => {
+                this.isBetweenPending = false;
+            }, 3000);
 
         },
 
         closeConfirmDialog() {
-
-            this.confirmResolve(false)
-
-            // Close dialog
+            this.isBetweenPending = false
             this.confirmDialog = false
+            this.confirmResolve(false)
         },
 
         openMessageDialog(text) {
@@ -919,16 +942,16 @@ app = createApp({
         loadPolling() {
 
             // Load machine
-            setInterval(this.loadMachine, 35000)
+            setInterval(this.loadMachine, 30000)
 
             // Load detail
-            setInterval(this.loadDetail, 30000)
+            setInterval(this.loadDetail, 40000)
 
             // Load Credit
-            setInterval(this.loadCredit, 30000)
+            setInterval(this.loadCredit, 2*60000)
             
             // Load Currencies
-            setInterval(this.loadWhCurrencies, 60000)
+            setInterval(this.loadWhCurrencies, 2*60000)
         },
 
         async loadMachine() {
@@ -942,12 +965,11 @@ app = createApp({
             response = response.data
 
             if (response.message) {
-
-                // Its not ok to show message here
+                this.setMachineLoadStatus()
             }
 
             if (response.data) {
-
+                this.setMachineLoadStatus()
                 this.machine = response.data
                 this.machineIsLoaded = true
             }
@@ -1170,6 +1192,10 @@ app = createApp({
                     this.machine = response.data
                 }
             }
+        },
+
+        setMachineLoadStatus() {
+            this.machineIsLoaded = true
         },
 
         async CopyAddress() {

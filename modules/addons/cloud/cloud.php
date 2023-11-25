@@ -8,7 +8,11 @@ function cloud_config()
 {
     $AutovmDefaultCurrencyID = 'Insert Id of your currency for cloud';
     $AutovmDefaultCurrencySymbol = 'Insert Symbol of your currency for cloud';
+    $PlaceCurrencySymbol = 'Select between "suffix" or "prefix" or "code" as the place of symbol in your currency setting';
+    $ShowExchange = 'Select "on" to enable showing Ratio and Conversion exchanges';
+    $ChargeModuleEnable = 'Select "on" to enable direct charging module';
     $ConsoleRoute = 'This is usually is domain of your WHMCS added to /console e.q. "https://www.mywhmcs.com/console"';
+    $TopupLink = 'This is usually one of your pages that user can increase their credit, default is "/clientarea.php?action=addfunds"';
     $minimumChargeInAutovmCurrency = 'The least amount a user can charge its own cloud balance';
     $DefaultMonthlyDecimal = 'Insert the decimal for Cost Monthly in cloud currency';
     $DefaultHourlyDecimal = 'Insert the decimal for Cost Hourly in cloud currency';
@@ -28,6 +32,17 @@ function cloud_config()
         'option3' => 2,
     );
 
+    $OnOffOption = array(
+        'option1' => 'on',
+        'option2' => 'off',
+    );
+    
+    $CurrencyPlaceOption = array(
+        'option1' => 'code',
+        'option2' => 'suffix',
+        'option3' => 'prefix',
+    );
+
 
     $configarray = array(
         "name" => "AutoVMCloud",
@@ -37,7 +52,11 @@ function cloud_config()
         "fields" => array(
             "AutovmDefaultCurrencyID" => array ("FriendlyName" => "Currency ID", "Type" => "text", "Size" => "31", "Description" => $AutovmDefaultCurrencyID, "Default" => 1),
             "AutovmDefaultCurrencySymbol" => array ("FriendlyName" => "Currency Symbol", "Type" => "text", "Size" => "31", "Description" => $AutovmDefaultCurrencySymbol, "Default" => "$"),
+            "PlaceCurrencySymbol" => array ("FriendlyName" => "Currency Placeholder", "Type" => "dropdown", 'Options' => $CurrencyPlaceOption, "Default" => 'option3', "Description" => $PlaceCurrencySymbol),
+            "ShowExchange" => array ("FriendlyName" => "Show Exchange", "Type" => "dropdown", 'Options' => $OnOffOption, "Default" => 'option2', "Description" => $ShowExchange),
+            "ChargeModuleEnable" => array ("FriendlyName" => "Enable Charging Module", "Type" => "dropdown", 'Options' => $OnOffOption, "Default" => 'option1', "Description" => $ChargeModuleEnable),
             "ConsoleRoute" => array ("FriendlyName" => "Console Route", "Type" => "text", "Size" => "31", "Description" => $ConsoleRoute, "Default" => "https://www.mywhmcs.com/console"),
+            "TopupLink" => array ("FriendlyName" => "Topup page Link", "Type" => "text", "Size" => "31", "Description" => $TopupLink, "Default" => "/clientarea.php?action=addfunds"),
             "minimumChargeInAutovmCurrency" => array ("FriendlyName" => "Minumum charge allowed in cloud currency", "Type" => "text", "Size" => "31", "Description" => $minimumChargeInAutovmCurrency, "Default" => "2"),
             "DefaultMonthlyDecimal" => array ("FriendlyName" => "Cost Decimal Monthly in User Currency", "Type" => "dropdown",'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultMonthlyDecimal),
             "DefaultHourlyDecimal" => array ("FriendlyName" => "Cost Decimal hourly in User Currency", "Type" => "dropdown",'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultHourlyDecimal),
@@ -111,6 +130,21 @@ function autovm_get_admintoken_baseurl_cloud(){
         return $response;
     }
 
+    // get Default Language
+    if(empty($DefLang)){
+        $DefLang = 'English';
+    }
+    
+    if(($DefLang != 'English' && $DefLang != 'Farsi' && $DefLang != 'Turkish' && $DefLang != 'Russian' && $DefLang != 'Deutsch' && $DefLang != 'French' && $DefLang != 'Brizilian' && $DefLang != 'Italian')){
+        $DefLang = 'English';
+    }
+
+    if(!empty($DefLang)){
+        if(empty($_COOKIE['temlangcookie'])) {
+            setcookie('temlangcookie', $DefLang, time() + (86400 * 30 * 12), '/');
+        }
+    }
+    
     if(isset($AdminToken) && isset($BackendUrl) && isset($DefLang)){
         $response['AdminToken'] = $AdminToken;
         $response['BackendUrl'] = $BackendUrl;
@@ -126,7 +160,11 @@ function autovm_get_config_cloud(){
     $requiredKeys = [
         'AutovmDefaultCurrencyID' => null,
         'AutovmDefaultCurrencySymbol' => null,
+        'PlaceCurrencySymbol' => null,
+        'ShowExchange' => null,
+        'ChargeModuleEnable' => null,
         'ConsoleRoute' => null,
+        'TopupLink' => null,
         'minimumChargeInAutovmCurrency' => null,
         'DefaultMonthlyDecimal' => null,
         'DefaultHourlyDecimal' => null,
@@ -169,8 +207,24 @@ function autovm_get_config_cloud(){
         } 
     }
     
+    $variables = $requiredKeys;
+    cloud_create_config_file($variables);
+
     return $response;
 }
+
+
+
+// Add functionality to client area env
+function cloud_create_config_file($variables){
+    
+    $configFilePath = __DIR__ . '/views/autovm/includes/commodules/vitalvariable.php';
+    $configArray = $variables;
+    
+    // Write the array to the configuration file
+    file_put_contents($configFilePath, '<?php return ' . var_export($configArray, true) . ';');
+}
+
 
 // Add functionality to client area env
 function cloud_clientarea($vars)
@@ -309,3 +363,4 @@ function cloud_output($vars) {
     
     
 }
+

@@ -2,21 +2,61 @@
 
 <?php
 
-/* Language */
-/* The language your peak here, will be set as your panel default language : */
-/* Turkish ==>> "Turkish", Farsi   ==>> "Farsi", English ==>> "English", Russian ==>> "Russian" , Deutsch ==>> "Deutsch", French ==>> "French", Italian ==>> "Italian", Brizilian ==>> "Brizilian",*/
-$CloudDefaulLanguage = "English";
+// Include the configuration file
+$configFilePath = __DIR__ . '/vitalvariable.php';
+$configArray = file_exists($configFilePath) ? include($configFilePath) : array();
+
+
+
+
+// Show both currency from client side and cloud side
+if(isset($configArray['ShowExchange'])){
+    if($configArray['ShowExchange'] == 'option1'){
+        $ShowExchange = 'on';
+    } else {
+        $ShowExchange = 'off';
+    }
+} else {
+    $ShowExchange = 'off';
+}
+
+
+
+// Use Charge module to handle user credit and balance
+if(isset($configArray['ChargeModuleEnable'])){
+    if($configArray['ChargeModuleEnable'] == 'option1'){
+        $ChargeModuleEnable = 'on';
+    } else {
+        $ChargeModuleEnable = 'off';
+    }
+} else {
+    $ChargeModuleEnable = 'off';
+}
+
+
 
 
 /* TopUp Link */
-/* What you put here will be used as the link for client to recharge their balance   */
-$CloudTopupLink = "/clientarea.php?action=addfunds";
+if(isset($configArray['TopupLink'])){
+    $CloudTopupLink = $configArray['TopupLink'];
+} else {
+    $CloudTopupLink = '/clientarea.php?action=addfunds';
+}
 
 
 
-/* Charge Module Enable */
-/* Set 1 to enable charge Module or 0 zero to disable it */
-$DefaultChargeModuleEnable = true;
-$DefaultChargeModuleDetailsViews = true;
+// Define config variables
+if(isset($ChargeModuleEnable) && $ChargeModuleEnable == 'off'){
+    $DefaultChargeModuleEnable = false;
+} else {
+    $DefaultChargeModuleEnable = true;
+}
+
+
+if(isset($ShowExchange) && $ShowExchange == 'on'){
+    $DefaultChargeModuleDetailsViews = true;
+} else {
+    $DefaultChargeModuleDetailsViews = false;
+}
 
 ?>

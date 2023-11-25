@@ -681,11 +681,14 @@ class CloudController
             return $response['message'];
         }
         
-
         $requiredKeys = [
             'AutovmDefaultCurrencyID',
             'AutovmDefaultCurrencySymbol',
+            'PlaceCurrencySymbol',
+            'ShowExchange',
+            'ChargeModuleEnable',
             'ConsoleRoute',
+            'TopupLink',
             'minimumChargeInAutovmCurrency',
             'DefaultMonthlyDecimal',
             'DefaultHourlyDecimal',
@@ -704,8 +707,28 @@ class CloudController
         
         foreach ($requiredKeys as $key) {
             if (isset($response[$key])) {
-                if ($key != 'AutovmDefaultCurrencyID' && $key != 'AutovmDefaultCurrencySymbol' && $key != 'ConsoleRoute' && $key != 'minimumChargeInAutovmCurrency') {
+                if ($key == 'DefaultMonthlyDecimal' || $key == 'DefaultHourlyDecimal' || $key == 'DefaultBalanceDecimalWhmcs' || $key == 'DefaultBalanceDecimalCloud' || $key == 'DefaultChargeAmountDecimalWhmcs' || $key == 'DefaultChargeAmountDecimalCloud' || $key == 'DefaultCreditDecimalWhmcs' || $key == 'DefaultCreditDecimalCloud' || $key == 'DefaultMinimumDecimalWhmcs' || $key == 'DefaultMinimumDecimalCloud' || $key == 'DefaultRatioDecimal') {
                     $config[$key] = $this->readDecimals($response[$key]);
+                } else if($key == 'ShowExchange'){
+                    if($response['ShowExchange'] == 'option1'){
+                        $config[$key] = 'on';
+                    } else {
+                        $config[$key] = 'off';
+                    }
+                } else if($key == 'ChargeModuleEnable'){
+                    if($response['ChargeModuleEnable'] == 'option1'){
+                        $config[$key] = 'on';
+                    } else {
+                        $config[$key] = 'off';
+                    }
+                } else if($key == 'PlaceCurrencySymbol'){
+                    if($response['PlaceCurrencySymbol'] == 'option1'){
+                        $config[$key] = 'code';
+                    } else if($response['PlaceCurrencySymbol'] == 'option2'){
+                        $config[$key] = 'suffix';
+                    } else {
+                        $config[$key] = 'prefix';
+                    }
                 } else {
                     $config[$key] = $response[$key];                
                 }
@@ -714,7 +737,13 @@ class CloudController
                 $this->response($text); 
             }
         }
+
+
+
+        
+
         $this->response($config); 
+        
     }
     
 }
