@@ -40,20 +40,20 @@
                 $currentfilename = basename($_SERVER['PHP_SELF'], '.php');
                 switch ($currentfilename) {
                     case 'create':
-                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/createapp.js"></script>';
+                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/createapp.js?v=' . time() . '"></script>';
                         break;
                     case 'index':
-                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/indexapp.js"></script>';
+                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/indexapp.js?v=' . time() . '"></script>';
                         break;
                     case 'machine':
-                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/machineapp.js"></script>';
+                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/machineapp.js?v=' . time() . '"></script>';
                         break;
                     case 'adminpanel':
-                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/adminapp.js"></script>';
+                        echo '<script src="/modules/addons/cloud/views/autovm/includes/assets/js/adminapp.js?v=' . time() . '"></script>';
                         break;
                     }
             ?>
-<!-- ?v=' . time() . ' -->
+
         </footer>
     </body>
 </html>

@@ -39,7 +39,9 @@
 
 
 
+    
+    <script src="/modules/servers/product/views/view/assets/js/main.js?v=<?php echo time(); ?>"></script>
 
-    <script src="/modules/servers/product/views/view/assets/js/main.js"></script>
     </body>
 </html>
+<!-- ?v=' . time() . ' -->
