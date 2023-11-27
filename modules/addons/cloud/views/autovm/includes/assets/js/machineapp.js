@@ -170,8 +170,14 @@ app = createApp({
             if (value) {
                 const numericValue = Number(value);
                 if (!isNaN(numericValue)) {
-                    const result = numericValue / 1024;
-                    return Number(result.toFixed(1));
+                    const result = numericValue / (1024 * 1024 * 1024);
+                    if(result < 1){
+                        return Number(result.toFixed(2));
+                    } else if(result < 10){
+                        return Number(result.toFixed(1));
+                    } else {
+                        return Number(result.toFixed(0));
+                    }
                 }
             }
             return null;
@@ -183,8 +189,14 @@ app = createApp({
             if (value) {
                 const numericValue = Number(value);
                 if (!isNaN(numericValue)) {
-                    const result = numericValue / 1024;
-                    return Number(result.toFixed(1));
+                    const result = numericValue / (1024 * 1024 * 1024);
+                    if(result < 1){
+                        return Number(result.toFixed(2));
+                    } else if(result < 10){
+                        return Number(result.toFixed(1));
+                    } else {
+                        return Number(result.toFixed(0));
+                    }
                 }
             }
             return null;
@@ -196,8 +208,14 @@ app = createApp({
             if (value) {
                 const numericValue = Number(value);
                 if (!isNaN(numericValue)) {
-                    const result = numericValue / 1024;
-                    return Number(result.toFixed(1));
+                    const result = numericValue / (1024 * 1024 * 1024);
+                    if(result < 1){
+                        return Number(result.toFixed(2));
+                    } else if(result < 10){
+                        return Number(result.toFixed(1));
+                    } else {
+                        return Number(result.toFixed(0));
+                    }
                 }
             }
             return null
