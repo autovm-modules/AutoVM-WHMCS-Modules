@@ -1322,6 +1322,9 @@ const app = Vue.createApp({
         createRAMRadialGraph() {
             let element = document.querySelector('.ramRadial')
             let percent = this.getMemoryPercent();
+            if(percent > 100){
+                percent = 100
+            }
             // create
             if (!this.hasRAMradial) {
                 if (percent == 0) {
@@ -1389,6 +1392,9 @@ const app = Vue.createApp({
         createCPURadialGraph() {
             let element = document.querySelector('.cpuRadial')
             let percent = this.getCPUPercent();
+            if(percent > 100){
+                percent = 100
+            }
             // create
             if (!this.hasCPUradial) {
                 if (percent == 0) {
@@ -1456,6 +1462,9 @@ const app = Vue.createApp({
         createDISKRadialGraph() {
             let element = document.querySelector('.diskRadial')
             let percent = this.getDiskPercent();
+            if(percent > 100){
+                percent = 100
+            }
             // create
             if (!this.hasDISKradial) {
                 if (percent == 0) {
@@ -1523,6 +1532,9 @@ const app = Vue.createApp({
         createBandwidthRadialGraph() {
             let element = document.querySelector('.bandwidthRadial')
             let percent = this.getBandwidthPercent();
+            if(percent > 100){
+                percent = 100
+            }
             // create
             if (!this.hasBandwidthradial) {
                 if (percent == 0) {
