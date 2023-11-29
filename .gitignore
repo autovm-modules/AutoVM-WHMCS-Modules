@@ -144,3 +144,4 @@ whois.php
 
 #config
 includes/hooks/autovm/config.php
+modules/addons/cloud/views/autovm/includes/commodules/vitalvariable.php
