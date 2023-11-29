@@ -13,6 +13,7 @@ function cloud_config()
     $ChargeModuleEnable = 'Select "on" to enable direct charging module';
     $ConsoleRoute = 'This is usually is domain of your WHMCS added to /console e.q. "https://www.mywhmcs.com/console"';
     $TopupLink = 'This is usually one of your pages that user can increase their credit, default is "/clientarea.php?action=addfunds"';
+    $AdminUserSummeryPagePath = 'This is the url of user sumery page in admin panel, if you did not changed it, it will be like this "/admin/clientssummary.php"';
     $minimumChargeInAutovmCurrency = 'The least amount a user can charge its own cloud balance';
     $DefaultMonthlyDecimal = 'Insert the decimal for Cost Monthly in cloud currency';
     $DefaultHourlyDecimal = 'Insert the decimal for Cost Hourly in cloud currency';
@@ -57,6 +58,7 @@ function cloud_config()
             "ChargeModuleEnable" => array ("FriendlyName" => "Enable Charging Module", "Type" => "dropdown", 'Options' => $OnOffOption, "Default" => 'option1', "Description" => $ChargeModuleEnable),
             "ConsoleRoute" => array ("FriendlyName" => "Console Route", "Type" => "text", "Size" => "31", "Description" => $ConsoleRoute, "Default" => "https://www.mywhmcs.com/console"),
             "TopupLink" => array ("FriendlyName" => "Topup page Link", "Type" => "text", "Size" => "31", "Description" => $TopupLink, "Default" => "/clientarea.php?action=addfunds"),
+            "AdminUserSummeryPagePath" => array ("FriendlyName" => "User Summery Page address in panel admin", "Type" => "text", "Size" => "51", "Description" => $AdminUserSummeryPagePath, "Default" => "/admin/clientssummary.php"),
             "minimumChargeInAutovmCurrency" => array ("FriendlyName" => "Minumum charge allowed in cloud currency", "Type" => "text", "Size" => "31", "Description" => $minimumChargeInAutovmCurrency, "Default" => "2"),
             "DefaultMonthlyDecimal" => array ("FriendlyName" => "Cost Decimal Monthly in User Currency", "Type" => "dropdown",'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultMonthlyDecimal),
             "DefaultHourlyDecimal" => array ("FriendlyName" => "Cost Decimal hourly in User Currency", "Type" => "dropdown",'Options' => $decimalOptions, "Default" => 'option1', "Description" => $DefaultHourlyDecimal),
@@ -165,6 +167,7 @@ function autovm_get_config_cloud(){
         'ChargeModuleEnable' => null,
         'ConsoleRoute' => null,
         'TopupLink' => null,
+        'AdminUserSummeryPagePath' => null,
         'minimumChargeInAutovmCurrency' => null,
         'DefaultMonthlyDecimal' => null,
         'DefaultHourlyDecimal' => null,
@@ -360,7 +363,5 @@ function cloud_output($vars) {
         print_r($response['error']);
         echo('</pre>');
     } 
-    
-    
 }
 
