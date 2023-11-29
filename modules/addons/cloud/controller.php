@@ -689,6 +689,7 @@ class CloudController
             'ChargeModuleEnable',
             'ConsoleRoute',
             'TopupLink',
+            'AdminUserSummeryPagePath',
             'minimumChargeInAutovmCurrency',
             'DefaultMonthlyDecimal',
             'DefaultHourlyDecimal',

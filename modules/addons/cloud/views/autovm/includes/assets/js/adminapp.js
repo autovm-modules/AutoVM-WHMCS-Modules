@@ -4,13 +4,15 @@ app = createApp({
 
     data() {
         return {
+            moduleConfig: null,
+            moduleConfigIsLoaded: null,
             PanelLanguage: null,
-            config: {
-                adminUrl: '/admin/clientssummary.php',
-                decimals: 0,
-                AutovmCurrency: 'USD',
-                AutovmCurrencyId: 1,
-            },
+            // config: {
+            //     adminUrl: '/admin/clientssummary.php',
+            //     decimals: 0,
+            //     AutovmCurrency: 'USD',
+            //     AutovmDefaultCurrencySymbol: 1,
+            // },
             user: {},
             softwares:{},
             userLoadStatus: null,
@@ -26,11 +28,7 @@ app = createApp({
     },
 
     mounted() {
-        this.ShowUser()
-        this.loadPolling()
-        this.loadWhCurrencies()
-        this.loadCredit()
-        this.readLanguageFirstTime()
+        this.loadModuleConfig()
     },
     
     watch: {
@@ -40,14 +38,24 @@ app = createApp({
                 this.adminTransId = null;
             }
         },
+
+        moduleConfigIsLoaded(){
+            if(this.moduleConfigIsLoaded == true){
+                this.ShowUser()
+                this.loadPolling()
+                this.loadWhCurrencies()
+                this.loadCredit()
+                this.readLanguageFirstTime()
+            }
+        }
     },
     computed: {
+        
+
         userBalance(){
-            let decimals = this.config.decimals
             if(this.user.balance !== null){
                 let number = parseFloat(this.user.balance)
-                return number.toFixed(decimals)
-
+                return number
             } else {
                 return null
             }
@@ -89,12 +97,27 @@ app = createApp({
                 let CurrencyArr = this.WhmcsCurrencies.currency
                 let id = this.userCurrencyIdFromWhmcs
                 let UserCurrency = null
-
-                CurrencyArr.forEach((item) =>{
-                    if(item.id == id){
-                        UserCurrency = item.suffix;
+                if(this.moduleConfigIsLoaded){
+                    let place = this.config.PlaceCurrencySymbol
+                    if(place == '' || place == null){
+                        place = 'prefix'
                     }
-                });
+                    CurrencyArr.forEach((item) =>{
+                        if(item.id == id){
+                            if(place == 'prefix'){
+                                UserCurrency = item.prefix;
+                            }
+                            if(place == 'suffix'){
+                                UserCurrency = item.suffix;
+                            }
+                            if(place == 'code'){
+                                UserCurrency = item.code;
+                            }
+                        }
+                    });
+                } else {
+                    return null
+                }
                 
                 if(UserCurrency){
                     return UserCurrency    
@@ -107,15 +130,15 @@ app = createApp({
         },
 
         CurrenciesRatioCloudToWhmcs(){
-            if(this.userCurrencyIdFromWhmcs != null && this.config.AutovmCurrencyId != null){
+            if(this.userCurrencyIdFromWhmcs != null && this.config.AutovmDefaultCurrencyID != null){
                 let userCurrencyId = this.userCurrencyIdFromWhmcs;
-                let AutovmCurrencyID = this.config.AutovmCurrencyId;
+                let AutovmDefaultCurrencyID = this.config.AutovmDefaultCurrencyID;
                 
-                if(userCurrencyId == AutovmCurrencyID){
+                if(userCurrencyId == AutovmDefaultCurrencyID){
                     return 1
                 } else {
                     let userCurrencyRatio = this.findRationFromId(userCurrencyId)
-                    let AutovmCurrencyRatio = this.findRationFromId(AutovmCurrencyID)
+                    let AutovmCurrencyRatio = this.findRationFromId(AutovmDefaultCurrencyID)
 
                     if(userCurrencyRatio != null && AutovmCurrencyRatio != null){
                         return userCurrencyRatio/ AutovmCurrencyRatio ;
@@ -135,13 +158,83 @@ app = createApp({
                 return null
             }
         },
+
+        config() {
+            if(this.moduleConfig != null && this.moduleConfigIsLoaded){
+                return {
+                    AdminUserSummeryPagePath: this.moduleConfig.AdminUserSummeryPagePath,
+                    AutovmDefaultCurrencySymbol: this.moduleConfig.AutovmDefaultCurrencySymbol,
+                    AutovmDefaultCurrencyID: this.moduleConfig.AutovmDefaultCurrencyID,
+                    DefaultBalanceDecimalWhmcs: this.moduleConfig.DefaultBalanceDecimalWhmcs,
+                    DefaultBalanceDecimalCloud: this.moduleConfig.DefaultBalanceDecimalCloud,
+                    PlaceCurrencySymbol: this.moduleConfig.PlaceCurrencySymbol,
+                    DefaultChargeAmountDecimalWhmcs: this.moduleConfig.DefaultChargeAmountDecimalWhmcs,
+                    DefaultChargeAmountDecimalCloud: this.moduleConfig.DefaultChargeAmountDecimalCloud,
+                    DefaultCreditDecimalWhmcs: this.moduleConfig.DefaultCreditDecimalWhmcs,
+                    DefaultCreditDecimalCloud: this.moduleConfig.DefaultCreditDecimalCloud,
+                };
+            } else {
+                return {
+                    AdminUserSummeryPagePath : '/admin/clientssummary.php',
+                    AutovmDefaultCurrencySymbol : '$',
+                    AutovmDefaultCurrencyID : 1,
+                    DefaultBalanceDecimalWhmcs : 0,
+                    DefaultBalanceDecimalCloud : 0,
+                    PlaceCurrencySymbol : 'prefix',
+                    DefaultChargeAmountDecimalWhmcs : 0,
+                    DefaultChargeAmountDecimalCloud : 0,
+                    DefaultCreditDecimalWhmcs : 0,
+                    DefaultCreditDecimalCloud : 0,
+                };
+            }
+        },
     },
 
     methods: {
+
+        formatNumbers(number, decimal) {
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'decimal',
+                minimumFractionDigits: decimal,
+                maximumFractionDigits: decimal,
+            });
+            return formatter.format(number);
+        },
+        
+        showBalanceWhmcsUnit(value){
+            decimal = this.config.DefaultBalanceDecimalWhmcs        
+            return this.formatNumbers(value, decimal)
+        },
+        
+        showBalanceCloudUnit(value){
+            decimal = this.config.DefaultBalanceDecimalCloud        
+            return this.formatNumbers(value, decimal)
+        },
+
+        showCreditWhmcsUnit(value){
+            decimal = this.config.DefaultCreditDecimalWhmcs        
+            return this.formatNumbers(value, decimal)
+        },
+        
+        showCreditCloudUnit(value){
+            decimal = this.config.DefaultCreditDecimalCloud        
+            return this.formatNumbers(value, decimal)
+        },
+
+        showChargeAmountWhmcsUnit(value){
+            decimal = this.config.DefaultChargeAmountDecimalWhmcs        
+            return this.formatNumbers(value, decimal)
+        },
+        
+        showChargeAmountCloudUnit(value){
+            decimal = this.config.DefaultChargeAmountDecimalCloud        
+            return this.formatNumbers(value, decimal)
+        },       
+
         async ShowUser() {
             let link = this.createLink('admin_ShowUser')
             let response = await axios.post(link)
-             
+                
             if(response.data.data){
                 this.userLoadStatus = 'fine'
                 this.user = response.data.data
@@ -204,6 +297,35 @@ app = createApp({
             }
         },
 
+        async loadModuleConfig() {
+            let response = await axios.get('/index.php?m=cloud&action=getModuleConfig');
+            if(response.data){
+                const answer = response.data
+                const requiredProperties = [
+                    'AutovmDefaultCurrencyID',
+                    'AutovmDefaultCurrencySymbol',
+                    'AdminUserSummeryPagePath',
+                    'DefaultBalanceDecimalWhmcs',
+                    'DefaultBalanceDecimalCloud',
+                    'PlaceCurrencySymbol',
+                    'DefaultChargeAmountDecimalWhmcs',
+                    'DefaultChargeAmountDecimalCloud',
+                    'DefaultCreditDecimalWhmcs',
+                    'DefaultCreditDecimalCloud',
+                ];
+                  
+                if (requiredProperties.every(prop => answer.hasOwnProperty(prop))) {
+                this.moduleConfigIsLoaded = true;
+                this.moduleConfig = response.data
+                } else {
+                console.log('Module properties does not exist');
+                }
+            } else {
+                console.log('can not get config');
+            }
+            
+        },
+
         ConverFromWhmcsToCloud(value){
             if(this.CurrenciesRatioWhmcsToCloud != null){
                 let ratio = this.CurrenciesRatioWhmcsToCloud
@@ -252,14 +374,16 @@ app = createApp({
         },
 
         createLink(method){
-            var urlParams = new URLSearchParams(window.location.search);
-            let userid = this.userid
-            let link = this.config.adminUrl
-            
-            if(userid != null){
-                link = this.config.adminUrl + '?' + 'userid=' + this.userid + '&' + 'method=' + method;
+            if(this.moduleConfigIsLoaded){
+                let link = this.config.AdminUserSummeryPagePath
+                let userid = this.userid
+                if(userid != null){
+                    link = this.config.AdminUserSummeryPagePath + '?' + 'userid=' + this.userid + '&' + 'method=' + method;
+                }
+                return link
+            } else {
+                return null
             }
-            return link
         },
 
         loadPolling() {
