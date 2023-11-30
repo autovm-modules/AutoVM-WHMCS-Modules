@@ -8,6 +8,7 @@ class AVMController
     protected $serviceId;
     protected $BackendUrl;
     protected $AdminToken;
+    protected $ConsoleRoute;
 
     public function __construct($serviceId)
     {
@@ -22,39 +23,27 @@ class AVMController
             return false;
         }
         
-        if(isset($response['AdminToken']) && isset($response['BackendUrl'])){
+        if(isset($response['AdminToken']) && isset($response['BackendUrl']) && isset($response['ConsoleRoute'])){
             $AdminToken = $response['AdminToken'];
             $BackendUrl = $response['BackendUrl'];
-        }
+        } 
         
         $this->serviceId = $serviceId;
         $this->BackendUrl = $BackendUrl;
         $this->AdminToken = $AdminToken;
+        $this->ConsoleRoute = $ConsoleRoute;
     }
 
     public function getConsoleRoute()
     {      
-        $response =  autovm_get_admintoken_baseurl_client();
-        if(!empty($response['error'])){
-            echo($response['error']);
-            return false;
-        }
+        $ConsoleRoute = $this->ConsoleRoute;
 
-        if(!empty($response['message'])){
-            echo($response['message']);
-            return false;
-        }
-        
-        if(isset($response['ConsoleRoute'])){
-            $ConsoleRoute = $response['ConsoleRoute'];
-        } else {
-            echo('please enter the console link in module configuration');
+        if(empty($ConsoleRoute)){
+            $ConsoleRoute = 'can not get console route in controller';
         }
 
         $this->response($ConsoleRoute); 
     }
-
-
 
     public function sendPoolsRequest()
     {
