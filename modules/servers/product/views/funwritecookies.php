@@ -1,17 +1,17 @@
 <?php  include_once('config.php');   ?>
 <?php
 
-
-// Find prefix or suffix from config
-$symblPlace = "prefix";
-
-if(isset($currencySymbolPlace)){
-    if($currencySymbolPlace == "prefix" or $currencySymbolPlace == "suffix"){
-        $symblPlace = $currencySymbolPlace;
-    }
+// Write Language
+if (isset($_COOKIE['temlangcookie'])) {
+    $templatelang = $_COOKIE['temlangcookie'];
+} elseif(!headers_sent()) {
+    setcookie('temlangcookie', 'English', time() + (86400 * 30 * 12), '/');     
+    $templatelang = 'English';
 }
 
 
+// Find prefix or suffix from config
+$currencysymb = $service->client->currencyrel->prefix;
 
 
 // find id for url
@@ -28,15 +28,6 @@ $nextduedate = $service->nextduedate;
 $recurringpayment = $service->amount;
 $billingcycle = $service->billingcycle;
 
-
-
-if($symblPlace == "prefix"){
-    $currencysymb = $service->client->currencyrel->prefix;
-} else if($symblPlace == "suffix"){
-    $currencysymb = $service->client->currencyrel->suffix;
-} else {
-    $currencysymb = $service->client->currencyrel->prefix;
-}
 
 // set value in cookies for the first time
 $datapairs = array(
@@ -73,7 +64,6 @@ foreach ($allCookies as $cookieName => $cookieValue) {
 
 // Loop through the data keys and write cookies
 foreach ($datapairs as $key => $value) {   
-
     $dynamicKey = $key . $id;
     setcookie($dynamicKey, $value, time() + 3600 * 24 * 7, '/');
     

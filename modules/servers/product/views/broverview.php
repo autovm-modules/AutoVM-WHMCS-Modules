@@ -1,6 +1,5 @@
 <?php include_once('funcurl.php');    ?>
 <?php include_once('config.php');     ?>
-<?php include_once('view/lang.php');  ?>
 
 
 <!doctype html>    

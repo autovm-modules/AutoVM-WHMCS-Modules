@@ -1,5 +1,4 @@
 <?php include_once('funcreadcookies.php'); ?>
-<?php include_once('lang.php');            ?>
 <?php include_once('header.php');          ?>
 <?php include_once('modalaction.php');     ?>
 <?php include_once('modalconsole.php');    ?>
