@@ -217,7 +217,7 @@ add_hook('AdminAreaClientSummaryPage', 1, function($vars) {
         }
     
         if(!empty($DefLang)){
-            if(empty($_COOKIE['temlangcookie'])) {
+            if(empty($_COOKIE['temlangcookie']) && !headers_sent()) {
                 setcookie('temlangcookie', $DefLang, time() + (86400 * 30 * 12), '/');
             }
         }
@@ -229,7 +229,7 @@ add_hook('AdminAreaClientSummaryPage', 1, function($vars) {
 
         // Writing user token
         $WhUserId = $vars['userid'];
-        if(isset($WhUserId) && isset($BackendUrl) && isset($WhUserId)){
+        if(isset($WhUserId) && isset($BackendUrl)){
             $response = admin_handel_usertoken($WhUserId, $BackendUrl);
         }
     

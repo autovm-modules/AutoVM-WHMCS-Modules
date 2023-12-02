@@ -285,11 +285,12 @@ function cloud_clientarea($vars)
         $action = autovm_get_query('action');
         $clientId = autovm_get_session('uid');
         if(!empty($clientId) && !empty($AdminToken) && !empty($BackendUrl)) {
+            autovm_get_config_cloud();
             try {
                 $controller = new CloudController($clientId, $AdminToken, $BackendUrl);
                 return $controller->handle($action);
             } catch (Exception $e) {
-                return "Error: " . $e->getMessage();
+                return "Error";
             }
         } else {
             echo "Error: Missing required parameters";

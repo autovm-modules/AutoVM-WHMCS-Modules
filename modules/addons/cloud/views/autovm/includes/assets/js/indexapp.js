@@ -382,7 +382,6 @@ app = createApp({
             }
         },
 
-
         async loadModuleConfig() {
             let response = await axios.get('/index.php?m=cloud&action=getModuleConfig');
             if(response.data){
@@ -415,7 +414,6 @@ app = createApp({
                 console.log('can not get config');
             }
         },
-
         
         async loadMachines() {
 

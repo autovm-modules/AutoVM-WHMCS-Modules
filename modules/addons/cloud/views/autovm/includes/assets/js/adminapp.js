@@ -7,12 +7,7 @@ app = createApp({
             moduleConfig: null,
             moduleConfigIsLoaded: null,
             PanelLanguage: null,
-            // config: {
-            //     adminUrl: '/admin/clientssummary.php',
-            //     decimals: 0,
-            //     AutovmCurrency: 'USD',
-            //     AutovmDefaultCurrencySymbol: 1,
-            // },
+            
             user: {},
             softwares:{},
             userLoadStatus: null,
@@ -50,8 +45,6 @@ app = createApp({
         }
     },
     computed: {
-        
-
         userBalance(){
             if(this.user.balance !== null){
                 let number = parseFloat(this.user.balance)

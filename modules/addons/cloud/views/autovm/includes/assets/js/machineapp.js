@@ -969,7 +969,7 @@ app = createApp({
             setInterval(this.loadCredit, 2*60000)
             
             // Load Currencies
-            setInterval(this.loadWhCurrencies, 2*60000)
+            setInterval(this.loadWhCurrencies, 3 * 60000)
         },
 
         async loadMachine() {
@@ -1343,7 +1343,7 @@ app = createApp({
             let percent = this.getMemoryPercent();
             // create
             if (!this.hasRAMradial) {
-                if (percent == 0) {
+                if (percent == 0 || percent > 100) {
                     let options = {};
                     options = this.createOptionRadials(
                         series = [100],
@@ -1409,7 +1409,7 @@ app = createApp({
             let percent = this.getCPUPercent();
             // create
             if (!this.hasCPUradial) {
-                if (percent == 0) {
+                if (percent == 0 || percent > 100) {
                     let options = {};
                     options = this.createOptionRadials(
                         series = [100],
@@ -1475,7 +1475,7 @@ app = createApp({
             let percent = this.getDiskPercent();
             // create
             if (!this.hasDISKradial) {
-                if (percent == 0) {
+                if (percent == 0 || percent > 100) {
                     let options = {};
                     options = this.createOptionRadials(
                         series = [100],
@@ -1773,7 +1773,9 @@ app = createApp({
             // similiar from here
             let memoryChart = [{ x: '8/1', y: 0 }, { x: '8/2', y: 0 }]
 
-            if (response) {
+            if(response.data.message) {
+                console.log('getMemoryLinearData: ' + response.data.message)
+            } else {
                 memoryChart = []
                 response = response.data['data']
                 for (let item of response) {
@@ -1782,8 +1784,6 @@ app = createApp({
                         y: item.value,
                     })
                 }
-            } else {
-                console.log("Fetching data from MemoryUsage error")
             }
 
             if (memoryChart.length > 0) {
@@ -1805,7 +1805,9 @@ app = createApp({
             // similiar from here
             let CPUChart = [{ x: '8/1', y: 0 }, { x: '8/2', y: 0 }]
 
-            if (response) {
+            if(response.data.message) {
+                console.log('getCPULinearData: ' + response.data.message)
+            } else {
                 CPUChart = []
                 response = response.data['data']
 
@@ -1816,9 +1818,7 @@ app = createApp({
                     })
                 }
 
-            } else {
-                console.log("Fetching data from CPU Usage error")
-            }
+            } 
 
             if (CPUChart.length > 0) {
                 this.cpuChart.data = CPUChart

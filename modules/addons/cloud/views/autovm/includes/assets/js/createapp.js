@@ -58,9 +58,9 @@ createApp({
         this.loadUser()
         
         // load Whmcs Data
-        this.loadModuleConfig()
         this.loadCredit()
         this.loadWhCurrencies()
+        this.loadModuleConfig()
         this.readLanguageFirstTime()
     },
 
@@ -160,14 +160,10 @@ createApp({
 
     methods: {
 
-        ConverFromWhmcsToCloud(value, decimal = 100000) {
+        ConverFromWhmcsToCloud(value) {
             if (this.CurrenciesRatioWhmcsToCloud) {
                 let ratio = this.CurrenciesRatioWhmcsToCloud
-                if (decimal > 0) {
-                    return Math.round(value * ratio * decimal) / decimal
-                } else {
-                    return Math.round(value * ratio)
-                }
+                return  (value * ratio)
             } else {
                 return null
             }
@@ -176,11 +172,7 @@ createApp({
         ConverFromAutoVmToWhmcs(value, decimal = 100000) {
             if (this.CurrenciesRatioCloudToWhmcs) {
                 let ratio = this.CurrenciesRatioCloudToWhmcs
-                if (decimal > 0) {
-                    return Math.round(value * ratio * decimal) / decimal
-                } else {
-                    return Math.round(value * ratio)
-                }
+                return (value * ratio)
             } else {
                 return null
             }
