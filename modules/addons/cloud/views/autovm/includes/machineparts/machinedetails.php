@@ -242,7 +242,7 @@
                             <span>
                                 {{ trafficTotal }}
                             </span>
-                            <span>
+                            <span class="px-1">
                                 {{ lang('gb') }}
                             </span>
                         </span>
@@ -255,7 +255,10 @@
                             <div class="m-0 p-0 me-3">
                                 <span class="text-secondary" style="--bs-text-opacity: 0.7;">
                                     <i class="bi bi-cloud-download-fill h5 me-2"></i>
-                                    Download :
+                                    <span>
+                                        {{ lang('download') }}
+                                    </span>
+                                    <span>:</span>
                                 </span>
                             </div>
                             <div class="m-0 p-0">
@@ -263,7 +266,7 @@
                                     <span>
                                         {{ trafficReceived }}
                                     </span>
-                                    <span>
+                                    <span class="px-1">
                                         {{ lang('gb') }}
                                     </span>
                                 </span>
@@ -279,7 +282,10 @@
                             <div class="m-0 p-0 me-3">
                                 <span class="text-secondary" style="--bs-text-opacity: 0.7;">
                                     <i class="bi bi-cloud-upload h5 me-2"></i>
-                                    Upload :
+                                    <span>
+                                        {{ lang('upload') }}
+                                    </span>
+                                    <span>:</span>
                                 </span>
                             </div>
                             <div class="m-0 p-0">
@@ -287,7 +293,7 @@
                                     <span>
                                         {{ trafficSend }}
                                     </span>
-                                    <span>
+                                    <span class="px-1">
                                         {{ lang('gb') }}
                                     </span>
                                 </span>
