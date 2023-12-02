@@ -232,27 +232,19 @@ app = createApp({
             }
         },
 
-        ConverFromWhmcsToCloud(value, decimal = 100000){
+        ConverFromWhmcsToCloud(value){
             if(this.CurrenciesRatioWhmcsToCloud){
                 let ratio = this.CurrenciesRatioWhmcsToCloud
-                if(decimal != 0){
-                    return Math.round(value*ratio * decimal) / decimal
-                } else {
-                    return Math.round(value*ratio)
-                }
+                return value * ratio
             } else {
                 return null
             }
         },
 
-        ConverFromAutoVmToWhmcs(value, decimal = 100000){
+        ConverFromAutoVmToWhmcs(value){
             if(this.CurrenciesRatioCloudToWhmcs){
                 let ratio = this.CurrenciesRatioCloudToWhmcs
-                if(decimal != 0){
-                    return Math.round(value*ratio * decimal) / decimal
-                } else {
-                    return Math.round(value*ratio)
-                }
+                return value * ratio
             } else {
             return null
             }
