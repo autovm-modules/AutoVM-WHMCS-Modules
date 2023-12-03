@@ -10,7 +10,7 @@
                     <span class="text-dark fw-medium fs-5 my-auto">
                         {{ lang('networkinformation') }}    
                     </span>
-                    <img src="/modules/addons/cloud/views/autovm/includes/assets/img/internet.svg" alt="internet">
+                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/internet.svg" alt="internet">
                 </div>
 
                 <!-- ip -->
@@ -39,7 +39,7 @@
                     <div class="m-0 p-0">
                         <a @click="CopyAddress" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
                             <span v-if="!AddressCopied" class="small">
-                                <img src="/modules/addons/cloud/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 23px;">
+                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 23px;">
                             </span>    
                             <span v-if="AddressCopied" class="d-flex flex-row justify-content-center align-items-end text-primary">
                                 <i class="bi bi-check-all"></i>
@@ -88,7 +88,7 @@
                             <div v-else class="row d-flex flex-row m-0 p-0">
                                 <div class="m-0 p-0 ps-3">
                                     <div class="d-flex flex-row align-items-center m-0 p-0">
-                                        <img src="/modules/addons/cloud/views/autovm/includes/assets/img/nounstatus.svg" width="20">
+                                        <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/nounstatus.svg" width="20">
                                         <!-- Three spinner -->
                                         <span class="d-flex flex-row align-items-center text-dark m-0 p-0 ps-4">
                                             <?php include('./includes/commodules/threespinner.php'); ?>
@@ -146,7 +146,7 @@
 
                         <td v-if="item.address.address" scope="row" class="py-3 text-secondary d-flex flex-row px-0">
                             <span>{{ item.address.address }}</span>                    
-                            <img src="/modules/addons/cloud/views/autovm/includes/assets/img/ip.svg" class="ms-3 d-none d-md-block" alt="ipicon" style="height: 20px;">
+                            <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/ip.svg" class="ms-3 d-none d-md-block" alt="ipicon" style="height: 20px;">
                         </td>
 
                         <td v-if="item.address.gateway" class="text-secondary align-middle px-0">{{ item.address.gateway }}</td>

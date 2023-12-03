@@ -35,7 +35,7 @@
             break;
 
             default:
-            echo "en";
+            echo "English";
         }
         ?>
     </span>

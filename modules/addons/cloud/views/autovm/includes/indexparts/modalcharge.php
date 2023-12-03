@@ -1,4 +1,5 @@
 <?php 
+
     if(isset($DefaultChargeModuleEnable) && $DefaultChargeModuleEnable == false){
         $ChargeModuleEnable = false;
     } else {
@@ -6,7 +7,7 @@
     }
     
     if(empty($CloudTopupLink)){
-        $CloudTopupLink = '/clientarea.php?action=addfunds';
+        $CloudTopupLink = $PersonalRootDirectoryURL . '/clientarea.php?action=addfunds';
     }
 
     if(isset($DefaultChargeModuleDetailsViews) && $DefaultChargeModuleDetailsViews){
