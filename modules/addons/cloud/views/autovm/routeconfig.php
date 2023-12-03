@@ -1,1 +1,1 @@
-<?php $PersonalRootDirectoryURL = 'https://whmcs.local:8891'; ?>
+<?php $PersonalRootDirectoryURL = ''; ?>
