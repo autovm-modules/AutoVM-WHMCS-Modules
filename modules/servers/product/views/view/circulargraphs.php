@@ -80,7 +80,7 @@
                 <div class="col-6 col-lg-6 m-0 p-0 px-1 mb-2">
                     <div @click="doReboot" data-bs-toggle="modal" data-bs-target="#processingModal"
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
-                        <img class="btn p-0 m-0" src="/modules/servers/product/views/view/assets/img/resetbtn.svg" width=35 alt="internet">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/resetbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('rebootaction') }}</p>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                     class="col-6 col-lg-6 m-0 m-0 p-0 px-1 pe-md-0 mb-2">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
-                        <img class="btn p-0 m-0" src="/modules/servers/product/views/view/assets/img/offbtn.svg" width=35 alt="internet">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/offbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('stopaction') }}</p>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                     class="col-6 col-lg-6 m-0 p-0 px-1">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
-                        <img class="btn p-0 m-0" src="/modules/servers/product/views/view/assets/img/setupbtn.svg" width=35 alt="internet">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/setupbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('consoleaction') }}</p>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                     class="col-6 col-lg-6 m-0 p-0 ps-1">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
-                        <img class="btn p-0 m-0" src="/modules/servers/product/views/view/assets/img/onbtn.svg" width=35 alt="internet">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/onbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('startaction') }}</p>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                 <div class="col-6 col-lg-6 m-0 p-0 px-1 mb-2">
                     <div @click="doReboot" data-bs-toggle="modal" data-bs-target="#actionsModal"
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
-                        <img class="btn p-0 m-0" src="/modules/servers/product/views/view/assets/img/resetbtn.svg" width=35 alt="internet">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/resetbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('rebootaction') }}</p>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                     class="col-6 col-lg-6 m-0 m-0 p-0 px-1 pe-md-0 mb-2">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
-                        <img class="btn p-0 m-0" src="/modules/servers/product/views/view/assets/img/offbtn.svg" width=35 alt="internet">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/offbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('stopaction') }}</p>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
                     class="col-6 col-lg-6 m-0 p-0 px-1">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
-                        <img class="btn p-0 m-0" src="/modules/servers/product/views/view/assets/img/setupbtn.svg" width=35 alt="internet">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/setupbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('consoleaction') }}</p>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                     class="col-6 col-lg-6 m-0 p-0 ps-1">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
-                        <img class="btn p-0 m-0" src="/modules/servers/product/views/view/assets/img/onbtn.svg" width=35 alt="internet">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/onbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('startaction') }}</p>
                     </div>
                 </div>

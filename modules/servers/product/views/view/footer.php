@@ -1,46 +1,37 @@
 
-    </div>
-        </div>
-        <!-- end container -->
-    </div>
+</div>
+</div>
+</div>    
     
-    <!-- Fotter file -->
-    <!-- scripts vue -->
-    <script src="/modules/servers/product/views/view/assets/js/apexcharts.js"></script>
-    <script src="/modules/servers/product/views/view/assets/js/lodash.min.js"></script>
-    <script src="/modules/servers/product/views/view/assets/js/axios.min.js"></script>
-    <script src="/modules/servers/product/views/view/assets/js/vue.global.js"></script>
+    <?php 
+        // $environ = 'dev'; 
+        $environ = 'prod'; 
+
+        $languageList = ['Russian', 'French', 'Deutsch', 'Farsi', 'Turkish', 'Brizilian', 'Italian', 'English'];
+        if (empty($templatelang) || !in_array($templatelang, $languageList)) {
+            $templatelang = 'English';
+        }
+
+
+
+        echo '<script src="' . $PersonalRootDirectoryURL . '/modules/servers/product/views/view/assets/js/apexcharts.js"></script>';
+        echo '<script src="' . $PersonalRootDirectoryURL . '/modules/servers/product/views/view/assets/js/lodash.min.js"></script>';
+        echo '<script src="' . $PersonalRootDirectoryURL . '/modules/servers/product/views/view/assets/js/axios.min.js"></script>';
+        echo '<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>';
+
+        if($environ == 'dev'){
+            echo('<script src="' . $PersonalRootDirectoryURL . '/modules/servers/product/views/view/assets/js/vue.global.js"></script>');
+            echo "<script src=\"". $PersonalRootDirectoryURL . "/modules/servers/product/views/view/assets/js/lang/{$templatelang}.js?v=" . time() . '"></script>';
+            echo '<script src="' . $PersonalRootDirectoryURL . '/modules/servers/product/views/view/assets/js/main.js?v=' . time() . '"></script>';
+        }
+
+
+        if($environ == 'prod'){
+            echo('<script src="' . $PersonalRootDirectoryURL . '/modules/servers/product/views/view/assets/js/vue.global.prod.js"></script>');
+            echo("<script src='". $PersonalRootDirectoryURL . "/modules/servers/product/views/view/assets/js/lang/$templatelang.js'></script>");
+            echo '<script src="' . $PersonalRootDirectoryURL . '/modules/servers/product/views/view/assets/js/main.js?"></script>';
+        }
+    ?>
     
-    
-
-
-
-    <!-- Language file -->
-    <?php if ($templatelang == 'Russian'): ?>
-        <script src="/modules/servers/product/views/view/assets/js/lang/ru.js"></script>
-    <?php elseif ($templatelang == 'French'): ?>
-        <script src="/modules/servers/product/views/view/assets/js/lang/fr.js"></script>
-    <?php elseif ($templatelang == 'Deutsch'): ?>
-        <script src="/modules/servers/product/views/view/assets/js/lang/du.js"></script>
-    <?php elseif ($templatelang == 'Farsi'): ?>
-        <script src="/modules/servers/product/views/view/assets/js/lang/fa.js"></script>
-    <?php elseif($templatelang == 'Turkish'): ?> 
-        <script src="/modules/servers/product/views/view/assets/js/lang/tr.js"></script>
-    <?php elseif($templatelang == 'Brizilian'): ?> 
-        <script src="/modules/servers/product/views/view/assets/js/lang/br.js"></script>
-    <?php elseif($templatelang == 'Italian'): ?> 
-        <script src="/modules/servers/product/views/view/assets/js/lang/it.js"></script>
-    <?php elseif($templatelang == 'English'): ?> 
-        <script src="/modules/servers/product/views/view/assets/js/lang/defaulten.js"></script>
-    <?php else: ?> 
-        <script src="/modules/servers/product/views/view/assets/js/lang/defaulten.js"></script>
-    <?php endif ?>
-        
-
-
-
-    
-    <script src="/modules/servers/product/views/view/assets/js/main.js?v=<?php echo time(); ?>"></script>
-
-    </body>
+</body>
 </html>

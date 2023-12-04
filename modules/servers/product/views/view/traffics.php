@@ -6,7 +6,7 @@
 
 <!-- top BTN -->
 <div v-if="machineIsLoaded && !isEmpty(traffics)" class="row mt-1 justify-content-end pe-1">
-    <a href="/cart.php?gid=addons" class="col-auto btn btn-primary px-5">{{ lang('buytraffics') }}</a>
+    <a href="<?php echo($PersonalRootDirectoryURL); ?>/cart.php?gid=addons" class="col-auto btn btn-primary px-5">{{ lang('buytraffics') }}</a>
 </div>
 
 <!-- Traffic list -->

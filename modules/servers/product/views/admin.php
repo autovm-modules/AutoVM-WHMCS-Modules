@@ -31,7 +31,7 @@
 <div style="padding: 20px 20px !important; color: #333232 !important;">
     <!-- check the page, error within the admin page -->
     <?php if ($id > 0): ?>
-        <iframe src="/modules/servers/product/views/broverview.php?id=<?php echo($id); ?>&u=admin" title="AutoVM" class="myiframe"></iframe>
+        <iframe src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/broverview.php?id=<?php echo($id); ?>&u=admin" title="AutoVM" class="myiframe"></iframe>
     <?php else : ?>
         <a href="/admin/index.php?rp=/admin/services" class="btn btn-primary mt-4 float-end mybtn">
             <i class="bi bi-pc-display-horizontal me-3"></i> 

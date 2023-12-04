@@ -110,7 +110,7 @@
                     <span class="text-dark fw-medium m-0 p-0 fs-5 my-auto">
                         {{ lang('networkinformation') }}
                     </span>
-                    <img src="/modules/servers/product/views/view/assets/img/internet.svg" alt="internet">
+                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/internet.svg" alt="internet">
                 </div>
 
 
@@ -135,7 +135,7 @@
                     </div>
                     <div v-show="!AddressCopied"class="m-0 p-0" >
                         <img @click="CopyAddress"
-                            src="/modules/servers/product/views/view/assets/img/ip.svg" alt="ipaddress">
+                            src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/ip.svg" alt="ipaddress">
                     </div>
                     <div v-show="AddressCopied" class="m-0 p-0">
                         <i class="bi bi-check-all text-primary"></i>
@@ -158,7 +158,7 @@
                     <div class="row d-flex flex-row m-0 p-0">
                         <div v-if="!detailIsLoaded" class="m-0 p-0 ps-3">
                             <div class="m-0 p-0">
-                                <img src="/modules/servers/product/views/view/assets/img/nounstatus.svg"
+                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/nounstatus.svg"
                                     width="20">
                                 <span class="text-dark m-0 p-0 ps-4">
                                     --- 
@@ -167,7 +167,7 @@
                         </div>
                         <div v-else class="m-0 p-0 ps-3">
                             <div v-if="online" class="m-0 p-0">
-                                <img src="/modules/servers/product/views/view/assets/img/online.svg"
+                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/online.svg"
                                     width="20">
                                 <span class="text-success ps-4">
                                     {{ lang('connected') }}
@@ -175,7 +175,7 @@
                             </div>
 
                             <div v-else-if="offline" class="m-0 p-0">
-                                <img src="/modules/servers/product/views/view/assets/img/offline.svg"
+                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/offline.svg"
                                     width="20">
                                 <span class="text-danger ps-4">
                                     {{ lang('disconnected') }}
