@@ -16,7 +16,7 @@
 
 
 <div>
-    <iframe src="/modules/servers/product/views/broverview.php?id=<?php echo($id); ?>&u=client" title="AutoVM" class="myiframe"></iframe>
+    <iframe src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/broverview.php?id=<?php echo($id); ?>&u=client" title="AutoVM" class="myiframe"></iframe>
 </div>
 
 <div style="height:300px"></div>

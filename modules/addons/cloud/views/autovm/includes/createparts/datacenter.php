@@ -120,7 +120,7 @@
                             <!-- bandwidth -->
                             <div class="d-flex flex-row justify-content-between py-2">
                                 <div class="d-flex flex-row justify-content-start">
-                                    <img src="/modules/addons/cloud/views/autovm/includes/assets/img/bandwidth.svg" width="18">        
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/bandwidth.svg" width="18">        
                                     <span class="fs-5 fw-light text-secondary mx-2">
                                         {{ lang('bandwidth') }}
                                     </span>
@@ -140,7 +140,7 @@
                             <!-- Memory -->
                             <div class="d-flex flex-row justify-content-between py-2">
                                 <div class="d-flex flex-row justify-content-start">
-                                    <img src="/modules/addons/cloud/views/autovm/includes/assets/img/ramicon.svg" width="18">        
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/ramicon.svg" width="18">        
                                     <span class="fs-5 fw-light text-secondary mx-2">
                                         {{ lang('memory') }} : 
                                     </span>
@@ -160,7 +160,7 @@
                             <!-- Disk -->
                             <div class="d-flex flex-row justify-content-between py-2">
                                 <div class="d-flex flex-row justify-content-start">
-                                    <img src="/modules/addons/cloud/views/autovm/includes/assets/img/diskicon.svg" width="18">    
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/diskicon.svg" width="18">    
                                     <span class="fs-5 fw-light text-secondary mx-2">
                                         {{ lang('disk') }} : 
                                     </span>
@@ -180,7 +180,7 @@
                             <!-- CPU -->
                             <div class="d-flex flex-row justify-content-between py-2">
                                 <div class="d-flex flex-row justify-content-start">
-                                    <img src="/modules/addons/cloud/views/autovm/includes/assets/img/cpuicon.svg" width="18">    
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/cpuicon.svg" width="18">    
                                     <span class="fs-5 fw-light text-secondary mx-2">
                                         {{ lang('cpu') }} : 
                                     </span>

@@ -260,7 +260,8 @@ add_hook('AdminAreaClientSummaryPage', 1, function($vars) {
         }
     
         
-        $link = '/modules/addons/cloud/views/autovm/adminpanel.php?userid=' . $WhUserId;
+        $PersonalRootDirectoryURL = '';
+        $link = $PersonalRootDirectoryURL . '/modules/addons/cloud/views/autovm/admin.php?userid=' . $WhUserId;
         $value = '<iframe src="' . $link . '" class="autovm"></iframe><style type="text/css"> .autovm{width: 1200px;height: 600px;border: none;}</style>';
         
         return $value;    

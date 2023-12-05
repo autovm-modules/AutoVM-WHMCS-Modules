@@ -5,6 +5,7 @@ createApp({
 
     data() {
         return {
+            PersonalRootDirectoryURL: '',
             PanelLanguage: null,
             moduleConfig: null,
             moduleConfigIsLoaded: null,
@@ -73,7 +74,8 @@ createApp({
                 ConsoleRoute: this.moduleConfig.ConsoleRoute,
                 DefaultMonthlyDecimal: this.moduleConfig.DefaultMonthlyDecimal,
                 DefaultHourlyDecimal: this.moduleConfig.DefaultHourlyDecimal,
-                DefaultBalanceDecimal: this.moduleConfig.DefaultBalanceDecimal,
+                DefaultBalanceDecimalCloud: this.moduleConfig.DefaultBalanceDecimalCloud,
+                DefaultBalanceDecimalWhmcs: this.moduleConfig.DefaultBalanceDecimalWhmcs,
                 // Add more properties as needed
                 };
             } else {
@@ -82,7 +84,8 @@ createApp({
                     AutovmDefaultCurrencySymbol: null,
                     DefaultMonthlyDecimal: 0,
                     DefaultHourlyDecimal: 0,
-                    DefaultBalanceDecimal: 0,
+                    DefaultBalanceDecimalCloud: 0,
+                    DefaultBalanceDecimalWhmcs: 0,
                 };
             }
         },
@@ -201,7 +204,7 @@ createApp({
         },
 
         formatBalance(value) {
-            let decimal = this.config.DefaultBalanceDecimal
+            let decimal = this.config.DefaultBalanceDecimalCloud
             if(value < 99999999999999  && value != null){
                 return value.toLocaleString('en-US', { minimumFractionDigits: decimal, maximumFractionDigits: decimal })
             } else {
@@ -234,7 +237,8 @@ createApp({
         },
         
         async loadModuleConfig() {
-            let response = await axios.get('/index.php?m=cloud&action=getModuleConfig');
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=getModuleConfig');
+            
             if(response.data){
                 const answer = response.data
                 const requiredProperties = [
@@ -243,7 +247,8 @@ createApp({
                     'ConsoleRoute',
                     'DefaultMonthlyDecimal',
                     'DefaultHourlyDecimal',
-                    'DefaultBalanceDecimal'
+                    'DefaultBalanceDecimalCloud',
+                    'DefaultBalanceDecimalWhmcs',
                   ];
                   
                   if (requiredProperties.every(prop => answer.hasOwnProperty(prop))) {
@@ -259,7 +264,7 @@ createApp({
         
         // Load User Credit
         async loadCredit() {
-            let response = await axios.get('/index.php?m=cloud&action=loadCredit');
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=loadCredit');
 
             if (response.data != null) {
                 this.userCreditinWhmcs = response.data.credit;
@@ -271,7 +276,7 @@ createApp({
 
         // Test Load Currencies
         async loadWhCurrencies() {
-            let response = await axios.post('/index.php?m=cloud&action=getAllCurrencies')
+            let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=getAllCurrencies')
             if (response.data.result == 'success') {
                 this.WhmcsCurrencies = response.data.currencies
             } else {
@@ -281,7 +286,7 @@ createApp({
 
         async loadUser() {
 
-            let response = await axios.get('/index.php?m=cloud&action=login')
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=login')
 
             response = response.data
 
@@ -410,7 +415,7 @@ createApp({
 
         async loadRegions() {
 
-            let response = await axios.get('/index.php?m=cloud&action=regions')
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=regions')
 
             response = response.data
 
@@ -449,7 +454,7 @@ createApp({
 
             this.products = []
 
-            let response = await axios.get('/index.php?m=cloud&action=products', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=products', {
                 params: {
                     id: this.regionId
                 }
@@ -486,7 +491,7 @@ createApp({
 
         async loadCategories() {
 
-            let response = await axios.get('/index.php?m=cloud&action=categories')
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=categories')
 
             response = response.data
 
@@ -521,7 +526,7 @@ createApp({
                     formData.append('name', this.themachinename)
                 }
 
-                let response = await axios.post('/index.php?m=cloud&action=create', formData)
+                let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=create', formData)
 
                 response = response.data
 
@@ -543,7 +548,7 @@ createApp({
 
         OpenMachineList() {
 
-            window.open('/index.php?m=cloud&action=pageIndex')
+            window.open(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=pageIndex')
 
         },
 

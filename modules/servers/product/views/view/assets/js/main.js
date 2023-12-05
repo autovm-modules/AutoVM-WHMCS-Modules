@@ -1,6 +1,7 @@
 const app = Vue.createApp({
     data() {
         return {
+            PersonalRootDirectoryURL: '',
             PanelLanguage: null,
 
             consoleRoute: null,
@@ -859,7 +860,7 @@ const app = Vue.createApp({
 
         async loadTraffic() {
 
-            let response = await axios.get('/index.php?avmAction=currentTrafficUsage', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=currentTrafficUsage', {
                 params: {
                     avmServiceId: this.serviceId
                 }
@@ -877,7 +878,7 @@ const app = Vue.createApp({
 
         async loadMachine() {
 
-            let response = await axios.get('/index.php?avmAction=show', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=show', {
                 params: {
                     avmServiceId: this.serviceId
                 }
@@ -902,7 +903,7 @@ const app = Vue.createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?avmAction=console', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=console', {
                     params: {
                         avmServiceId: this.serviceId
                     }
@@ -949,7 +950,7 @@ const app = Vue.createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?avmAction=stop', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=stop', {
                     params: {
                         avmServiceId: this.serviceId
                     }
@@ -977,7 +978,7 @@ const app = Vue.createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?avmAction=start', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=start', {
                     params: {
                         avmServiceId: this.serviceId
                     }
@@ -1003,7 +1004,7 @@ const app = Vue.createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?avmAction=reboot', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=reboot', {
                     params: {
                         avmServiceId: this.serviceId
                     }
@@ -1030,7 +1031,7 @@ const app = Vue.createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?avmAction=setup', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=setup', {
                     params: {
                         avmServiceId: this.serviceId
                     }
@@ -1058,7 +1059,7 @@ const app = Vue.createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?avmAction=change', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=change', {
                     params: {
                         avmServiceId: this.serviceId, avmTemplateId: this.templateId
                     }
@@ -1085,7 +1086,7 @@ const app = Vue.createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?avmAction=changeSoftware', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=changeSoftware', {
                     params: {
                         avmServiceId: this.serviceId, avmSoftwareId: this.softwareId
                     }
@@ -1107,7 +1108,7 @@ const app = Vue.createApp({
 
         async loadDetail() {
 
-            let response = await axios.get('/index.php?avmAction=detail', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=detail', {
                 params: {
                     avmServiceId: this.serviceId
                 }
@@ -1127,7 +1128,7 @@ const app = Vue.createApp({
 
         async loadSoftwares() {
 
-            let response = await axios.get('/index.php?avmAction=softwares', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=softwares', {
                 params: {
                     avmServiceId: this.serviceId
                 }
@@ -1187,7 +1188,7 @@ const app = Vue.createApp({
 
         async loadTemplates() {
 
-            let response = await axios.get('/index.php?avmAction=templates', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=templates', {
                 params: {
                     avmServiceId: this.serviceId
                 }
@@ -1208,7 +1209,7 @@ const app = Vue.createApp({
 
         async loadBandwidth() {
 
-            let response = await axios.get('/index.php?avmAction=currentBandwidthUsage', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=currentBandwidthUsage', {
                 params: {
                     avmServiceId: this.serviceId
                 }
@@ -1229,7 +1230,7 @@ const app = Vue.createApp({
         },
         
         async loadConsoleRoute() {
-            let response = await axios.get('/index.php?m=cloud&action=getConsoleRoute');
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=getConsoleRoute');
             if(response.data){
                 consoleRoute = response.data;
                 if(consoleRoute != 'empty'){
@@ -1726,7 +1727,7 @@ const app = Vue.createApp({
 
         // Get Data Memory Line 
         async getMemoryLinearData() {
-            let response = await axios.get('/index.php?avmAction=memoryUsage', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=memoryUsage', {
                 params: { avmServiceId: this.serviceId }
             })
 
@@ -1761,7 +1762,7 @@ const app = Vue.createApp({
         // Get Data Memory Line 
         async getCPULinearData() {
 
-            let response = await axios.get('/index.php?avmAction=cpuUsage', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=cpuUsage', {
                 params: { avmServiceId: this.serviceId }
             })
 

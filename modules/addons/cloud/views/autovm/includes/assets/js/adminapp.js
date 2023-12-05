@@ -4,6 +4,7 @@ app = createApp({
 
     data() {
         return {
+            PersonalRootDirectoryURL: '',
             moduleConfig: null,
             moduleConfigIsLoaded: null,
             PanelLanguage: null,
@@ -291,7 +292,7 @@ app = createApp({
         },
 
         async loadModuleConfig() {
-            let response = await axios.get('/index.php?m=cloud&action=getModuleConfig');
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=getModuleConfig');
             if(response.data){
                 const answer = response.data
                 const requiredProperties = [
@@ -371,7 +372,7 @@ app = createApp({
                 let link = this.config.AdminUserSummeryPagePath
                 let userid = this.userid
                 if(userid != null){
-                    link = this.config.AdminUserSummeryPagePath + '?' + 'userid=' + this.userid + '&' + 'method=' + method;
+                    link = this.PersonalRootDirectoryURL + this.config.AdminUserSummeryPagePath + '?' + 'userid=' + this.userid + '&' + 'method=' + method;
                 }
                 return link
             } else {
