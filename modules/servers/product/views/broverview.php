@@ -1,6 +1,5 @@
 <?php include_once('funcurl.php');    ?>
 <?php include_once('config.php');     ?>
-<?php include_once('view/lang.php');  ?>
 
 
 <!doctype html>    
@@ -13,17 +12,17 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
         <!-- Bootsrtap Bundle -->
-        <script src="/modules/servers/product/views/view/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/js/bootstrap.bundle.min.js"></script>
 
         <!-- My CSS -->
-        <link href="/modules/servers/product/views/view/assets/style.css" rel="stylesheet">
+        <link href="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/style.css" rel="stylesheet">
         
         <!-- RTL && LTR -->
         <?php if ($templatelang == 'Farsi'): ?>
-            <link href="/modules/servers/product/views/view/assets/css/bootstrap.rtl.min.css" rel="stylesheet">
+            <link href="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/css/bootstrap.rtl.min.css" rel="stylesheet">
             <style> * {font-family: 'Vazirmatn' !important;}</style>
         <?php else: ?> 
-            <link href="/modules/servers/product/views/view/assets/css/bootstrap.min.css" rel="stylesheet">    
+            <link href="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/css/bootstrap.min.css" rel="stylesheet">    
             <!-- FONT: Plus Jakarta Sans  -->
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +50,7 @@
                             <!-- Get Id from Wisefunc.php -->
                                 <?php if($id != 0): ?>
                                     </a>
-                                    <a href="/modules/servers/product/views/viewpanel.php?id=<?php echo($id); ?>&u=<?php echo($u); ?>" target="_top" type="button" class="btn btn-primary">
+                                    <a href="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/viewpanel.php?id=<?php echo($id); ?>&u=<?php echo($u); ?>" target="_top" type="button" class="btn btn-primary">
                                         <span class="px-2 small">{{ lang('gotopanel') }}</span>
                                     </a>
                                 <?php else: ?>
@@ -173,7 +172,7 @@
                                             <span class="m-0 p-0" >
                                                 <button @click="CopyAddress" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
                                                     <span v-if="!AddressCopied" class="small">
-                                                        <img src="/modules/servers/product/views/view/assets/img/ip.svg" alt="copy" style="width: 14px;">
+                                                        <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/ip.svg" alt="copy" style="width: 14px;">
                                                     </span>    
                                                     <span class="d-flex flex-row justify-content-center align-items-end text-primary" v-if="AddressCopied">
                                                         <i class="bi bi-check-all"></i>
@@ -196,7 +195,7 @@
                                             <div class="col-3 m-0 pe-2">
                                                 <div class="border border-2 rounded-4 shadow-sm bg-white py-4 m-0 p-0 px-3" style="height: 120px">
                                                     <div class="m-0 p-0 mb-3 text-start">
-                                                        <img src="/modules/servers/product/views/view/assets/img/ramicon.svg" width="18">
+                                                        <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/ramicon.svg" width="18">
                                                         <span class="text-secondary m-0 p-0 ps-2">
                                                             {{ lang('memory') }}
                                                         </span>
@@ -222,7 +221,7 @@
                                             <div class="col-3 m-0 pe-2">
                                                 <div class="border border-2 rounded-4 shadow-sm bg-white py-4 m-0 p-0 px-3" style="height: 120px">
                                                     <div class="m-0 p-0 mb-3 text-start">
-                                                        <img src="/modules/servers/product/views/view/assets/img/diskicon.svg" width="18">
+                                                        <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/diskicon.svg" width="18">
                                                         <span class="m-0 p-0 text-secondary ps-2">
                                                             {{ lang('disk') }}
                                                         </span>
@@ -246,7 +245,7 @@
                                             <div class="col-3 m-0 pe-2">
                                                 <div class="border border-2 rounded-4 shadow-sm bg-white py-4 m-0 p-0 px-3" style="height: 120px">
                                                     <div class="m-0 p-0 mb-3 text-start">
-                                                        <img src="/modules/servers/product/views/view/assets/img/cpuicon.svg" width="18">
+                                                        <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/cpuicon.svg" width="18">
                                                         <span class="m-0 p-0 text-secondary ps-2">
                                                         {{ lang('cpu') }}
                                                         </span>
@@ -548,7 +547,7 @@
                                         <div class="col-6 col-md-4 m-0 p-0 pb-2 pe-2">
                                             <div class="border border-2 rounded-4 shadow-sm bg-white py-4 m-0 p-0 px-3" style="height: 100px">
                                                 <div class="m-0 p-0 mb-3 text-start">
-                                                    <img src="/modules/servers/product/views/view/assets/img/ramicon.svg" width="18">
+                                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/ramicon.svg" width="18">
                                                     <span class="text-secondary m-0 p-0 ps-2">
                                                         {{ lang('memory') }}
                                                     </span>
@@ -574,7 +573,7 @@
                                         <div class="col-6 col-md-4 m-0 p-0 pb-2 pe-2 d-none d-md-block">
                                             <div class="border border-2 rounded-4 shadow-sm bg-white py-4 m-0 p-0 px-3" style="height: 100px">
                                                 <div class="m-0 p-0 mb-3 text-start">
-                                                    <img src="/modules/servers/product/views/view/assets/img/diskicon.svg" width="18">
+                                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/diskicon.svg" width="18">
                                                     <span class="m-0 p-0 text-secondary ps-2">
                                                         {{ lang('disk') }}
                                                     </span>
@@ -598,7 +597,7 @@
                                         <div class="col-6 col-md-4 m-0 p-0 pb-2">
                                             <div class="border border-2 rounded-4 shadow-sm bg-white py-4 m-0 p-0 px-3" style="height: 100px">
                                                 <div class="m-0 p-0 mb-3 text-start">
-                                                    <img src="/modules/servers/product/views/view/assets/img/cpuicon.svg" width="18">
+                                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/cpuicon.svg" width="18">
                                                     <span class="m-0 p-0 text-secondary ps-2">
                                                     {{ lang('cpu') }}
                                                     </span>

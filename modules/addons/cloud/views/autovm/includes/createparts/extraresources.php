@@ -19,7 +19,7 @@
                             <!-- CPU -->
                             <div class="row my-5">
                                 <div class="col-12 col-md-2 p-0 m-0 text-start mb-3">
-                                    <img src="/modules/addons/cloud/views/autovm/includes/assets/img/cpuicon.svg" alt="cpuicon">
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/cpuicon.svg" alt="cpuicon">
                                 <span class="p-0 m-0 ps-1 ps-md-3">
                                     {{ lang('cpu') }}
                                 </span>
@@ -41,7 +41,7 @@
                             <!-- Memory -->
                             <div class="row my-5">
                                 <div class="col-12 col-md-2 p-0 m-0 text-start mb-3">
-                                    <img src="/modules/addons/cloud/views/autovm/includes/assets/img/ramicon.svg" alt="cpuicon">
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/ramicon.svg" alt="cpuicon">
                                     <span class="p-0 m-0 ps-1 ps-md-3">
                                         {{ lang('memory') }}
                                     </span>
@@ -60,7 +60,7 @@
                             <!-- Storage -->
                             <div class="row my-5">
                                 <div class="col-12 col-md-2 p-0 m-0 text-start mb-3">
-                                    <img src="/modules/addons/cloud/views/autovm/includes/assets/img/diskicon.svg" alt="cpuicon">
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/diskicon.svg" alt="cpuicon">
                                     <span class="p-0 m-0 ps-1 ps-md-3">
                                         {{ lang('disk') }}
                                     </span>

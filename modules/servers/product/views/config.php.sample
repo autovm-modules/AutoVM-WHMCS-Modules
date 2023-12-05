@@ -1,9 +1,10 @@
+<!-- Different -->
+
 <?php
+
 // In case you changed the root directory, put the directoy name here
 // Otherwise leave it empty
 $PersonalRootDirectoryURL = '';
-
-
 
 
 
@@ -17,4 +18,3 @@ $DefaultAdminBackLink = '/admin/clientsservices.php';
 ?>
 
 
- 

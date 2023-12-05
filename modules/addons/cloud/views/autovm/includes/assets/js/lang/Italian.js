@@ -11,6 +11,8 @@ let common = {
 // Machine view 
         
         // from product
+        "download" : "Download",
+        "upload" : "Upload",
         "backtoservices": "Torna ai Servizi",
         "mb": "MB",
         "gb": "GB",

@@ -3,6 +3,7 @@ app = createApp({
 
     data() {
         return {
+            PersonalRootDirectoryURL: '',
             PanelLanguage: null,
             moduleConfig: null,
             moduleConfigIsLoaded: null,
@@ -669,7 +670,7 @@ app = createApp({
         },
         
         async loadModuleConfig() {
-            let response = await axios.get('/index.php?m=cloud&action=getModuleConfig');
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=getModuleConfig');
             if(response.data){
                 const answer = response.data
                 const requiredProperties = [
@@ -695,7 +696,7 @@ app = createApp({
 
 
         async loadCredit() {
-            let response = await axios.get('/index.php?m=cloud&action=loadCredit');
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=loadCredit');
             
             if(response.data != null){
                 this.userCreditinWhmcs = response.data.credit;
@@ -706,7 +707,7 @@ app = createApp({
         },
 
         async loadWhCurrencies() {
-            let response = await axios.post('/index.php?m=cloud&action=getAllCurrencies')    
+            let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=getAllCurrencies')    
             if(response.data.result == 'success'){
                 this.WhmcsCurrencies = response.data.currencies
             } else {
@@ -716,7 +717,7 @@ app = createApp({
 
         async loadUser() {
 
-            let response = await axios.get('/index.php?m=cloud&action=login')
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=login')
 
             response = response.data
 
@@ -969,12 +970,12 @@ app = createApp({
             setInterval(this.loadCredit, 2*60000)
             
             // Load Currencies
-            setInterval(this.loadWhCurrencies, 2*60000)
+            setInterval(this.loadWhCurrencies, 3 * 60000)
         },
 
         async loadMachine() {
 
-            let response = await axios.get('/index.php?m=cloud&action=machine', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=machine', {
                 params: {
                     id: this.machineId
                 }
@@ -1001,7 +1002,7 @@ app = createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?m=cloud&action=console', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=console', {
                     params: {
                         id: this.machineId
                     }
@@ -1048,7 +1049,7 @@ app = createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?m=cloud&action=stop', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=stop', {
                     params: {
                         id: this.machineId
                     }
@@ -1075,7 +1076,7 @@ app = createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?m=cloud&action=start', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=start', {
                     params: {
                         id: this.machineId
                     }
@@ -1102,7 +1103,7 @@ app = createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?m=cloud&action=reboot', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=reboot', {
                     params: {
                         id: this.machineId
                     }
@@ -1130,7 +1131,7 @@ app = createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?m=cloud&action=setup', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=setup', {
                     params: {
                         id: this.machineId
                     }
@@ -1158,7 +1159,7 @@ app = createApp({
 
             if (accept) {
 
-                let response = await axios.get('/index.php?m=cloud&action=destroy', {
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=destroy', {
                     params: {
                         id: this.machineId
                     }
@@ -1192,7 +1193,7 @@ app = createApp({
                 // Template identity
                 formData.append('templateId', this.templateId)
 
-                let response = await axios.post('/index.php?m=cloud&action=change', formData, {
+                let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=change', formData, {
                     params: {
                         id: this.machineId
                     }
@@ -1242,7 +1243,7 @@ app = createApp({
 
         async loadDetail() {
 
-            let response = await axios.get('/index.php?m=cloud&action=detail', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=detail', {
                 params: {
                     id: this.machineId
                 }
@@ -1343,7 +1344,7 @@ app = createApp({
             let percent = this.getMemoryPercent();
             // create
             if (!this.hasRAMradial) {
-                if (percent == 0) {
+                if (percent == 0 || percent > 100) {
                     let options = {};
                     options = this.createOptionRadials(
                         series = [100],
@@ -1409,7 +1410,7 @@ app = createApp({
             let percent = this.getCPUPercent();
             // create
             if (!this.hasCPUradial) {
-                if (percent == 0) {
+                if (percent == 0 || percent > 100) {
                     let options = {};
                     options = this.createOptionRadials(
                         series = [100],
@@ -1475,7 +1476,7 @@ app = createApp({
             let percent = this.getDiskPercent();
             // create
             if (!this.hasDISKradial) {
-                if (percent == 0) {
+                if (percent == 0 || percent > 100) {
                     let options = {};
                     options = this.createOptionRadials(
                         series = [100],
@@ -1577,7 +1578,7 @@ app = createApp({
 
         async loadTraffic() {
 
-            let response = await axios.get('/index.php?m=cloud&action=currentTrafficUsage', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=currentTrafficUsage', {
                 params: {
                     id: this.machineId
                 }
@@ -1595,7 +1596,7 @@ app = createApp({
 
         async loadCategories() {
 
-            let response = await axios.get('/index.php?m=cloud&action=categories')
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=categories')
 
             response = response.data
 
@@ -1764,7 +1765,7 @@ app = createApp({
 
         async getMemoryLinearData() {
 
-            let response = await axios.get('/index.php?m=cloud&action=memoryUsage', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=memoryUsage', {
                 params: {
                     id: this.machineId
                 }
@@ -1773,7 +1774,9 @@ app = createApp({
             // similiar from here
             let memoryChart = [{ x: '8/1', y: 0 }, { x: '8/2', y: 0 }]
 
-            if (response) {
+            if(response.data.message) {
+                console.log('getMemoryLinearData: ' + response.data.message)
+            } else {
                 memoryChart = []
                 response = response.data['data']
                 for (let item of response) {
@@ -1782,8 +1785,6 @@ app = createApp({
                         y: item.value,
                     })
                 }
-            } else {
-                console.log("Fetching data from MemoryUsage error")
             }
 
             if (memoryChart.length > 0) {
@@ -1798,14 +1799,16 @@ app = createApp({
 
         async getCPULinearData() {
 
-            let response = await axios.get('/index.php?m=cloud&action=cpuUsage', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=cpuUsage', {
                 params: { id: this.machineId }
             })
 
             // similiar from here
             let CPUChart = [{ x: '8/1', y: 0 }, { x: '8/2', y: 0 }]
 
-            if (response) {
+            if(response.data.message) {
+                console.log('getCPULinearData: ' + response.data.message)
+            } else {
                 CPUChart = []
                 response = response.data['data']
 
@@ -1816,9 +1819,7 @@ app = createApp({
                     })
                 }
 
-            } else {
-                console.log("Fetching data from CPU Usage error")
-            }
+            } 
 
             if (CPUChart.length > 0) {
                 this.cpuChart.data = CPUChart

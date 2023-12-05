@@ -4,6 +4,7 @@ app = createApp({
 
     data() {
         return {
+            PersonalRootDirectoryURL: '',
             PanelLanguage: null,
             moduleConfig: null,
             moduleConfigIsLoaded: null,
@@ -232,27 +233,19 @@ app = createApp({
             }
         },
 
-        ConverFromWhmcsToCloud(value, decimal = 100000){
+        ConverFromWhmcsToCloud(value){
             if(this.CurrenciesRatioWhmcsToCloud){
                 let ratio = this.CurrenciesRatioWhmcsToCloud
-                if(decimal != 0){
-                    return Math.round(value*ratio * decimal) / decimal
-                } else {
-                    return Math.round(value*ratio)
-                }
+                return value * ratio
             } else {
                 return null
             }
         },
 
-        ConverFromAutoVmToWhmcs(value, decimal = 100000){
+        ConverFromAutoVmToWhmcs(value){
             if(this.CurrenciesRatioCloudToWhmcs){
                 let ratio = this.CurrenciesRatioCloudToWhmcs
-                if(decimal != 0){
-                    return Math.round(value*ratio * decimal) / decimal
-                } else {
-                    return Math.round(value*ratio)
-                }
+                return value * ratio
             } else {
             return null
             }
@@ -367,7 +360,7 @@ app = createApp({
         
         async loadUser() {
 
-            let response = await axios.get('/index.php?m=cloud&action=login')
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=login')
 
             response = response.data
 
@@ -382,9 +375,8 @@ app = createApp({
             }
         },
 
-
         async loadModuleConfig() {
-            let response = await axios.get('/index.php?m=cloud&action=getModuleConfig');
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=getModuleConfig');
             if(response.data){
                 const answer = response.data
                 const requiredProperties = [
@@ -415,11 +407,10 @@ app = createApp({
                 console.log('can not get config');
             }
         },
-
         
         async loadMachines() {
 
-            let response = await axios.get('/index.php?m=cloud&action=machines')
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=machines')
 
             response = response.data
 
@@ -437,7 +428,7 @@ app = createApp({
         },
 
         async loadCredit() {
-            let response = await axios.get('/index.php?m=cloud&action=loadCredit');
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=loadCredit');
             
             if(response.data != null){
                 this.userCreditinWhmcs = response.data.credit;
@@ -458,7 +449,7 @@ app = createApp({
             const params = {chargeamount: chargeAmountinWhmcs};
 
             if(chargingValidity == 'fine'){
-                let response = await axios.post('/index.php?m=cloud&action=CreateUnpaidInvoice', params)
+                let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=CreateUnpaidInvoice', params)
                 
                 if(response.data.result == 'success'){    
                     this.invoice = response.data;
@@ -494,7 +485,7 @@ app = createApp({
             };
 
             if(id > 0){
-                let response = await axios.post('/index.php?m=cloud&action=chargeCloud', params);
+                let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=chargeCloud', params);
                 if(response.data.data){
                     setTimeout(() => {
                         this.theStepStatus = 22;
@@ -520,7 +511,7 @@ app = createApp({
             const invoiceid = this.ConstantInvoiceId.value;
             const params = {invoiceid: invoiceid};
 
-            let response = await axios.post('/index.php?m=cloud&action=markCancelInvoice', params)
+            let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=markCancelInvoice', params)
             if(response.data.result == 'success'){    
                 console.log('Invoice is marked cancelled successfully');
             } else {
@@ -538,7 +529,7 @@ app = createApp({
             const params = {invoiceid: invoiceid, chargeamount : chargeamountinWhmcs};
 
             if(invoiceid > 0){
-                let response = await axios.post('/index.php?m=cloud&action=applyTheCredit', params)
+                let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=applyTheCredit', params)
                 
                 if(response.data.result == 'success'){
                     setTimeout(() => {
@@ -563,7 +554,7 @@ app = createApp({
         },
         
         async loadWhCurrencies() {
-            let response = await axios.post('/index.php?m=cloud&action=getAllCurrencies')    
+            let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=getAllCurrencies')    
             if(response.data.result == 'success'){
                 this.WhmcsCurrencies = response.data.currencies
             } else {

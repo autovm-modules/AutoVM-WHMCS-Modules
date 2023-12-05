@@ -635,7 +635,7 @@ class CloudController
     
     public function getConsoleRoute()
     {
-        $response =  autovm_get_admintoken_baseurl_admin();
+        $response =  autovm_get_config_cloud();
         if(!empty($response['error'])){
             echo($response['error']);
             return false;

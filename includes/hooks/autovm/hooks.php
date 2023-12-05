@@ -81,8 +81,14 @@ function autovm_get_admintoken_baseurl_client(){
         $response['message'] = $message;
         return $response;
     }
+    
+    if(empty($ConsoleRoute)){
+        $message = 'ConsoleRoute ERR ===> Go to addons module and insert ConsoleRoute';
+        $response['message'] = $message;
+        return $response;
+    }
 
-    if(isset($AdminToken) && isset($BackendUrl) && isset($DefLang)){
+    if(isset($AdminToken) && isset($BackendUrl) && isset($DefLang) && isset($ConsoleRoute)){
         $response['AdminToken'] = $AdminToken;
         $response['BackendUrl'] = $BackendUrl;
         $response['DefLang'] = $DefLang;
