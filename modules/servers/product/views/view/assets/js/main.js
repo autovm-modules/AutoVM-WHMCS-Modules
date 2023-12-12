@@ -1230,7 +1230,12 @@ const app = Vue.createApp({
         },
         
         async loadConsoleRoute() {
-            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=getConsoleRoute');
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=getConsoleRoute', {
+                params: {
+                    avmServiceId: this.serviceId
+                }
+            })
+
             if(response.data){
                 consoleRoute = response.data;
                 if(consoleRoute != 'empty'){

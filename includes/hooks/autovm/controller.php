@@ -26,6 +26,7 @@ class AVMController
         if(isset($response['AdminToken']) && isset($response['BackendUrl']) && isset($response['ConsoleRoute'])){
             $AdminToken = $response['AdminToken'];
             $BackendUrl = $response['BackendUrl'];
+            $ConsoleRoute = $response['ConsoleRoute'];
         } 
         
         $this->serviceId = $serviceId;
