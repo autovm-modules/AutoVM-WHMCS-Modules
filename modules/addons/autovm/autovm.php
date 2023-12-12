@@ -53,6 +53,10 @@ function autovm_activate()
             $table->string('machine_id');
         });
     }
+
+    $pdo = Capsule::connection()->getPdo();
+
+    $pdo->exec('ALTER TABLE tblcurrencies MODIFY rate decimal(10, 10)');
 }
 
 
