@@ -4,8 +4,8 @@
 </div>    
     
     <?php 
-        // $environ = 'dev'; 
-        $environ = 'prod'; 
+        $environ = 'dev'; 
+        // $environ = 'prod'; 
 
         $languageList = ['Russian', 'French', 'Deutsch', 'Farsi', 'Turkish', 'Brizilian', 'Italian', 'English'];
         if (empty($templatelang) || !in_array($templatelang, $languageList)) {

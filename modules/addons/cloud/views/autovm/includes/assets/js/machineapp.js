@@ -3,6 +3,7 @@ app = createApp({
 
     data() {
         return {
+            doingAction: '',
             PersonalRootDirectoryURL: '',
             PanelLanguage: null,
             moduleConfig: null,
@@ -1016,7 +1017,7 @@ app = createApp({
                 }
 
                 if (response.data) {
-
+                    this.doingAction = 'Console'
                     this.machine = response.data
                 }
             }
@@ -1063,7 +1064,7 @@ app = createApp({
                 }
 
                 if (response.data) {
-
+                    this.doingAction = 'Stop'
                     this.machine = response.data
                 }
             }
@@ -1090,7 +1091,7 @@ app = createApp({
                 }
 
                 if (response.data) {
-
+                    this.doingAction = 'Start'
                     this.machine = response.data
                 }
             }
@@ -1117,7 +1118,7 @@ app = createApp({
                 }
 
                 if (response.data) {
-
+                    this.doingAction = 'Reboot'
                     this.machine = response.data
                 }
             }
@@ -1145,7 +1146,7 @@ app = createApp({
                 }
 
                 if (response.data) {
-
+                    this.doingAction = 'SetUp'
                     this.machine = response.data
                 }
             }
