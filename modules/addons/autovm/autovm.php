@@ -172,6 +172,7 @@ function autovm_output($vars) {
         print_r($response['message']);
         echo('</pre>');
     } 
+    
 }
 
 add_hook('AddonConfigSave', 1, function($vars) {
