@@ -33,6 +33,7 @@ const { createApp } = Vue
           .then(response => {
             // Handle the response from the server
             this.ActonResponse = response.data
+            window.parent.location.reload();
           })
           .catch(error => {
             // Handle errors

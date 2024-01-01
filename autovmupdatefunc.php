@@ -79,7 +79,7 @@ if($method == 'fix')
 if($method == 'delete')
 {    
     foreach ($DirectoriesList as $item){
-        if($item != 'modules/addons/autovm' && $item != 'autovmupdatepage.php' && $item != 'autovmupdatefunc.php' && $item != 'autovmversion.txt' && $item != 'autovmupdater'){
+        if($item != 'modules/addons/autovm' && $item != 'autovmupdatepage.php' && $item != 'autovmupdatefunc.php' && $item != 'autovmversion.txt' && $item != 'autovmupdater' && $item != 'hardDelete'){
             DeletDirectory($item);
         }
     }
