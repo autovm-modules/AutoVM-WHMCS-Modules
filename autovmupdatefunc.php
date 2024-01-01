@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 // Check Method
-if(empty($method) || ($method != 'install' && $method != 'delete' && $method != 'update' && $method != 'fix')){
+if(empty($method) || ($method != 'install' && $method != 'delete' && $method != 'update' && $method != 'fix' && $method != 'hardDelete')){
     $method = 'none';
 }
 
@@ -79,7 +79,7 @@ if($method == 'fix')
 if($method == 'delete')
 {    
     foreach ($DirectoriesList as $item){
-        if($item != 'modules/addons/autovm' && $item != 'autovmupdatepage.php' && $item != 'autovmupdatefunc.php' && $item != 'autovmversion.txt' && $item != 'autovmupdater' && $item != 'hardDelete'){
+        if($item != 'modules/addons/autovm' && $item != 'autovmupdatepage.php' && $item != 'autovmupdatefunc.php' && $item != 'autovmversion.txt' && $item != 'autovmupdater'){
             DeletDirectory($item);
         }
     }
