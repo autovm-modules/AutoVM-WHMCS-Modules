@@ -8,6 +8,7 @@
 $maxDepth = 12;
 $DirectoriesList = [
                     'console', 
+                    'autovmupdater',
                     'includes/hooks/autovm', 
                     'modules/addons/autovm', 
                     'modules/addons/cloudsnp', 
@@ -20,10 +21,8 @@ $DirectoriesList = [
                     'autovmupdatefunc.php', 
                     'autovmupdatepage.php', 
                     'autovmversion.txt',
-                    'autovmupdater'
-
                 ];
-
+                
 
 $RemoteZipAddress = 'http://localhost:8888/whmcsmodule.zip';
 $RemoteVersionAddress = 'http://localhost:8888/autovmversion.txt';
