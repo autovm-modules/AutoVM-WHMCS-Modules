@@ -5,8 +5,8 @@
 
 
 
-$maxDepth = 5;
-$DirectoriesList = ['console', 'includes/hooks/autovm', 'modules/addons/autovm', 'modules/addons/cloudsnp', 'modules/addons/cloud', 'modules/servers/balance', 'modules/servers/traffic', 'modules/servers/product', 'includes/hooks/balance.php', 'includes/hooks/autovm.php'];
+$maxDepth = 12;
+$DirectoriesList = ['console', 'includes/hooks/autovm', 'modules/addons/autovm', 'modules/addons/cloudsnp', 'modules/addons/cloud', 'modules/servers/balance', 'modules/servers/traffic', 'modules/servers/product', 'includes/hooks/balance.php', 'includes/hooks/autovm.php', 'autovmupdatefunc.php', 'autovmupdatepage.php', 'autovmversion.txt'];
 $RemoteZipAddress = 'http://localhost:8888/whmcsmodule.zip';
 $RemoteVersionAddress = 'http://localhost:8888/autovmversion.txt';
 $RemoteVersion = file_get_contents($RemoteVersionAddress);
