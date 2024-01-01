@@ -1,5 +1,6 @@
 <?php   include_once('autovmupdatefunc.php');    ?>
-<?php   include('autovmupdater/header.php');    ?>
+<?php   include('autovmupdater/header.php');     ?>
+
 
 <div id="app" class="bg-dark text-light p-5 rounded-5 mt-4">
     <div class="row" v-cloak>

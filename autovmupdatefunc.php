@@ -3,6 +3,13 @@
 // $permissions = fileperms('autovmupdatefunc.php');
 // echo substr(decoct($permissions), -3);
 
+// Kill if not admin
+define('ROOTDIR', dirname(__FILE__));
+require_once(ROOTDIR . '/init.php');
+$session = $_SESSION['adminid'];
+if($session != 1){
+    exit("Opps");
+}
 
 
 $maxDepth = 12;
@@ -66,14 +73,12 @@ if($method == 'install' || $method == 'update')
     }
 }
 
-
 if($method == 'fix')
 {    
     foreach ($DirectoriesList as $item) {
         setPermissions($item, $maxDepth);
     }
 }
-
 
 if($method == 'delete')
 {    
@@ -90,6 +95,9 @@ if($method == 'hardDelete')
         DeletDirectory($item);
     }
 }
+
+
+
 
 function DeletDirectory($src) {
     $notexist = '<span class="text-danger">Not Exist: </span>';
@@ -129,6 +137,10 @@ function DeletDirectory($src) {
     
 }
 
+
+
+
+
 function DownloadZip($RemoteZipAddress, $localZipAddress) 
 {
     
@@ -156,6 +168,10 @@ function DownloadZip($RemoteZipAddress, $localZipAddress)
 }
 
 
+
+
+
+
 function ExtractZip($localZipAddress, $RooteAddress) 
 {   
     // Check if the zip file was downloaded successfully
@@ -178,7 +194,9 @@ function ExtractZip($localZipAddress, $RooteAddress)
 
 
 
-function setPermissions($path, $maxDepth = 5, $currentDepth = 0) {
+
+
+function setPermissions($path, $maxDepth = 12, $currentDepth = 0) {
     if ($currentDepth > $maxDepth) {
         return; // Stop recursion if maximum depth is reached
     }
