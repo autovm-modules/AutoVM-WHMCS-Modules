@@ -302,7 +302,10 @@ function product_CreateAccount($params)
     }
 
     // Send request
-    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $traffic, $remaining, $duration, $ipv4, $ipv6);
+    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $traffic, $duration, $ipv4, $ipv6);
+
+      
+    
 
     if (empty($response)) {
 
