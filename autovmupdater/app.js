@@ -6,10 +6,16 @@ const { createApp } = Vue
         iframeAddress : '/autovmupdatepage.php',
         ActonResponse : null,
         ChoseVersion: null,
+        HardDeleteVisible: false,
       }
     },
 
     methods: {
+        ChangeShowHardDelete(){
+          this.HardDeleteVisible = !this.HardDeleteVisible;
+          console.log(this.HardDeleteVisible);
+        },
+
         funcDelete() {
           axios.post('./autovmupdatefunc.php', {funcmethod: 'delete'})
           .then(response => {
@@ -20,7 +26,19 @@ const { createApp } = Vue
             // Handle errors
             this.ActonResponse = error;
           });
-        }, 
+        },
+        
+        funchardDelete() {
+          axios.post('./autovmupdatefunc.php', {funcmethod: 'hardDelete'})
+          .then(response => {
+            // Handle the response from the server
+            this.ActonResponse = response.data
+          })
+          .catch(error => {
+            // Handle errors
+            this.ActonResponse = error;
+          });
+        },
 
         funcInstall() {
           axios.post('./autovmupdatefunc.php', {funcmethod: 'install'})

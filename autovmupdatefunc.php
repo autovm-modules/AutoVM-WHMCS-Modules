@@ -85,6 +85,13 @@ if($method == 'delete')
     }
 }
 
+if($method == 'hardDelete')
+{    
+    foreach ($DirectoriesList as $item){
+        DeletDirectory($item);
+    }
+}
+
 function DeletDirectory($src) {
     $notexist = '<span class="text-danger">Not Exist: </span>';
 

@@ -51,6 +51,21 @@
                 <a class="btn btn-primary px-3 mx-2" @click="funcFix">Fix Permision</a>
                 <a class="btn btn-danger px-3 mx-2" @click="funcDelete">Delete Module</a>
             </div>
+            
+            <div class="mt-4 p-2 bg-warning rounded-4 text-dark h6 px-4">
+                <div class="accordion-item">
+                    <div class="accordion-" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Hard Delete, It will delete everything related to AutoVM <i class="bi bi-arrow-down-circle-fill ms-4"></i>
+                    </div>
+                    <div id="collapseOne" class="accordion-collapse collapse mt-4" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <button v-if="!HardDeleteVisible" class="col-12 btn btn-danger px-3 mx-2" @click="ChangeShowHardDelete">Hard Delete</button>
+                            <button v-if="HardDeleteVisible" class="btn btn-secondary px-5 me-4" @click="ChangeShowHardDelete"><i class="bi bi-arrow-left-circle-fill pe-3"></i> Back</button>
+                            <button v-if="HardDeleteVisible" class="btn btn-danger px-5 me-4" @click="ChangeShowHardDelete">I am Sure</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-12 col-md-6" v-if="ActonResponse">
             <div v-html="ActonResponse" class="bg-body-secondary p-4 rounded-5 border-2 shadow-lg text-secondary small">
