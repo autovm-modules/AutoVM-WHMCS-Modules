@@ -61,7 +61,7 @@
                         <div class="accordion-body">
                             <button v-if="!HardDeleteVisible" class="col-12 btn btn-danger px-3 mx-2" @click="ChangeShowHardDelete">Hard Delete</button>
                             <button v-if="HardDeleteVisible" class="btn btn-secondary px-5 me-4" @click="ChangeShowHardDelete"><i class="bi bi-arrow-left-circle-fill pe-3"></i> Back</button>
-                            <button v-if="HardDeleteVisible" class="btn btn-danger px-5 me-4" @click="ChangeShowHardDelete">I am Sure</button>
+                            <button v-if="HardDeleteVisible" class="btn btn-danger px-5 me-4" @click="funchardDelete">I am Sure</button>
                         </div>
                     </div>
                 </div>
