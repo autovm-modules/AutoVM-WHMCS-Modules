@@ -18,4 +18,4 @@
         }
     </style>
 </head>
-<body class="container-fluid bg-dark text-light p-5" style="max-width: 1900px;">
+<body class="container-fluid" style="max-width: 1900px;">

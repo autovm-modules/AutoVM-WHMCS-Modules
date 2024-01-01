@@ -1,7 +1,7 @@
 <?php   include_once('autovmupdatefunc.php');    ?>
 <?php   include('autovmupdater/header.php');    ?>
 
-<div id="app">
+<div id="app" class="bg-dark text-light p-5 rounded-5 mt-4">
     <div class="row" v-cloak>
         <div class="col-12 col-md-6">
             <div class="d-felx flex-row justify-content-center align-items-center py-5">
