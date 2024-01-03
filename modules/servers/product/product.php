@@ -257,7 +257,7 @@ function product_CreateAccount($params)
     $traffic = autovm_get_array('configoption11', $params);
 
     if (empty($traffic)) {
-
+        $traffic = 0;
         // Its not required
     }
 
