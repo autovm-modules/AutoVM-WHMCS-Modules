@@ -174,7 +174,7 @@ function autovm_output($vars) {
     } 
     
 
-    $iframe = '<iframe src="https://whmcs.local:8890/autovmupdatepage.php" frameborder="0" class="iframe"></iframe><style>.iframe{width:100%; height: 800px;}</style>';
+    $iframe = '<iframe src="/autovmupdatepage.php" frameborder="0" class="iframe"></iframe><style>.iframe{width:100%; height: 800px;}</style>';
     echo $iframe;
 }
 
