@@ -302,10 +302,7 @@ function product_CreateAccount($params)
     }
 
     // Send request
-    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $traffic, $duration, $months, $ipv4, $ipv6);
-
-      
-    
+    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6);
 
     if (empty($response)) {
 
@@ -317,6 +314,18 @@ function product_CreateAccount($params)
     if ($message) {
         return $response->message;
     }
+
+
+    // Add traffic to the created machine
+    if($response->data->id){
+        $machineId = $response->data->id;
+        if($machineId){
+            $trafficResponse = $controller->sendTrafficRequest($machineId, $traffic, $remaining = null, $duration, $type = 'main');
+        }           
+    } else {
+        return 'Could not get machine ID to set Traffic';
+    }
+ 
 
     // Machine details
     $machine = $response->data;

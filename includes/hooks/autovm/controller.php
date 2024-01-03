@@ -119,12 +119,12 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
     }
 
-    public function sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $traffic, $duration, $months = 1, $ipv4, $ipv6)
+    public function sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6)
     {
         $params = [
-            'poolId' => $poolId, 'templateId' => $templateId, 'memorySize' => $memorySize, 'memoryLimit' => $memoryLimit, 'diskSize' => $diskSize, 'cpuCore' => $cpuCore, 'cpuLimit' => $cpuLimit, 'name' => $name, 'email' => $email, 'publicKey' => $publicKey, 'traffic' => 0, 'remaining' => 0, 'duration' => 0, 'autoSetup' => true, 'ipv4' => $ipv4, 'ipv6' => $ipv6, 
+            'poolId' => $poolId, 'templateId' => $templateId, 'memorySize' => $memorySize, 'memoryLimit' => $memoryLimit, 'diskSize' => $diskSize, 'cpuCore' => $cpuCore, 'cpuLimit' => $cpuLimit, 'name' => $name, 'email' => $email, 'publicKey' => $publicKey, 'autoSetup' => true, 'ipv4' => $ipv4, 'ipv6' => $ipv6, 
         ];
-
+        
         $AdminToken = $this->AdminToken;
         $headers = ['token' => $AdminToken];
 
@@ -133,16 +133,8 @@ class AVMController
             $BackendUrl, 'candy', 'backend', 'machine', 'smart', 'pool'
         ];
 
-        $response = Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
+        return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
 
-        if($response->data->id){
-            $machineId = $response->data->id;
-            if($machineId){
-                $trafficResponse = $this->sendTrafficRequest($machineId, $traffic, $remaining = null, $duration = $months * 30, $type = 'main');
-            }           
-        } 
-
-        return $response;
     }
 
     public function show()
