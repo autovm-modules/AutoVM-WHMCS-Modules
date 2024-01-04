@@ -257,7 +257,7 @@ function product_CreateAccount($params)
     $traffic = autovm_get_array('configoption11', $params);
 
     if (empty($traffic)) {
-        $traffic = 0;
+        
         // Its not required
     }
 
@@ -317,10 +317,10 @@ function product_CreateAccount($params)
 
 
     // Add traffic to the created machine
-    if($response->data->id){
+    if($response->data->id && $traffic){
         $machineId = $response->data->id;
         if($machineId){
-            $trafficResponse = $controller->sendTrafficRequest($machineId, $traffic, $remaining = null, $duration, $type = 'main');
+            $trafficResponse = $controller->sendTrafficRequest($machineId, $traffic, $remaining, $duration, $type = 'main');
         }           
     } else {
         return 'Could not get machine ID to set Traffic';
