@@ -1,8 +1,8 @@
 <footer>
 
     <?php 
-        // $environ = 'dev'; 
-        $environ = 'prod'; 
+        $environ = 'dev'; 
+        // $environ = 'prod'; 
         
         $currentfilename = basename($_SERVER['PHP_SELF'], '.php');
         $languageList = ['Russian', 'French', 'Deutsch', 'Farsi', 'Turkish', 'Brizilian', 'Italian', 'English'];

@@ -13,7 +13,7 @@ function autovm_config()
     $configarray = array(
         "name" => "AutoVM",
         "description" => "Main AutoVM Module",
-        "version" => "V05.10.02",
+        "version" => "V05.11.00",
         "author" => "autovm.net",
         "fields" => array(
             "BackendUrl" => array ("FriendlyName" => "Backend Url", "Type" => "text", "Size" => "31", "Description" => $BackendUrlLabel, "Default" => "http://backend.autovm.online"),
@@ -172,6 +172,10 @@ function autovm_output($vars) {
         print_r($response['message']);
         echo('</pre>');
     } 
+    
+
+    $iframe = '<iframe src="/autovmupdatepage.php" frameborder="0" class="iframe"></iframe><style>.iframe{width:100%; height: 800px;}</style>';
+    echo $iframe;
 }
 
 add_hook('AddonConfigSave', 1, function($vars) {

@@ -127,6 +127,28 @@ function product_CreateAccount($params)
         return 'Could not find any options';
     }
 
+     // Find the IP Verion
+     $ipv = autovm_get_array('ipv', $options);
+
+     if (empty($ipv)) {
+         $ipv = 'ipv4';
+     }
+ 
+     if($ipv == 'ipv4'){
+         $ipv4 = 1;
+         $ipv6 = null;
+     } else if($ipv == 'ipv6'){
+         $ipv4 = null;
+         $ipv6 = 1;
+     } else if($ipv == 'both'){
+         $ipv4 = 1;
+         $ipv6 = 1;
+     } else {
+         $ipv4 = 1;
+         $ipv6 = null;
+     }
+
+
     // Find the template name
     $templateName = autovm_get_array('template', $options);
 
@@ -235,7 +257,7 @@ function product_CreateAccount($params)
     $traffic = autovm_get_array('configoption11', $params);
 
     if (empty($traffic)) {
-
+        
         // Its not required
     }
 
@@ -280,7 +302,7 @@ function product_CreateAccount($params)
     }
 
     // Send request
-    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $traffic, $remaining, $duration);
+    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6);
 
     if (empty($response)) {
 
@@ -292,6 +314,18 @@ function product_CreateAccount($params)
     if ($message) {
         return $response->message;
     }
+
+
+    // Add traffic to the created machine
+    if($response->data->id && $traffic){
+        $machineId = $response->data->id;
+        if($machineId){
+            $trafficResponse = $controller->sendTrafficRequest($machineId, $traffic, $remaining, $duration, $type = 'main');
+        }           
+    } else {
+        return 'Could not get machine ID to set Traffic';
+    }
+ 
 
     // Machine details
     $machine = $response->data;
