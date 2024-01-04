@@ -31,12 +31,12 @@ $DirectoriesList = [
                 ];
                 
 
-$RemoteZipAddress = 'http://localhost:8888/whmcsmodule.zip';
-$RemoteVersionAddress = 'http://localhost:8888/autovmversion.txt';
+$RemoteZipAddress = 'https://www.update.autovm.net/whmcs/downlodedautovm.zip';
+$RemoteVersionAddress = 'https://www.update.autovm.net/whmcs/autovmversion.txt';
 $RemoteVersion = file_get_contents($RemoteVersionAddress);
 if(empty($RemoteVersion)){$RemoteVersion = 0;}
 
-$localZipAddress = __DIR__ . '/downloaded.zip';
+$localZipAddress = __DIR__ . '/downlodedautovm.zip';
 $RooteAddress = __DIR__ . '/';
 $LocalVersionAddress = __DIR__ . '/autovmversion.txt';
 $LocalVersion = file_get_contents($LocalVersionAddress);
@@ -67,7 +67,7 @@ if($method == 'install' || $method == 'update')
     DownloadZip($RemoteZipAddress, $localZipAddress);
     ExtractZip($localZipAddress, $RooteAddress);
     DeletDirectory('__MACOSX');
-    DeletDirectory('downloaded.zip');
+    DeletDirectory('downlodedautovm.zip');
     foreach ($DirectoriesList as $item) {
         setPermissions($item, $maxDepth);
     }

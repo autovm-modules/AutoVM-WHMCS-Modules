@@ -48,7 +48,7 @@ function cloud_config()
     $configarray = array(
         "name" => "AutoVMCloud",
         "description" => "Cloud Module By AutoVM for WHMCS",
-        "version" => "V05.10.02",
+        "version" => "V05.11.00",
         "author" => "AutoVM.net",
         "fields" => array(
             "AutovmDefaultCurrencyID" => array ("FriendlyName" => "Currency ID", "Type" => "text", "Size" => "31", "Description" => $AutovmDefaultCurrencyID, "Default" => 1),

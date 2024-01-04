@@ -47,7 +47,7 @@
 
             <hr>
             <div class="d-flex flex-row justify-content-start align-items-center">
-                <a class="btn btn-primary px-3 mx-2" @click="funcInstall">Install Module</a>
+                <a class="btn btn-primary px-3 mx-2" @click="funcInstall">Reinstall Module</a>
                 <a class="btn btn-primary px-3 mx-2" @click="funcUpdate">Update Module</a>
                 <a class="btn btn-primary px-3 mx-2" @click="funcFix">Fix Permision</a>
                 <a class="btn btn-danger px-3 mx-2" @click="funcDelete">Delete Module</a>
