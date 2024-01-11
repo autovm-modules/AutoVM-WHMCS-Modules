@@ -170,3 +170,134 @@ add_hook('ClientAreaPage', 100, function($params) {
 
 
 
+
+// Hook for creating traffic in WHMCS version 5.4
+// add_hook('InvoicePaid', 1, function($vars) {
+
+//     $invoiceid = $vars['invoiceid'];
+//     $command = 'GetInvoice';
+//     $postData = array(
+//         'invoiceid' => $invoiceid,
+//     );
+
+//     $results = localAPI($command, $postData);
+
+//     $items = $results['items']['item'];
+
+//     foreach ($items as $item) {
+//         $description = $item['description'];
+//         $description = strtolower($description);
+//         if (strpos($description, 'traffic') !== false) {
+            
+
+            
+            
+
+
+//             // Find OrderId from InvoiceID in tblorders
+//             $Ordertable = Capsule::table('tblorders')
+//             ->where('invoiceid', $invoiceid)
+//             ->first();
+
+//             if(empty($Ordertable)){
+//                 return 'can not find invoice in tblorders';
+//             }
+            
+//             $OrderIdFromInvoceID = $Ordertable->id;
+
+//             if(empty($OrderIdFromInvoceID)){
+//                 return 'can not find orderid from invoiceid in tblorders';
+//             }
+
+            
+
+
+
+
+
+
+
+//             // Find real orderID from hostingid in tblhostingaddons
+//             $hostingAddonsTable = Capsule::table('tblhostingaddons')
+//             ->where('orderid', $OrderIdFromInvoceID)
+//             ->first();
+
+//             if(empty($hostingAddonsTable)){
+//                 return 'can not find orderid in hostingAddonsTable';
+//             }
+
+//             $hostingid = $hostingAddonsTable->hostingid;
+
+//             if(empty($hostingid)){
+//                 return 'can not find hostingid in hostingAddonsTable';
+//             }
+
+//             // hostingid is actually serviceid
+//             $serviceId = $hostingid;
+            
+            
+            
+
+
+
+
+
+
+//             // Find Addon ID to find params
+//             $addonid = $hostingAddonsTable->addonid;
+//             if(empty($addonid)){
+//                 return 'can not find addonid in hostingAddonsTable';
+//             }
+
+//             $addonsTable = Capsule::table('tbladdons')
+//             ->where('id', $addonid)
+//             ->first();
+            
+//             if(empty($addonsTable)){
+//                 return 'can not find addonid in addonsTable';
+//             }
+            
+//             $addonDescription = $addonsTable->description;
+
+            
+
+//             if(empty($addonDescription)){
+//                 return 'can not find addonDescription in addonsTable';
+//             }
+
+//             $TrafficAmount = $addonDescription;
+//             if(!is_numeric($TrafficAmount)){
+//                 return 'traffic amount is not numeric';
+//             }
+
+            
+
+//             // Send request
+//             $controller = new AVMController($serviceId);
+//             $machineId = $controller->getMachineIdFromService();
+
+//             if (empty($machineId)) {
+//                 return 'Could not find the machine identity';
+//             }
+            
+//             $ServiceDuration = $controller->getServiceDuration();
+//             if (empty($ServiceDuration)) {
+//                 return 'Could not find duration';
+//             }
+
+
+//             $ServiceRemaining = $controller->getServiceRemaining();
+//             if (empty($ServiceRemaining)) {
+//                 //nothing
+//             }
+
+//             $controller->sendTrafficRequest($machineId, $TrafficAmount, $ServiceRemaining, $ServiceDuration, 'plus');
+        
+
+//             // $filePath = __DIR__ . '/file.txt';
+//             // file_put_contents($filePath, var_export($ServiceRemaining, true));
+            
+//         }
+//     }
+    
+// });
