@@ -193,45 +193,36 @@
             <!-- bottom slice -->
             <div>
                 <div class="m-0 p-0 mt-0 fs-4">
-                    <div class="row m-0 p-0 mb-4">
-                        <span class="text-secondary fs-6 m-0 p-0 align-middle">
-                            {{ lang('networkstatus') }}
-                        </span>
-                    </div>
-                    <div v-if="online || offline" class="row d-flex flex-row m-0 p-0">
-                        <div v-if="reserve" class="m-0 p-0 ps-3">
-                            <div v-if="online" class="d-flex flex-row m-0 p-0 align-items-center">
-                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/online.svg"
-                                    width="20"
-                                    class="spinner-grow align-middle bg-light"
-                                    style="--bs-spinner-width: 17px; --bs-spinner-height: 17px; --bs-spinner-animation-speed: 2s;">
-                                <span class="text-success ps-2">
-                                    {{ lang('connected') }}
+                    <div class="d-flex flex-row align-items-center justify-content-between m-0 p-0 mb-4">
+                        <div class="d-flex flex-row align-items-center justify-content-between m-0 p-0">
+                            <?php if($templatelang =='Farsi'): ?>
+                                <div style="width:80px">
+                            <?php else: ?>
+                                <div style="width:40px">
+                            <?php endif ?>
+                                <span class="text-secondary fs-6 m-0 p-0">
+                                    {{ lang('IPV6') }}
                                 </span>
                             </div>
-
-                            <div v-else-if="offline" class="d-flex flex-row m-0 p-0 align-items-center">
-                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/offline.svg"
-                                    width="20"
-                                    class="spinner-grow align-middle bg-light"
-                                    style="--bs-spinner-width: 17px; --bs-spinner-height: 17px; --bs-spinner-animation-speed: 2s;">
-                                <span class="text-danger ps-2">
-                                    {{ lang('disconnected') }}
+                            <div style="width:200px">
+                                <span v-if="Ipv6Address != null" class="text-primary fs-6 m-0 p-0 border-0 mx-3" :class="ipv6color">    
+                                    {{ Ipv6Address }}
                                 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-else class="row d-flex flex-row m-0 p-0">
-                        <div class="m-0 p-0 ps-3">
-                            <div class="d-flex flex-row align-items-center m-0 p-0">
-                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/nounstatus.svg" width="20"
-                                class="spinner-grow align-middle bg-light"
-                                    style="--bs-spinner-width: 17px; --bs-spinner-height: 17px; --bs-spinner-animation-speed: 2s;">
-                                <!-- Three spinner -->
-                                <span class="d-flex flex-row align-items-center text-dark m-0 p-0 ps-4">
+                                <span v-else class="text-primary fs-6  m-0 p-0 mx-1">
                                     ---
                                 </span>
                             </div>
+                        </div>
+                        <div class="m-0 p-0">
+                            <a @click="CopyIPV6" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
+                                <span v-if="!IPV6AddressCopied" class="small">
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 23px;">
+                                </span>    
+                                <span v-if="IPV6AddressCopied" class="d-flex flex-row justify-content-center align-items-end text-primary">
+                                    <i class="bi bi-check-all"></i>
+                                    <span class="small">Copied</span>
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>
