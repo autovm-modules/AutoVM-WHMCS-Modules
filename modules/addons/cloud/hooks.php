@@ -124,6 +124,7 @@ function admin_get_user_token_from_database($WhUserId)
 // Manage user token, read from table or create and record a new token
 function admin_handel_usertoken($WhUserId, $BackendUrl)
 {
+    
     try {
         // Find client info
         $client = Client::find($WhUserId);
@@ -174,6 +175,145 @@ function admin_handel_usertoken($WhUserId, $BackendUrl)
     }
 }
 
+
+// Manage user token for client side
+function client_handel_usertoken($WhUserId, $BackendUrl)
+{
+    
+    try {
+        // Find client info
+        $client = Client::find($WhUserId);
+        if (empty($client)) {
+            return false; // We dont need to log anything here
+        }
+
+        // Find token in database
+        $token = admin_get_user_token_from_database($WhUserId);
+
+        // Create user in AutoVM if there is no token in data base
+        if (empty($token)) {
+            $response = admin_create_user($client, $BackendUrl);
+
+            if (empty($response)) {
+                return false; // We dont need to log anything here
+            }
+
+            $message = property_exists($response, 'message');
+            if ($message) {
+                return false; // We dont need to log anything here
+            }
+
+            // Save token
+            $user = $response->data;
+            $params = ['user_id' => $client->id, 'token' => $user->token];
+
+            $answer = Capsule::table('autovm_user')->insert($params);
+
+            if($answer){
+                return true;
+            } else {
+                return false;
+            }
+
+        } else {
+            return true;
+        }
+    } catch (\Exception $e) {
+        return false;
+    }
+}
+
+// Get Token From AutoVm module
+function client_get_admintoken_baseurl_cloud(){
+    $response = [];
+
+    // find Module aparams
+    try {
+        $moduleparams = Capsule::table('tbladdonmodules')->get();
+        foreach ($moduleparams as $item) {
+            if($item->module == 'autovm'){
+                if($item->setting == 'BackendUrl'){
+                    $BackendUrl = $item->value;
+                }
+                
+                if($item->setting == 'AdminToken'){
+                    $AdminToken = $item->value;
+                }
+                
+                if($item->setting == 'DefLang'){
+                    $DefLang = $item->value;
+                }
+                
+                if($item->setting == 'CloudActivationStatus'){
+                    $CloudActivationStatus = $item->value;
+                }
+            }
+        }
+    } catch (\Exception $e) {
+        return $response;
+    }
+
+
+    // if cloud is active
+    if(isset($CloudActivationStatus)){
+        $response['CloudActivationStatus'] = $CloudActivationStatus;
+    }
+
+
+    if(empty($BackendUrl)){
+        return $response;
+    }
+    
+    if(empty($AdminToken)){
+        return $response;
+    }
+
+    if(empty($DefLang)){
+        return $response;
+    }
+    
+    if(isset($AdminToken) && isset($BackendUrl) && isset($DefLang)){
+        $response['AdminToken'] = $AdminToken;
+        $response['BackendUrl'] = $BackendUrl;
+        $response['DefLang'] = $DefLang;
+        return $response;
+    }
+    
+}
+
+
+// Hook to generate user and token in data base for cloud in client side
+add_hook('ClientAreaPage', 1, function($params) {
+    $response = client_get_admintoken_baseurl_cloud();
+    
+    if(!empty($response['error'])){
+        return false;
+    }
+
+    if(!empty($response['message'])){
+        return false;
+    }
+
+    if(!empty($response['CloudActivationStatus'])){
+        $CloudActivationStatus = $response['CloudActivationStatus'];
+    } else {
+        return false;
+    }
+    
+    if(!empty($CloudActivationStatus)){
+        if(!empty($response['AdminToken']) && !empty($response['BackendUrl']) && !empty($response['DefLang'])){
+            $AdminToken = $response['AdminToken'];
+            $BackendUrl = $response['BackendUrl'];
+        }        
+    }
+
+    
+    $WhUserId = $params['client']['id'];
+    if(isset($WhUserId) && isset($BackendUrl)){
+        $response = client_handel_usertoken($WhUserId, $BackendUrl);
+    }
+
+});
 
 // iframe in user profile tab in admin panel to handle user balance and credit
 add_hook('AdminAreaClientSummaryPage', 1, function($vars) {
@@ -267,7 +407,6 @@ add_hook('AdminAreaClientSummaryPage', 1, function($vars) {
         return $value;    
     }
 });
-
 
 
 // create menu if cloud is active

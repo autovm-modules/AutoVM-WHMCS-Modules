@@ -31,8 +31,8 @@ $DirectoriesList = [
                 ];
                 
 
-$RemoteZipAddress = 'https://www.update.autovm.net/whmcs/downlodedautovm.zip';
-$RemoteVersionAddress = 'https://www.update.autovm.net/whmcs/autovmversion.txt';
+$RemoteZipAddress = 'https://update.autovm.net/whmcs/downloadedautovm.zip';
+$RemoteVersionAddress = 'https://update.autovm.net/whmcs/autovmversion.txt';
 $RemoteVersion = file_get_contents($RemoteVersionAddress);
 if(empty($RemoteVersion)){$RemoteVersion = 0;}
 

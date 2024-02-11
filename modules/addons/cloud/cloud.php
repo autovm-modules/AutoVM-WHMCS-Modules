@@ -2,7 +2,7 @@
 use WHMCS\Database\Capsule;
 $path = dirname(__FILE__);
 
-require $path . '/controller.php';
+require_once $path . '/controller.php';
 
 function cloud_config()
 {
@@ -48,7 +48,7 @@ function cloud_config()
     $configarray = array(
         "name" => "AutoVMCloud",
         "description" => "Cloud Module By AutoVM for WHMCS",
-        "version" => "V05.11.00",
+        "version" => "V05.12.01",
         "author" => "AutoVM.net",
         "fields" => array(
             "AutovmDefaultCurrencyID" => array ("FriendlyName" => "Currency ID", "Type" => "text", "Size" => "31", "Description" => $AutovmDefaultCurrencyID, "Default" => 1),
@@ -216,8 +216,6 @@ function autovm_get_config_cloud(){
     return $response;
 }
 
-
-
 // Add functionality to client area env
 function cloud_create_config_file($variables){
     
@@ -227,7 +225,6 @@ function cloud_create_config_file($variables){
     // Write the array to the configuration file
     file_put_contents($configFilePath, '<?php return ' . var_export($configArray, true) . ';');
 }
-
 
 // Add functionality to client area env
 function cloud_clientarea($vars)
@@ -297,7 +294,6 @@ function cloud_clientarea($vars)
         }
     }
 }
-
 
 // Show in admin panel in addon menu page
 function cloud_output($vars) {
