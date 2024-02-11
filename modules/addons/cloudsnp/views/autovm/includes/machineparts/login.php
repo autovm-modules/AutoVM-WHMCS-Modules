@@ -145,7 +145,7 @@
                         {{ lang('networkinformation') }}
                     </span>
                     </span>
-                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/internet.svg" alt="internet">
+                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/internet.svg" alt="internet">
                 </div>
 
                 <!-- ip -->
@@ -174,7 +174,7 @@
                     <div class="m-0 p-0">
                         <a @click="CopyAddress" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
                             <span v-if="!AddressCopied" class="small">
-                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloud/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 23px;">
+                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 23px;">
                             </span>    
                             <span v-if="AddressCopied" class="d-flex flex-row justify-content-center align-items-end text-primary">
                                 <i class="bi bi-check-all"></i>
