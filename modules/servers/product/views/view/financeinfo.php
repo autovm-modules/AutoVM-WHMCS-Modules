@@ -149,38 +149,37 @@
 
             <!-- bottom slice -->
             <div>
-                <div class="m-0 p-0 mt-0 fs-4">
-                    <div class="d-flex flex-row justify-content-between m-0 p-0 mb-4">
-                        <span class="text-secondary fs-6 m-0 p-0 align-middle">
-                            {{ lang('networkstatus') }}
-                        </span>
-                    </div>
-                    <div class="row d-flex flex-row m-0 p-0">
-                        <div v-if="!detailIsLoaded" class="m-0 p-0 ps-3">
-                            <div class="m-0 p-0">
-                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/nounstatus.svg"
-                                    width="20">
-                                <span class="text-dark m-0 p-0 ps-4">
-                                    --- 
+                <div class="m-0 p-0 fs-4">
+                    <div class="d-flex flex-row align-items-center justify-content-between m-0 p-0 mb-4">
+                        <div class="d-flex flex-row align-items-center justify-content-between m-0 p-0">
+                            <?php if($templatelang =='Farsi'): ?>
+                                <div style="width:80px">
+                            <?php else: ?>
+                                <div style="width:40px">
+                            <?php endif ?>
+                                <span class="text-secondary fs-6 m-0 p-0">
+                                    {{ lang('IPV6') }}
+                                </span>
+                            </div>
+                            <div style="width:200px">
+                                <span v-if="Ipv6Address != null" class="text-primary fs-6 m-0 p-0 border-0 mx-3" :class="ipv6color">    
+                                    {{ Ipv6Address }}
+                                </span>
+                                <span v-else class="text-primary fs-6  m-0 p-0 mx-1">
+                                    ---
                                 </span>
                             </div>
                         </div>
-                        <div v-else class="m-0 p-0 ps-3">
-                            <div v-if="online" class="m-0 p-0">
-                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/online.svg"
-                                    width="20">
-                                <span class="text-success ps-4">
-                                    {{ lang('connected') }}
+                        <div class="m-0 p-0">
+                            <a @click="CopyIPV6" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
+                                <span v-if="!IPV6AddressCopied" class="small">
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 23px;">
+                                </span>    
+                                <span v-if="IPV6AddressCopied" class="d-flex flex-row justify-content-center align-items-end text-primary">
+                                    <i class="bi bi-check-all"></i>
+                                    <span class="small">Copied</span>
                                 </span>
-                            </div>
-
-                            <div v-else-if="offline" class="m-0 p-0">
-                                <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/offline.svg"
-                                    width="20">
-                                <span class="text-danger ps-4">
-                                    {{ lang('disconnected') }}
-                                </span>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

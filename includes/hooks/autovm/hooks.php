@@ -114,6 +114,18 @@ add_hook('ClientAreaPage', 100, function($params) {
         return false;
     }
     
+    if(isset($response['DefLang'])){
+        $lang = $response['DefLang'];
+        if(($lang != 'English' && $lang != 'Farsi' && $lang != 'Turkish' && $lang != 'Russian' && $lang != 'Deutsch' && $lang != 'French' && $lang != 'Brizilian' && $lang != 'Italian')){
+            $lang = 'English';
+        }
+        if(!empty($lang)){
+            if(empty($_COOKIE['temlangcookie']) && !headers_sent()) {
+                setcookie('temlangcookie', $lang, time() + (86400 * 30 * 12), '/');
+            }
+        }
+    }
+
     if(isset($response['AdminToken']) && isset($response['BackendUrl'])){
         $AdminToken = $response['AdminToken'];
         $BackendUrl = $response['BackendUrl'];
@@ -169,6 +181,30 @@ add_hook('ClientAreaPage', 100, function($params) {
 });
 
 
+add_hook('AdminAreaPage', 1, function($vars) {
+    if(empty($_COOKIE['temlangcookie'])){
+        $response =  autovm_get_admintoken_baseurl_client();
+        if(!empty($response['error'])){
+            return false;
+        }
+
+        if(!empty($response['message'])){
+            return false;
+        }
+        
+        if(isset($response['DefLang'])){
+            $lang = $response['DefLang'];
+            if(($lang != 'English' && $lang != 'Farsi' && $lang != 'Turkish' && $lang != 'Russian' && $lang != 'Deutsch' && $lang != 'French' && $lang != 'Brizilian' && $lang != 'Italian')){
+                $lang = 'English';
+            }
+            if(!empty($lang)){
+                if(empty($_COOKIE['temlangcookie']) && !headers_sent()) {
+                    setcookie('temlangcookie', $lang, time() + (86400 * 30 * 12), '/');
+                }
+            }
+        }
+    }
+});
 
 
 // Hook for creating traffic in WHMCS version 5.4

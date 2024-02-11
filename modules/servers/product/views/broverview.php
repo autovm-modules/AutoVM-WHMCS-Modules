@@ -1,3 +1,4 @@
+<?php include_once('funwritecookies.php'); ?>
 <?php include_once('funcurl.php');    ?>
 <?php include_once('config.php');     ?>
 
@@ -176,12 +177,44 @@
                                                     </span>    
                                                     <span class="d-flex flex-row justify-content-center align-items-end text-primary" v-if="AddressCopied">
                                                         <i class="bi bi-check-all"></i>
-                                                        <span class="small">Copied</span>
                                                     </span>
                                                 </button>
                                             </span>
                                         </span>
                                     </div><!-- End IP -->
+                                    <!-- bottom slice -->
+                                    <div v-if="Ipv6Address != null">
+                                        <div class="m-0 p-0 mt-0 fs-4">
+                                            <div class="d-flex flex-row align-items-center justify-content-start m-0 p-0 mb-4">
+                                                <div class="d-flex flex-row align-items-center justify-content-between m-0 p-0">
+                                                    <div style="">
+                                                        <span class="text-secondary fs-6 m-0 p-0">
+                                                            {{ lang('IPV6') }}
+                                                            <span class="">:</span>
+                                                        </span>
+                                                    </div>
+                                                    <div style="">
+                                                        <span v-if="Ipv6Address != null" class="text-primary fs-6 m-0 p-0 border-0 mx-3" :class="ipv6color">    
+                                                            {{ Ipv6Address }}
+                                                        </span>
+                                                        <span v-else class="text-primary fs-6  m-0 p-0 mx-1">
+                                                            ---
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="m-0 p-0">
+                                                    <a @click="CopyIPV6" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
+                                                        <span v-if="!IPV6AddressCopied" class="small">
+                                                            <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 14px;">
+                                                        </span>    
+                                                        <span v-if="IPV6AddressCopied" class="d-flex flex-row justify-content-center align-items-end text-primary">
+                                                            <i class="bi bi-check-all"></i>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end bottom -->
                                 </div>
                             </div>
                             
