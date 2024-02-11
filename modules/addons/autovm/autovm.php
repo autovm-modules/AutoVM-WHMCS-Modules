@@ -10,21 +10,31 @@ function autovm_config()
     $CloudActivationStatusLabel = '<span style="padding-left: 30px; color: red;">!!! Please be very careful. Enabling Cloud Module unintentionally or accidentally can be harmful.</span>';
     $ConsoleRoute = '<span style="padding-left: 30px">This is usually is domain of your WHMCS added to /console e.q. "https://mywhmcs.com/console"</span>';
     
+    $langiageOption = array (
+        'English' => 'English',
+        'Farsi' => 'Farsi',
+        'Turkish' => 'Turkish',
+        'Russian' => 'Russian',
+        'Deutsch' => 'Deutsch',
+        'French' => 'French',
+        'Brizilian' => 'Brizilian',
+        'Italian' => 'Italian',
+    );
+
     $configarray = array(
         "name" => "AutoVM",
         "description" => "Main AutoVM Module",
-        "version" => "V05.11.00",
+        "version" => "V05.12.01",
         "author" => "autovm.net",
         "fields" => array(
             "BackendUrl" => array ("FriendlyName" => "Backend Url", "Type" => "text", "Size" => "31", "Description" => $BackendUrlLabel, "Default" => "http://backend.autovm.online"),
             "AdminToken" => array ("FriendlyName" => "Admin Token", "Type" => "text", "Size" => "31", "Description" => $AdminTokenLabel, "Default" => "xxxx"),
-            "DefLang" => array ("FriendlyName" => "Default Language", "Type" => "dropdown", "Options" => "English, Farsi, Turkish, Russian, Deutsch, French, Brizilian, Italian", "Description" => $DefLangLabel, "Default" => "English"),
+            "DefLang" => array ("FriendlyName" => "Default Language", "Type" => "dropdown", "Options" => $langiageOption, "Description" => $DefLangLabel, "Default" => "English"),
             "CloudActivationStatus" => array ("FriendlyName" => "Enable Cloud Module", "Type" => "yesno", 'Description' => $CloudActivationStatusLabel, "Default" => ""),            
             "ConsoleRoute" => array ("FriendlyName" => "Console Route", "Type" => "text", "Size" => "50", "Description" => $ConsoleRoute, "Default" => "https://mywhmcs.com/console"),
         ));
         return $configarray;
 }
-
 
 function autovm_activate()
 {
@@ -59,10 +69,7 @@ function autovm_activate()
     $pdo->exec('ALTER TABLE tblcurrencies MODIFY rate decimal(10, 10)');
 }
 
-
-
-
-// Get Token From AutoVm module
+// Get Token From AutoVM
 function autovm_get_admintoken_baseurl_autovm(){
     $response = [];
 
@@ -130,8 +137,6 @@ function autovm_get_admintoken_baseurl_autovm(){
     }
     
 }
-
-
 
 // Show in admin panel in addon menu page
 function autovm_output($vars) {

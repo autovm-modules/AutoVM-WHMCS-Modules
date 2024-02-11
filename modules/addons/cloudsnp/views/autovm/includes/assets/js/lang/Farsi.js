@@ -321,6 +321,7 @@ let common = {
     "ipv" : "انتخاب نسخه پروتکل",
     "ipvversion4" : "نسخه چهار",
     "ipvversion6" : "نسخه شش",
+    "IPV6" : "آی‌پی نسخه ۶ : ",
 // create machine page
 
 

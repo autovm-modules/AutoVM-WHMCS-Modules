@@ -180,6 +180,7 @@ let common = {
         "destroyaction": "حذف",
         "fetching" : "در حال دریافت اطلاعات",
         "payasyougo" : "پرداخت به ازای مصرف",
+        "IPV6" : "آی‌پی نسخه ۶",
     // End Unique for this cloud
 
 // end Machine View 

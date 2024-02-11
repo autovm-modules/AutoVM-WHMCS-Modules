@@ -12,7 +12,7 @@ class AVMController
 
     public function __construct($serviceId)
     {
-        $response =  autovm_get_admintoken_baseurl_client();
+        $response =  $this->autovm_get_admintoken_baseurl_client();
         if(!empty($response['error'])){
             echo($response['error']);
             return false;
@@ -33,6 +33,80 @@ class AVMController
         $this->BackendUrl = $BackendUrl;
         $this->AdminToken = $AdminToken;
         $this->ConsoleRoute = $ConsoleRoute;
+    }
+
+    // Get Token From AutoVm module
+    function autovm_get_admintoken_baseurl_client(){
+        $response = [];
+
+        // find Module aparams
+        try {
+            $moduleparams = Capsule::table('tbladdonmodules')->get();
+            foreach ($moduleparams as $item) {
+                if($item->module == 'autovm'){
+                    if($item->setting == 'BackendUrl'){
+                        $BackendUrl = $item->value;
+                    }
+                    
+                    if($item->setting == 'AdminToken'){
+                        $AdminToken = $item->value;
+                    }
+                    
+                    if($item->setting == 'DefLang'){
+                        $DefLang = $item->value;
+                    }
+
+                    if($item->setting == 'CloudActivationStatus'){
+                        $CloudActivationStatus = $item->value;
+                    }
+                    
+                    if($item->setting == 'ConsoleRoute'){
+                        $ConsoleRoute = $item->value;
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            $error = 'Database ERR ===> Can not find module params table in database';
+            $response['error'] = $error;
+            return $response;
+        }
+        
+        // if cloud is active
+        if(isset($CloudActivationStatus)){
+            $response['CloudActivationStatus'] = $CloudActivationStatus;
+        }
+
+        if(empty($BackendUrl)){
+            $message = 'Backend URL ERR ===> Go to addons module and insert your backend adrress';
+            $response['message'] = $message;
+            return $response;
+        }
+        
+        if(empty($AdminToken)){
+            $message = 'Admin Token ERR ===> Go to addons module and insert your Token';
+            $response['message'] = $message;
+            return $response;
+        }
+    
+        if(empty($DefLang)){
+            $message = 'Defaul Language ERR ===> Go to addons module and select a language';
+            $response['message'] = $message;
+            return $response;
+        }
+        
+        if(empty($ConsoleRoute)){
+            $message = 'ConsoleRoute ERR ===> Go to addons module and insert ConsoleRoute';
+            $response['message'] = $message;
+            return $response;
+        }
+
+        if(isset($AdminToken) && isset($BackendUrl) && isset($DefLang) && isset($ConsoleRoute)){
+            $response['AdminToken'] = $AdminToken;
+            $response['BackendUrl'] = $BackendUrl;
+            $response['DefLang'] = $DefLang;
+            $response['ConsoleRoute'] = $ConsoleRoute;
+            return $response;
+        } 
     }
 
     public function getConsoleRoute()

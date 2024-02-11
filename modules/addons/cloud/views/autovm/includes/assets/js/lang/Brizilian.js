@@ -311,7 +311,7 @@ let common = {
     "confirmationtext" : "Eu afirmo meu acordo com todos os termos e regulamentos para utilizar a nuvem global da rede.",
     "optional" : "Opcional",
     "readmore" : "Leia Mais ...",
-
+    "IPV6" : "IPV6",
 // create machine page
 }
 

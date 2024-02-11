@@ -290,6 +290,7 @@ let common = {
     "createanothermachine": "Eine weitere Maschine erstellen",
     "createsuccessmsg": "Jetzt können Sie Ihre Maschine in der Maschinenliste sehen, indem Sie auf den folgenden Link klicken. Sie können auch eine andere Maschine erstellen.",
     "onlyenglishletters": "Only English letters",
+    "IPV6" : "IPV6",
     // create machine page
 
 

@@ -42,9 +42,6 @@ $datapairs = array(
 
 
 
-
-
-
 // Delet all other machines
 $allCookies = $_COOKIE;
 
@@ -68,5 +65,8 @@ foreach ($datapairs as $key => $value) {
     setcookie($dynamicKey, $value, time() + 3600 * 24 * 7, '/');
     
 }
+
+
+
 
 ?>

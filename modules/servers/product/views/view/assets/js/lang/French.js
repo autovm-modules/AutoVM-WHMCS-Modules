@@ -180,6 +180,7 @@ let common = {
     "destroyaction": "Détruire",
     "fetching": "Récupération des données",
     "payasyougo" : "Payez au fur et à mesure",
+    "IPV6" : "IPV6",
     // End Unique for this cloud
 
 // end Machine View 
