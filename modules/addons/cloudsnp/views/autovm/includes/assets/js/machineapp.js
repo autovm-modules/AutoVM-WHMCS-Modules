@@ -3,6 +3,9 @@ app = createApp({
 
     data() {
         return {
+            Ipv6Address: null,
+            IPV6AddressCopied: null,
+            ipv6color: null,
             PersonalRootDirectoryURL: '',
             DiskErrorOverFlow: false,
             PanelLanguage: null,
@@ -131,6 +134,7 @@ app = createApp({
         
         machine() {
             this.setLastAction()
+            this.loadIpv6()
         },
     },
 
@@ -607,6 +611,18 @@ app = createApp({
     },
 
     methods: {
+        loadIpv6(){
+            let machineIsLoaded = this.machineIsLoaded;
+            let machine = this.machine;
+            if(machineIsLoaded && machine){
+                machine.reserves.forEach(reserve => {
+                    const address = reserve.address.address;
+                    if (address.includes(':')) {
+                        this.Ipv6Address = address
+                    }
+                }); 
+            }
+        },
 
         changeTimeVisibilty() {
             setTimeout(() => {
@@ -762,8 +778,8 @@ app = createApp({
 
         async loadModuleConfig() {
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=getModuleConfig');
-            if(response.data){
-                const answer = response.data
+            if(response?.data){
+                const answer = response?.data
                 const requiredProperties = [
                     'AutovmDefaultCurrencyID',
                     'AutovmDefaultCurrencySymbol',
@@ -776,7 +792,7 @@ app = createApp({
                   
                 if (requiredProperties.every(prop => answer.hasOwnProperty(prop))) {
                 this.moduleConfigIsLoaded = true;
-                this.moduleConfig = response.data
+                this.moduleConfig = response?.data
                 } else {
                 console.log('Module properties does not exist');
                 }
@@ -788,9 +804,9 @@ app = createApp({
         async loadCredit() {
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=loadCredit');
             
-            if(response.data != null){
-                this.userCreditinWhmcs = response.data.credit;
-                this.userCurrencyIdFromWhmcs = response.data.userCurrencyId;
+            if(response?.data != null){
+                this.userCreditinWhmcs = response?.data.credit;
+                this.userCurrencyIdFromWhmcs = response?.data.userCurrencyId;
             } else {
                 console.log('can not find credit');
             }
@@ -798,8 +814,8 @@ app = createApp({
 
         async loadWhCurrencies() {
             let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=getAllCurrencies')    
-            if(response.data.result == 'success'){
-                this.WhmcsCurrencies = response.data.currencies
+            if(response?.data.result == 'success'){
+                this.WhmcsCurrencies = response?.data.currencies
             } else {
                 return null
             }
@@ -809,20 +825,18 @@ app = createApp({
 
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=login')
 
-            response = response.data
+            response = response?.data
 
-            if (response.message) {
+            if (response?.message) {
 
                 // Its not ok to show message here
             }
 
-            if (response.data) {
+            if (response?.data) {
 
-                this.user = response.data
+                this.user = response?.data
             }
         },
-
-        
 
         setLastAction() {
 
@@ -1077,16 +1091,16 @@ app = createApp({
                 }
             })
 
-            response = response.data
+            response = response?.data
 
-            if (response.message) {
+            if (response?.message) {
 
                 // Its not ok to show message here
             }
 
-            if (response.data) {
+            if (response?.data) {
 
-                this.machine = response.data
+                this.machine = response?.data
                 this.machineIsLoaded = true
             }
         },
@@ -1105,16 +1119,16 @@ app = createApp({
                     }
                 })
 
-                response = response.data
+                response = response?.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
-                if (response.data) {
+                if (response?.data) {
                     this.doingAction = 'Console'
-                    this.machine = response.data
+                    this.machine = response?.data
                 }
             }
         },
@@ -1152,16 +1166,16 @@ app = createApp({
                     }
                 })
 
-                response = response.data
+                response = response?.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
-                if (response.data) {
+                if (response?.data) {
                     this.doingAction = 'Stop'
-                    this.machine = response.data
+                    this.machine = response?.data
                 }
             }
         },
@@ -1179,16 +1193,16 @@ app = createApp({
                     }
                 })
 
-                response = response.data
+                response = response?.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
-                if (response.data) {
+                if (response?.data) {
                     this.doingAction = 'Start'
-                    this.machine = response.data
+                    this.machine = response?.data
                 }
             }
         },
@@ -1206,16 +1220,16 @@ app = createApp({
                     }
                 })
 
-                response = response.data
+                response = response?.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
-                if (response.data) {
+                if (response?.data) {
                     this.doingAction = 'Reboot'
-                    this.machine = response.data
+                    this.machine = response?.data
                 }
             }
         },
@@ -1234,16 +1248,16 @@ app = createApp({
                     }
                 })
 
-                response = response.data
+                response = response?.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
-                if (response.data) {
+                if (response?.data) {
                     this.doingAction = 'SetUp'
-                    this.machine = response.data
+                    this.machine = response?.data
                 }
             }
         },
@@ -1262,16 +1276,16 @@ app = createApp({
                     }
                 })
 
-                response = response.data
+                response = response?.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
-                if (response.data) {
+                if (response?.data) {
 
-                    this.machine = response.data
+                    this.machine = response?.data
                 }
             }
         },
@@ -1296,16 +1310,16 @@ app = createApp({
                     }
                 })
 
-                response = response.data
+                response = response?.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
-                if (response.data) {
+                if (response?.data) {
 
-                    this.machine = response.data
+                    this.machine = response?.data
                 }
             }
         },
@@ -1333,6 +1347,28 @@ app = createApp({
             
         },
 
+        async CopyIPV6() {
+            this.IPV6AddressCopied = true;
+            let ValueToCopy = null;
+            if(this.Ipv6Address){
+                ValueToCopy = this.Ipv6Address;
+            } else {
+                ValueToCopy = '';
+            }
+
+            if(ValueToCopy){
+                try {
+                    await navigator.clipboard.writeText(ValueToCopy);
+                } catch (err) {
+                    console.log('Unable to copy Address to clipboard', err);
+                }    
+            }
+
+            setTimeout(() => {
+                this.IPV6AddressCopied = false;
+            }, 1000);
+        },
+
         async loadDetail() {
 
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=detail', {
@@ -1341,16 +1377,16 @@ app = createApp({
                 }
             })
 
-            response = response.data
+            response = response?.data
 
-            if (response.message) {
+            if (response?.message) {
 
                 // Its not ok to show message here
             }
 
-            if (response.data) {
+            if (response?.data) {
 
-                this.detail = response.data
+                this.detail = response?.data
                 this.setDetailLoadStatus()
             }
         },
@@ -1695,12 +1731,12 @@ app = createApp({
                 }
             })
             
-            response = response.data
-            if (response.message) {
+            response = response?.data
+            if (response?.message) {
             }
 
-            if (response.data) {
-                this.machineTraffic = response.data
+            if (response?.data) {
+                this.machineTraffic = response?.data
             }
         },
 
@@ -1708,16 +1744,16 @@ app = createApp({
 
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=categories')
 
-            response = response.data
+            response = response?.data
 
-            if (response.message) {
+            if (response?.message) {
 
                 // Its not ok to show message here
             }
 
-            if (response.data) {
+            if (response?.data) {
 
-                this.categories = response.data
+                this.categories = response?.data
             }
         },
 
@@ -1884,11 +1920,11 @@ app = createApp({
             // similiar from here
             let memoryChart = [{ x: '8/1', y: 0 }, { x: '8/2', y: 0 }]
 
-            if(response.data.message) {
-                console.log('getMemoryLinearData: ' + response.data.message)
+            if(response?.data.message) {
+                console.log('getMemoryLinearData: ' + response?.data.message)
             } else {
                 memoryChart = []
-                response = response.data['data']
+                response = response?.data['data']
                 for (let item of response) {
                     memoryChart.push({
                         x: item.month + '/' + item.day,
@@ -1916,11 +1952,11 @@ app = createApp({
             // similiar from here
             let CPUChart = [{ x: '8/1', y: 0 }, { x: '8/2', y: 0 }]
 
-            if(response.data.message) {
-                console.log('getCPULinearData: ' + response.data.message)
+            if(response?.data.message) {
+                console.log('getCPULinearData: ' + response?.data.message)
             } else {
                 CPUChart = []
-                response = response.data['data']
+                response = response?.data['data']
 
                 for (let item of response) {
                     CPUChart.push({

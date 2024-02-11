@@ -3,6 +3,10 @@ app = createApp({
 
     data() {
         return {
+            Ipv6Address: null,
+            IPV6AddressCopied: null,
+            ipv6color: null,
+
             doingAction: '',
             PersonalRootDirectoryURL: '',
             PanelLanguage: null,
@@ -129,6 +133,7 @@ app = createApp({
         
         machine() {
             this.setLastAction()
+            this.loadIpv6()
         },
     },
 
@@ -599,6 +604,21 @@ app = createApp({
     },
 
     methods: {
+
+        loadIpv6(){
+            let machineIsLoaded = this.machineIsLoaded;
+            let machine = this.machine;
+            if(machineIsLoaded && machine){
+                machine.reserves.forEach(reserve => {
+                    const address = reserve.address.address;
+                    if (address.includes(':')) {
+                        this.Ipv6Address = address
+                    }
+                });
+                
+            }
+        },
+        
         ConverFromWhmcsToCloud(value){
             if(this.CurrenciesRatioWhmcsToCloud  && value != null){
                 let ratio = this.CurrenciesRatioWhmcsToCloud
@@ -722,7 +742,7 @@ app = createApp({
 
             response = response.data
 
-            if (response.message) {
+            if (response?.message) {
 
                 // Its not ok to show message here
             }
@@ -984,7 +1004,7 @@ app = createApp({
 
             response = response.data
 
-            if (response.message) {
+            if (response?.message) {
                 this.setMachineLoadStatus()
             }
 
@@ -1011,9 +1031,9 @@ app = createApp({
 
                 response = response.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
                 if (response.data) {
@@ -1058,9 +1078,9 @@ app = createApp({
 
                 response = response.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
                 if (response.data) {
@@ -1085,9 +1105,9 @@ app = createApp({
 
                 response = response.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
                 if (response.data) {
@@ -1112,9 +1132,9 @@ app = createApp({
 
                 response = response.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
                 if (response.data) {
@@ -1140,9 +1160,9 @@ app = createApp({
 
                 response = response.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
                 if (response.data) {
@@ -1168,9 +1188,9 @@ app = createApp({
 
                 response = response.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
                 if (response.data) {
@@ -1202,9 +1222,9 @@ app = createApp({
 
                 response = response.data
 
-                if (response.message) {
+                if (response?.message) {
 
-                    this.openMessageDialog(this.lang(response.message))
+                    this.openMessageDialog(this.lang(response?.message))
                 }
 
                 if (response.data) {
@@ -1241,6 +1261,28 @@ app = createApp({
             
         },
 
+        async CopyIPV6() {
+            this.IPV6AddressCopied = true;
+            let ValueToCopy = null;
+            if(this.Ipv6Address){
+                ValueToCopy = this.Ipv6Address;
+            } else {
+                ValueToCopy = '';
+            }
+
+            if(ValueToCopy){
+                try {
+                    await navigator.clipboard.writeText(ValueToCopy);
+                } catch (err) {
+                    console.log('Unable to copy Address to clipboard', err);
+                }    
+            }
+
+            setTimeout(() => {
+                this.IPV6AddressCopied = false;
+            }, 1000);
+        },
+
 
         async loadDetail() {
 
@@ -1252,7 +1294,7 @@ app = createApp({
 
             response = response.data
 
-            if (response.message) {
+            if (response?.message) {
 
                 // Its not ok to show message here
             }
@@ -1586,7 +1628,7 @@ app = createApp({
             })
 
             response = response.data
-            if (response.message) {
+            if (response?.message) {
                 // Its not ok to show message here
             }
 
@@ -1601,7 +1643,7 @@ app = createApp({
 
             response = response.data
 
-            if (response.message) {
+            if (response?.message) {
 
                 // Its not ok to show message here
             }

@@ -179,6 +179,7 @@ let common = {
     "destroyaction": "Distruggi",
     "fetching": "Recupero Dati",
     "payasyougo": "Paga come vai",
+    "IPV6" : "IPV6",
     // Fine Unico per questo cloud
 
     // Fine Vista Macchina

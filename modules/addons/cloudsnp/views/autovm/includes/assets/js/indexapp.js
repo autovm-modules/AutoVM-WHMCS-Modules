@@ -360,23 +360,23 @@ app = createApp({
 
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=login')
 
-            response = response.data
+            response = response?.data
 
-            if (response.message) {
+            if (response?.message) {
 
                 // Its not ok to show message here
             }
 
-            if (response.data) {
-                this.user = response.data
-                this.ConstUserId = Object.freeze({value: response.data.id});
+            if (response?.data) {
+                this.user = response?.data
+                this.ConstUserId = Object.freeze({value: response?.data.id});
             }
         },
 
         async loadModuleConfig() {
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=getModuleConfig');
-            if(response.data){
-                const answer = response.data
+            if(response?.data){
+                const answer = response?.data
                 const requiredProperties = [
                     'AutovmDefaultCurrencyID',
                     'AutovmDefaultCurrencySymbol',
@@ -397,7 +397,7 @@ app = createApp({
                   
                 if (requiredProperties.every(prop => answer.hasOwnProperty(prop))) {
                 this.moduleConfigIsLoaded = true;
-                this.moduleConfig = response.data
+                this.moduleConfig = response?.data
                 } else {
                 console.log('Module properties does not exist');
                 }
@@ -410,17 +410,17 @@ app = createApp({
 
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=machines')
 
-            response = response.data
+            response = response?.data
 
-            if (response.message) {
+            if (response?.message) {
                 this.machinsLoaded = true
-                if(response.message == "There is nothing."){
+                if(response?.message == "There is nothing."){
                     this.userHasNoMachine = true;
                 }
             }
 
-            if (response.data) {
-                this.machines = response.data
+            if (response?.data) {
+                this.machines = response?.data
                 this.machinsLoaded = true
             }
         },
@@ -428,9 +428,9 @@ app = createApp({
         async loadCredit() {
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=loadCredit');
             
-            if(response.data != null){
-                this.userCreditinWhmcs = response.data.credit;
-                this.userCurrencyIdFromWhmcs = response.data.userCurrencyId;
+            if(response?.data != null){
+                this.userCreditinWhmcs = response?.data.credit;
+                this.userCurrencyIdFromWhmcs = response?.data.userCurrencyId;
             } else {
                 console.log('can not find credit');
             }
@@ -449,9 +449,9 @@ app = createApp({
             if(chargingValidity == 'fine'){
                 let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=CreateUnpaidInvoice', params)
                 
-                if(response.data.result == 'success'){    
-                    this.invoice = response.data;
-                    this.ConstantInvoiceId = Object.freeze({value: response.data.invoiceid});
+                if(response?.data.result == 'success'){    
+                    this.invoice = response?.data;
+                    this.ConstantInvoiceId = Object.freeze({value: response?.data.invoiceid});
                     setTimeout(() => {
                         this.theStepStatus = 12;
                         this.chargeCloud();
@@ -490,7 +490,7 @@ app = createApp({
                 let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=chargeCloud', params);
                 console.log(response);
                 
-                if(response.data.data){
+                if(response?.data.data){
                     setTimeout(() => {
                         this.theStepStatus = 22;
                         this.applyTheCredit();
@@ -516,7 +516,7 @@ app = createApp({
             const params = {invoiceid: invoiceid};
 
             let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=markCancelInvoice', params)
-            if(response.data.result == 'success'){    
+            if(response?.data.result == 'success'){    
                 console.log('Invoice is marked cancelled successfully');
             } else {
                 console.log('can not able to clear invoice'); 
@@ -535,7 +535,7 @@ app = createApp({
             if(invoiceid > 0){
                 let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=applyTheCredit', params)
                 
-                if(response.data.result == 'success'){
+                if(response?.data.result == 'success'){
                     setTimeout(() => {
                         this.theStepStatus = 32;
                         setTimeout(() => {
@@ -559,8 +559,8 @@ app = createApp({
         
         async loadWhCurrencies() {
             let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloudsnp&action=getAllCurrencies')    
-            if(response.data.result == 'success'){
-                this.WhmcsCurrencies = response.data.currencies
+            if(response?.data.result == 'success'){
+                this.WhmcsCurrencies = response?.data.currencies
             } else {
                 return null
             }

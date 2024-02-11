@@ -12,7 +12,7 @@
                             <div v-if="!userClickedCreationBtn">    
 
                                 <!-- enough data to push btn -->
-                                <div v-else-if="themachinename && regionName && planName && templateId">
+                                <div v-if="themachinename && regionName && planName && templateId">
                                     <p class="h5 fw-Medium">{{ lang('youarecreating') }}</p>
                                     <p class="fs-6 fw-light mt-3">{{ lang('makesure') }}</p>
                                 </div>

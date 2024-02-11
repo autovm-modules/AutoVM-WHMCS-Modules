@@ -180,6 +180,7 @@ let common = {
     "destroyaction": "Sil",
     "fetching" : "Veri Getiriliyor",
     "payasyougo" : "Kullandıkça öde",
+    "IPV6" : "IPV6",
 // End Unique for this cloud
 
 // end Machine View 

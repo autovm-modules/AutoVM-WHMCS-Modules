@@ -318,6 +318,7 @@ let common = {
     "ipv" : "Internet Protocol version",
     "ipvversion4" : "",
     "ipvversion6" : "",
+    "IPV6" : "IPV6",
     // end create machine page
 
 
