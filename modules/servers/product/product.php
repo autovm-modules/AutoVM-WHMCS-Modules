@@ -314,21 +314,14 @@ function product_CreateAccount($params)
     if ($message) {
         return $response->message;
     }
-
-
-    // Add traffic to the created machine
-    if($response->data->id && $traffic){
-        $machineId = $response->data->id;
-        if($machineId){
-            $trafficResponse = $controller->sendTrafficRequest($machineId, $traffic, $remaining, $duration, $type = 'main');
-        }           
-    } else {
-        return 'Could not get machine ID to set Traffic';
-    }
  
-
     // Machine details
     $machine = $response->data;
+
+    // Add traffic to machine
+    if ($traffic) {
+        $trafficResponse = $controller->sendTrafficRequest($machine->id, $traffic, $remaining, $duration, 'main');
+    }
 
     // Add machine to service
     $params = [
