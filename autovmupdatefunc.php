@@ -7,7 +7,7 @@
 define('ROOTDIR', dirname(__FILE__));
 require_once(ROOTDIR . '/init.php');
 $session = $_SESSION['adminid'];
-if($session != 1){
+if(empty($session)){
     exit("Opps");
 }
 
