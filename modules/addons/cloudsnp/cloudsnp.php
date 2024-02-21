@@ -86,7 +86,7 @@ function cloudsnp_config()
     $configarray = array(
         "name" => "Cloud SNP",
         "description" => "Cloud SNP Module By AutoVM",
-        "version" => "V05.12.01",
+        "version" => "V05.12.03",
         "author" => "autovm.net",
         "fields" => array(
             "ResellerBackendUrl" => array ("FriendlyName" => "Reseller Backend Url", "Type" => "text", "Size" => "31", "Description" => $ResellerBackendUrlLabel, "Default" => "https://api.cloudsnp.net"),
