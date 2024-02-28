@@ -116,7 +116,7 @@
 
 
                 <!-- ip -->
-                <div class="mt-4 fs-4 d-flex flex-row justify-content-between m-0 p-0">
+                <div v-if="Ipv4Address == null" class="mt-4 fs-4 d-flex flex-row justify-content-between m-0 p-0">
                     <div class="text-start m-0 p-0">
                         <span class="text-secondary fs-6 align-middle m-0 p-0">
                             {{ lang('ipaddress') }}
@@ -143,10 +143,48 @@
                 </div>
             </div><!-- end top -->
 
-            <div class="py-4">
+            <div v-if="Ipv4Address == null" class="py-4">
                 <hr class="text-secondary border-2 border-secondary m-0 p-0">
             </div>
 
+            <!-- bottom slice -->
+            <div>
+                <div class="m-0 p-0 fs-4">
+                    <div class="d-flex flex-row align-items-center justify-content-between m-0 p-0">
+                        <div class="d-flex flex-row align-items-center justify-content-between m-0 p-0">
+                            <?php if($templatelang =='Farsi'): ?>
+                                <div style="width:80px">
+                            <?php else: ?>
+                                <div style="width:40px">
+                            <?php endif ?>
+                                <span class="text-secondary fs-6 m-0 p-0">
+                                    {{ lang('IPV4') }}
+                                </span>
+                            </div>
+                            <div style="width:200px">
+                                <span v-if="Ipv4Address != null" class="text-primary fs-6 m-0 p-0 border-0 mx-3" :class="ipv4color">    
+                                    {{ Ipv4Address }}
+                                </span>
+                                <span v-else class="text-primary fs-6  m-0 p-0 mx-1">
+                                    ---
+                                </span>
+                            </div>
+                        </div>
+                        <div class="m-0 p-0">
+                            <a @click="CopyIPV4" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
+                                <span v-if="!IPV4AddressCopied" class="small">
+                                    <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 23px;">
+                                </span>    
+                                <span v-if="IPV4AddressCopied" class="d-flex flex-row justify-content-center align-items-end text-primary">
+                                    <i class="bi bi-check-all"></i>
+                                    <span class="small">Copied</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end bottom -->
             <!-- bottom slice -->
             <div>
                 <div class="m-0 p-0 fs-4">
@@ -183,7 +221,8 @@
                         </div>
                     </div>
                 </div>
-            </div><!-- end bottom -->
+            </div>
+            <!-- end bottom -->
         </div>
     </div><!-- end Network -->
 

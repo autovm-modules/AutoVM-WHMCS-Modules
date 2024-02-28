@@ -4,7 +4,11 @@ const app = Vue.createApp({
             Ipv6Address: null,
             IPV6AddressCopied: null,
             ipv6color: null,
-            
+
+            Ipv4Address: null,
+            IPV4AddressCopied: null,
+            ipv4color: null,
+
             PersonalRootDirectoryURL: '',
             PanelLanguage: null,
 
@@ -144,6 +148,7 @@ const app = Vue.createApp({
     watch: {
         machine() {
             this.loadIpv6()
+            this.loadIpv4()
 
         },
 
@@ -181,16 +186,16 @@ const app = Vue.createApp({
     },
 
     computed: {
-        trafficTotal(){
+        trafficTotal() {
             const value = this.machineTraffic?.total;
             if (value === 0 || value === '0') { return 0; }
             if (value) {
                 const numericValue = Number(value);
                 if (!isNaN(numericValue)) {
                     const result = numericValue / (1024 * 1024 * 1024);
-                    if(result < 1){
+                    if (result < 1) {
                         return Number(result.toFixed(2));
-                    } else if(result < 10){
+                    } else if (result < 10) {
                         return Number(result.toFixed(1));
                     } else {
                         return Number(result.toFixed(0));
@@ -199,17 +204,17 @@ const app = Vue.createApp({
             }
             return null;
         },
-        
-        trafficSend(){
+
+        trafficSend() {
             const value = this.machineTraffic?.sent;
             if (value === 0 || value === '0') { return 0; }
             if (value) {
                 const numericValue = Number(value);
                 if (!isNaN(numericValue)) {
                     const result = numericValue / (1024 * 1024 * 1024);
-                    if(result < 1){
+                    if (result < 1) {
                         return Number(result.toFixed(2));
-                    } else if(result < 10){
+                    } else if (result < 10) {
                         return Number(result.toFixed(1));
                     } else {
                         return Number(result.toFixed(0));
@@ -218,17 +223,17 @@ const app = Vue.createApp({
             }
             return null;
         },
-        
-        trafficReceived(){
+
+        trafficReceived() {
             const value = this.machineTraffic?.received;
             if (value === 0 || value === '0') { return 0; }
             if (value) {
                 const numericValue = Number(value);
                 if (!isNaN(numericValue)) {
                     const result = numericValue / (1024 * 1024 * 1024);
-                    if(result < 1){
+                    if (result < 1) {
                         return Number(result.toFixed(2));
-                    } else if(result < 10){
+                    } else if (result < 10) {
                         return Number(result.toFixed(1));
                     } else {
                         return Number(result.toFixed(0));
@@ -237,7 +242,7 @@ const app = Vue.createApp({
             }
             return null
         },
-        
+
         actionMethod() {
             let actionMethod = this.getMachineProperty('action.method');
 
@@ -644,17 +649,31 @@ const app = Vue.createApp({
     },
 
     methods: {
-        loadIpv6(){
+        loadIpv6() {
             let machineIsLoaded = this.machineIsLoaded;
             let machine = this.machine;
-            if(machineIsLoaded && machine){
+            if (machineIsLoaded && machine) {
                 machine.reserves.forEach(reserve => {
                     const address = reserve.address.address;
                     if (address.includes(':')) {
                         this.Ipv6Address = address
                     }
                 });
-                
+
+            }
+        },
+
+        loadIpv4() {
+            let machineIsLoaded = this.machineIsLoaded;
+            let machine = this.machine;
+            if (machineIsLoaded && machine) {
+                machine.reserves.forEach(reserve => {
+                    const address = reserve.address.address;
+                    if (address.includes('.')) {
+                        this.Ipv4Address = address
+                    }
+                });
+
             }
         },
 
@@ -945,18 +964,18 @@ const app = Vue.createApp({
 
             let address = null
             let params = null
-            
-            if(this.consoleRoute != null){
+
+            if (this.consoleRoute != null) {
                 address = this.consoleRoute
             } else {
                 console.log('can not find console route in open console');
             }
 
-            if(address != null){
+            if (address != null) {
                 params = new URLSearchParams({
                     'host': this.machine.console.proxy.proxy, 'port': this.machine.console.proxy.port, 'ticket': this.machine.console.ticket
                 }).toString()
-    
+
                 return window.open([address, params].join('?'))
             }
         },
@@ -1245,7 +1264,7 @@ const app = Vue.createApp({
 
             }
         },
-        
+
         async loadConsoleRoute() {
             let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=getConsoleRoute', {
                 params: {
@@ -1253,12 +1272,12 @@ const app = Vue.createApp({
                 }
             })
 
-            if(response?.data){
+            if (response?.data) {
                 consoleRoute = response?.data;
-                if(consoleRoute != 'empty'){
+                if (consoleRoute != 'empty') {
                     this.consoleRoute = consoleRoute
                 } else {
-                    console.log('Console Route is null');    
+                    console.log('Console Route is null');
                 }
             } else {
                 console.log('can not find console route');
@@ -1345,7 +1364,7 @@ const app = Vue.createApp({
         createRAMRadialGraph() {
             let element = document.querySelector('.ramRadial')
             let percent = this.getMemoryPercent();
-            if(percent > 100){
+            if (percent > 100) {
                 percent = 100
             }
             // create
@@ -1415,7 +1434,7 @@ const app = Vue.createApp({
         createCPURadialGraph() {
             let element = document.querySelector('.cpuRadial')
             let percent = this.getCPUPercent();
-            if(percent > 100){
+            if (percent > 100) {
                 percent = 100
             }
             // create
@@ -1485,7 +1504,7 @@ const app = Vue.createApp({
         createDISKRadialGraph() {
             let element = document.querySelector('.diskRadial')
             let percent = this.getDiskPercent();
-            if(percent > 100){
+            if (percent > 100) {
                 percent = 100
             }
             // create
@@ -1555,7 +1574,7 @@ const app = Vue.createApp({
         createBandwidthRadialGraph() {
             let element = document.querySelector('.bandwidthRadial')
             let percent = this.getBandwidthPercent();
-            if(percent > 100){
+            if (percent > 100) {
                 percent = 100
             }
             // create
@@ -1886,49 +1905,71 @@ const app = Vue.createApp({
         setMachineLoadStatus() {
             this.machineIsLoaded = true
         },
-        
+
         async CopyAddress() {
             this.AddressCopied = true;
             let ValueToCopy = null;
-            if(this.hasalias){
+            if (this.hasalias) {
                 ValueToCopy = this.alias;
             } else {
                 ValueToCopy = this.address;
             }
 
-            if(ValueToCopy){
+            if (ValueToCopy) {
                 try {
                     await navigator.clipboard.writeText(ValueToCopy);
                 } catch (err) {
                     console.log('Unable to copy Address to clipboard', err);
                 }
-                
+
                 setTimeout(() => {
                     this.AddressCopied = false;
                 }, 1000);
             }
-            
+
         },
 
         async CopyIPV6() {
             this.IPV6AddressCopied = true;
             let ValueToCopy = null;
-            if(this.Ipv6Address){
+            if (this.Ipv6Address) {
                 ValueToCopy = this.Ipv6Address;
             } else {
                 ValueToCopy = '';
             }
 
-            if(ValueToCopy){
+            if (ValueToCopy) {
                 try {
                     await navigator.clipboard.writeText(ValueToCopy);
                 } catch (err) {
                     console.log('Unable to copy Address to clipboard', err);
-                }    
+                }
             }
 
             setTimeout(() => {
                 this.IPV6AddressCopied = false;
+            }, 1000);
+        },
+
+        async CopyIPV4() {
+            this.IPV4AddressCopied = true;
+            let ValueToCopy = null;
+            if (this.Ipv4Address) {
+                ValueToCopy = this.Ipv4Address;
+            } else {
+                ValueToCopy = '';
+            }
+
+            if (ValueToCopy) {
+                try {
+                    await navigator.clipboard.writeText(ValueToCopy);
+                } catch (err) {
+                    console.log('Unable to copy Address to clipboard', err);
+                }
+            }
+
+            setTimeout(() => {
+                this.IPV4AddressCopied = false;
             }, 1000);
         },
 
@@ -1951,7 +1992,7 @@ const app = Vue.createApp({
             this.tempIconSetup = templateIcon
 
         },
-        
+
         formatdate(time) {
 
             if (this.machineIsLoaded) {
@@ -1989,33 +2030,33 @@ const app = Vue.createApp({
             }
         },
 
-        changeLanguage(){
+        changeLanguage() {
             let newLang = this.PanelLanguage;
             document.cookie = `temlangcookie=${newLang}; expires=${new Date(Date.now() + 365 * 86400000).toUTCString()}; path=/`;
             window.parent.location.reload();
         },
 
-        readLanguageFirstTime(){
+        readLanguageFirstTime() {
             this.PanelLanguage = this.getCookieValue('temlangcookie');
         },
 
-        
+
         getCookieValue(cookieName) {
             const name = cookieName + "=";
             const decodedCookie = decodeURIComponent(document.cookie);
             const cookieArray = decodedCookie.split(';');
-          
+
             for (let i = 0; i < cookieArray.length; i++) {
-              let cookie = cookieArray[i];
-              while (cookie.charAt(0) === ' ') {
-                cookie = cookie.substring(1);
-              }
-              if (cookie.indexOf(name) === 0) {
-                return cookie.substring(name.length, cookie.length);
-              }
+                let cookie = cookieArray[i];
+                while (cookie.charAt(0) === ' ') {
+                    cookie = cookie.substring(1);
+                }
+                if (cookie.indexOf(name) === 0) {
+                    return cookie.substring(name.length, cookie.length);
+                }
             }
             return null; // Return an empty string if the cookie is not found
-          },
+        },
 
     },
 

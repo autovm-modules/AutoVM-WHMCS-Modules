@@ -150,38 +150,38 @@
                                     </div><!-- End User, Pass -->
                                     
                                     <div class="pb-md-4"><hr></div>
-
-                                    <!-- IP Adrress -->
-                                    <div class="d-flex flex-row justify-content-between align-items-center">
-                                        <span class="fs-6 p-0 m-0 text-secondary">
-                                            {{ lang('ipaddress') }}
-                                            <span v-if="address && !alias" class="text-primary">
-                                                <span class="px-1">
-                                                    {{address}}
-                                                </span>
-                                            </span>
-                                            <span v-if="alias" class="text-primary">
-                                                <span class="px-1">
-                                                    {{ alias }}
-                                                </span>
-                                            </span>
-                                            <span v-if="!address && !alias" class="text-secondary">
-                                                <span class="px-1">
-                                                    ---
-                                                </span>
-                                            </span>
-                                            <span class="m-0 p-0" >
-                                                <button @click="CopyAddress" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
-                                                    <span v-if="!AddressCopied" class="small">
-                                                        <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/ip.svg" alt="copy" style="width: 14px;">
-                                                    </span>    
-                                                    <span class="d-flex flex-row justify-content-center align-items-end text-primary" v-if="AddressCopied">
-                                                        <i class="bi bi-check-all"></i>
-                                                    </span>
-                                                </button>
-                                            </span>
-                                        </span>
-                                    </div><!-- End IP -->
+                                    <div v-if="Ipv4Address != null">
+                                        <div class="m-0 p-0 mt-0 fs-4">
+                                            <div class="d-flex flex-row align-items-center justify-content-start m-0 p-0">
+                                                <div class="d-flex flex-row align-items-center justify-content-between m-0 p-0">
+                                                    <div style="">
+                                                        <span class="text-secondary fs-6 m-0 p-0">
+                                                            {{ lang('IPV4') }}
+                                                            <span class="">:</span>
+                                                        </span>
+                                                    </div>
+                                                    <div style="">
+                                                        <span v-if="Ipv4Address != null" class="text-primary fs-6 m-0 p-0 border-0 mx-3" :class="ipv4color">    
+                                                            {{ Ipv4Address }}
+                                                        </span>
+                                                        <span v-else class="text-primary fs-6  m-0 p-0 mx-1">
+                                                            ---
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="m-0 p-0">
+                                                    <a @click="CopyIPV4" class="btn btn-sm btn-outline p-0 m-0 ms-1 p-1" style="font-size: 70%;">
+                                                        <span v-if="!IPV4AddressCopied" class="small">
+                                                            <img src="<?php echo($PersonalRootDirectoryURL); ?>/modules/addons/cloudsnp/views/autovm/includes/assets/img/ip.svg" alt="copy" style="width: 14px;">
+                                                        </span>    
+                                                        <span v-if="IPV4AddressCopied" class="d-flex flex-row justify-content-center align-items-end text-primary">
+                                                            <i class="bi bi-check-all"></i>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- end bottom -->
                                     <!-- bottom slice -->
                                     <div v-if="Ipv6Address != null">
                                         <div class="m-0 p-0 mt-0 fs-4">
