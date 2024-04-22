@@ -268,7 +268,7 @@ class AVMController
 
         $BackendUrl = $this->BackendUrl;
         $address = [
-            $BackendUrl, 'candy', 'backend', 'machine', 'traffic', $machineId
+            $BackendUrl, 'admin', 'machine', 'traffic', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
