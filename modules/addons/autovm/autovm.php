@@ -66,7 +66,7 @@ function autovm_activate()
 
     $pdo = Capsule::connection()->getPdo();
 
-    $pdo->exec('ALTER TABLE tblcurrencies MODIFY rate decimal(10, 10)');
+    $pdo->exec('ALTER TABLE tblcurrencies MODIFY rate decimal(30, 10)');
 }
 
 // Get Token From AutoVM
