@@ -24,7 +24,7 @@ function autovm_config()
     $configarray = array(
         "name" => "AutoVM",
         "description" => "Main AutoVM Module",
-        "version" => "V05.12.03",
+        "version" => "V05.13.01",
         "author" => "autovm.net",
         "fields" => array(
             "BackendUrl" => array ("FriendlyName" => "Backend Url", "Type" => "text", "Size" => "31", "Description" => $BackendUrlLabel, "Default" => "http://backend.autovm.online"),
