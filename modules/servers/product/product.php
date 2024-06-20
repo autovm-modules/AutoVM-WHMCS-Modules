@@ -103,6 +103,13 @@ function product_CreateAccount($params)
         return 'Could not find email';
     }
 
+    $phone = autovm_get_array('phonenumber', $client);
+
+    if (empty($phone)) {
+
+        // Its not required
+    }
+
     $service = autovm_get_array('model', $params);
 
     if (empty($service)) {
@@ -302,7 +309,7 @@ function product_CreateAccount($params)
     }
 
     // Send request
-    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6);
+    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6, $phone);
 
     if (empty($response)) {
 
