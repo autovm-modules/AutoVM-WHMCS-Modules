@@ -569,8 +569,16 @@ function product_ChangePackage($params)
         $cpuLimit = ($cpuLimit + $extraCpuLimit);
     }
 
+    // Traffic
+    $traffic = autovm_get_array('configoption11', $params);
+
+    if (empty($traffic)) {
+        
+        // Its not required
+    }
+
     // Send request
-    $response = $controller->sendUpgradeRequest($machineId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit);
+    $response = $controller->sendUpgradeRequest($machineId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $traffic);
 
     if (empty($response)) {
 
