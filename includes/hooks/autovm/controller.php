@@ -725,10 +725,10 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
     }
 
-    public function sendUpgradeRequest($machineId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit)
+    public function sendUpgradeRequest($machineId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $traffic)
     {
         $params = [
-            'memorySize' => $memorySize, 'memoryLimit' => $memoryLimit, 'diskSize' => $diskSize, 'cpuCore' => $cpuCore, 'cpuLimit' => $cpuLimit, 'reboot' => 'active'
+            'memorySize' => $memorySize, 'memoryLimit' => $memoryLimit, 'diskSize' => $diskSize, 'cpuCore' => $cpuCore, 'cpuLimit' => $cpuLimit, 'traffic' => $traffic, 'reboot' => 'active'
         ];
 
         $AdminToken = $this->AdminToken;
@@ -736,7 +736,7 @@ class AVMController
 
         $BackendUrl = $this->BackendUrl;
         $address = [
-            $BackendUrl, 'candy', 'backend', 'machine', 'upgrade', $machineId
+            $BackendUrl, 'admin', 'machine', 'upgrade', $machineId
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
