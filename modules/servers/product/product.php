@@ -327,7 +327,20 @@ function product_CreateAccount($params)
 
     // Add traffic to machine
     if ($traffic) {
+
+        sleep(1); // Wait one second
+        
         $trafficResponse = $controller->sendTrafficRequest($machine->id, $traffic, $remaining, $duration, 'main');
+
+        if (empty($trafficResponse)) {
+            return 'Could not create traffic';
+        }
+
+        $message = property_exists($trafficResponse, 'message');
+
+        if ($message) {
+            return $trafficResponse->message;
+        }
     }
 
     // Add machine to service
