@@ -476,6 +476,15 @@ function product_TerminateAccount($params)
     return 'success';
 }
 
+function product_log_request($action, $request = [], $response = [], $processed = [], $replace = [])
+{
+    $request = serialize($request);
+    $response = serialize($response);
+    $processed = serialize($processed);
+
+    logModuleCall('AutoVM', $action, $request, $response, $processed, $replace);
+}
+
 function product_ChangePackage($params)
 {
     $service = autovm_get_array('model', $params);
@@ -593,6 +602,19 @@ function product_ChangePackage($params)
     // Send request
     $response = $controller->sendUpgradeRequest($machineId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $traffic);
 
+    // Log request
+    $request = [
+        'machineId' => $machineId,
+        'memorySize' => $memorySize,
+        'memoryLimit' => $memoryLimit,
+        'diskSize' => $diskSize,
+        'cpuCore' => $cpuCore,
+        'cpuLimit' => $cpuLimit,
+        'traffic' => $traffic
+    ];
+
+    product_log_request('ChangePackage', $request, $response, $params);
+    
     if (empty($response)) {
 
         return 'Could not get response';
