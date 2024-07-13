@@ -709,6 +709,23 @@ function product_ClientArea($params)
         return null; // We dont need to log anything here
     }
 
+    $controller = new AVMController($service->id);
+
+    // Find client's details
+    $client = autovm_get_array('clientsdetails', $params);
+
+    if (empty($client)) {
+
+        return null; // We dont need to log anything here
+    }
+
+    // Update machine's phone
+    $phone = autovm_get_array('phonenumber', $client);
+
+    if ($phone) {
+        $controller->updateMachinePhone($phone);
+    }
+
     // Show client template
     ob_start();
 

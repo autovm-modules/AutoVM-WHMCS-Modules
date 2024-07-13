@@ -742,6 +742,32 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
     }
 
+    public function updateMachinePhone($phone)
+    {
+        $machineId = $this->getMachineIdFromService();
+
+        $response = $this->sendUpdateMachinePhoneRequest($machineId, $phone);
+
+        return $response;
+    }
+
+    public function sendUpdateMachinePhoneRequest($machineId, $phone)
+    {
+        $headers = [
+            'token' => $this->AdminToken
+        ];
+
+        $params = [
+            'phone' => $phone
+        ];
+
+        $address = [
+            $this->BackendUrl, 'admin', 'machine', 'phone', $machineId
+        ];
+
+        return Request::instance()->setHeaders($headers)->setParams($params)->setAddress($address)->getResponse()->asObject();
+    }
+
     public function response($response)
     {
         header('Content-Type: application/json');
