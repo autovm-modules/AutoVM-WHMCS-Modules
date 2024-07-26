@@ -12,7 +12,18 @@ function autovm_create_user($client, $BackendUrl)
     return Request::instance()->setAddress($address)->setParams($params)->getResponse()->asObject();
 }
 
+function autovm_update_user_phone($token, $phone, $BackendUrl)
+{
+    $params = ['phone' => $phone];
 
+    $address = [
+        $BackendUrl, 'client', 'profile', 'phone'
+    ];
+
+    $headers = ['token' => $token];
+
+    return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
+}
 
 function autovm_get_user_token($userId)
 {
@@ -147,9 +158,24 @@ add_hook('ClientAreaPage', 100, function($params) {
             return false;
         }
 
+        $details = autovm_get_array('clientsdetails', $params);
+
+        if (empty($details)) {
+            return false;
+        }
+
+        $phone = autovm_get_array('phonenumber', $details);
+
+        if (empty($phone)) {
+            // Its not required
+        }
 
         $token = autovm_get_user_token($clientId);
+        
         if($token) {
+
+            autovm_update_user_phone($token, $phone, $BackendUrl);
+            
             return false;
         }
 
