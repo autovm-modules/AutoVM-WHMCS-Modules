@@ -9,7 +9,7 @@ function traffic_MetaData()
 
 function traffic_ConfigOptions()
 {
-    return ['traffic' => ['FriendlyName' => 'Traffic', 'Type' => 'text'], 'type' => ['FriendlyName' => 'Type', 'Type' => 'dropdown', 'Options' => ['main' => 'Main', 'refresh' => 'Refresh', 'plus' => 'Plus']]];
+    return ['traffic' => ['FriendlyName' => 'Traffic', 'Type' => 'text'], 'type' => ['FriendlyName' => 'Type', 'Type' => 'dropdown', 'Options' => ['main' => 'Main', 'refresh' => 'Refresh', 'plus' => 'Plus']], 'days' => ['FriendlyName' => 'Days', 'Type' => 'text']];
 }
 
 function traffic_CreateAccount($params)
@@ -59,7 +59,14 @@ function traffic_CreateAccount($params)
 
     if (empty($duration)) {
 
-        return 'Could not find duration';
+        // Its not required
+    }
+
+    // Days
+    $days = autovm_get_array('configoption3', $params);
+
+    if ($days) {
+        $remaining = $duration = $days;
     }
 
     // Send request
