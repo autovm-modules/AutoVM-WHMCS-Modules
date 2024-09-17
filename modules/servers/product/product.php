@@ -368,6 +368,76 @@ function product_CreateAccount($params)
     return 'success';
 }
 
+function product_Renew($params)
+{
+    // Find service
+    $service = autovm_get_array('model', $params);
+
+    if (!$service) {
+        return 'Could not find service';
+    }
+
+    $controller = new AVMController($service->id);
+
+    // Can refresh traffic
+    $canRefresh = $controller->canRefreshTraffic();
+
+    if (!$canRefresh)
+        return 'success';
+
+    // Find machine
+    $machineId = $controller->getMachineIdFromService();
+
+    if (!$machineId) {
+        return 'Could not find machine';
+    }
+
+    // Traffic
+    $traffic = autovm_get_array('configoption11', $params);
+
+    if (!$traffic)
+        return 'success';
+
+    // Remaining
+    $remaining = $controller->getServiceRemaining();
+
+    if (!$remaining) {
+        // Its not required
+    }
+
+    // Duration
+    $duration = $controller->getServiceDuration();
+
+    if (!$duration) {
+        // Its not required
+    }
+
+    // Calculate
+    if ($duration) {
+    
+        // Traffic
+        $traffic *= floor($duration/31);
+
+        // Duration
+        $duration += $remaining;
+    }
+
+    // Create traffic
+    $response = $controller->sendTrafficRequest($machineId, $traffic, $duration, $duration, 'refresh');
+
+    if (empty($response)) {
+        return 'Could not create traffic';
+    }
+
+    $message = property_exists($response, 'message');
+
+    if ($message) {
+        return $response->message;
+    }
+
+    return 'success';
+}
+
 function product_SuspendAccount($params)
 {
     $service = autovm_get_array('model', $params);

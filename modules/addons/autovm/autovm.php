@@ -32,6 +32,7 @@ function autovm_config()
             "DefLang" => array ("FriendlyName" => "Default Language", "Type" => "dropdown", "Options" => $langiageOption, "Description" => $DefLangLabel, "Default" => "English"),
             "CloudActivationStatus" => array ("FriendlyName" => "Enable Cloud Module", "Type" => "yesno", 'Description' => $CloudActivationStatusLabel, "Default" => ""),            
             "ConsoleRoute" => array ("FriendlyName" => "Console Route", "Type" => "text", "Size" => "50", "Description" => $ConsoleRoute, "Default" => "https://mywhmcs.com/console"),
+            "RefreshTraffic" => array("FriendlyName" => "Refresh Traffic", "Type" => "dropdown", "Options" => array("active" => "Active", "passive" => "Passive"), "Description" => "Refresh Traffic By WHMCS", "Default" => "passive")
         ));
         return $configarray;
 }

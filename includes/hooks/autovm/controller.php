@@ -9,6 +9,12 @@ class AVMController
     protected $BackendUrl;
     protected $AdminToken;
     protected $ConsoleRoute;
+    protected $RefreshTraffic;
+
+    public function canRefreshTraffic()
+    {
+        return $this->RefreshTraffic;
+    }
 
     public function __construct($serviceId)
     {
@@ -27,12 +33,14 @@ class AVMController
             $AdminToken = $response['AdminToken'];
             $BackendUrl = $response['BackendUrl'];
             $ConsoleRoute = $response['ConsoleRoute'];
+            $RefreshTraffic = $response['RefreshTraffic'];
         } 
         
         $this->serviceId = $serviceId;
         $this->BackendUrl = $BackendUrl;
         $this->AdminToken = $AdminToken;
         $this->ConsoleRoute = $ConsoleRoute;
+        $this->RefreshTraffic = $RefreshTraffic;
     }
 
     // Get Token From AutoVm module
@@ -62,6 +70,10 @@ class AVMController
                     
                     if($item->setting == 'ConsoleRoute'){
                         $ConsoleRoute = $item->value;
+                    }
+
+                    if ($item->setting == 'RefreshTraffic'){
+                        $RefreshTraffic = $item->value;
                     }
                 }
             }
@@ -100,11 +112,18 @@ class AVMController
             return $response;
         }
 
+        if ($RefreshTraffic == 'active') {
+            $RefreshTraffic = true;
+        } else {
+            $RefreshTraffic = false;
+        }
+
         if(isset($AdminToken) && isset($BackendUrl) && isset($DefLang) && isset($ConsoleRoute)){
             $response['AdminToken'] = $AdminToken;
             $response['BackendUrl'] = $BackendUrl;
             $response['DefLang'] = $DefLang;
             $response['ConsoleRoute'] = $ConsoleRoute;
+            $response['RefreshTraffic'] = $RefreshTraffic;
             return $response;
         } 
     }
@@ -833,7 +852,7 @@ EOT;
 
 $query = <<<EOT
 
-SELECT ( CASE WHEN a.billingcycle IN ('Monthly') THEN 30 WHEN a.billingcycle IN ('Quarterly') THEN 90 WHEN a.billingcycle IN ('Semi-Annually') THEN 182 WHEN a.billingcycle IN ('Annually') THEN 365 WHEN a.billingcycle IN ('Biennially') THEN 730 WHEN a.billingcycle IN ('Triennially') THEN 1095 ELSE 365 END ) as days FROM tblhosting a
+SELECT ( CASE WHEN a.billingcycle IN ('Monthly') THEN 31 WHEN a.billingcycle IN ('Quarterly') THEN 93 WHEN a.billingcycle IN ('Semi-Annually') THEN 186 WHEN a.billingcycle IN ('Annually') THEN 372 WHEN a.billingcycle IN ('Biennially') THEN 744 WHEN a.billingcycle IN ('Triennially') THEN 1116 ELSE 372 END ) as days FROM tblhosting a
     WHERE a.id = :serviceId
         HAVING days >= 1
 
