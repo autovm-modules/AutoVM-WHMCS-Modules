@@ -412,18 +412,13 @@ function product_Renew($params)
         // Its not required
     }
 
-    // Calculate
+    // Calculate traffic
     if ($duration) {
-    
-        // Traffic
         $traffic *= floor($duration/31);
-
-        // Duration
-        $duration += $remaining;
     }
 
     // Create traffic
-    $response = $controller->sendTrafficRequest($machineId, $traffic, $duration, $duration, 'refresh');
+    $response = $controller->sendTrafficRequest($machineId, $traffic, $remaining, $remaining, 'refresh');
 
     if (empty($response)) {
         return 'Could not create traffic';
