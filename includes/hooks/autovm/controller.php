@@ -1,6 +1,7 @@
 <?php
 
 use WHMCS\Database\Capsule;
+use WHMCS\Service\Service;
 use PG\Request\Request;
 
 class AVMController
@@ -177,6 +178,63 @@ class AVMController
         $response = $this->sendCategoriesRequest();
 
         $this->response($response);
+    }
+
+    public function desiredCategories()
+    {
+        // Find templates
+        $response = $this->sendCategoriesRequest();
+
+        $message = property_exists($response, 'message');
+
+        if ($message) {
+            return $this->response($response);
+        }
+
+        // Find service
+        $service = Service::find($this->serviceId);
+
+        if (!$service) {
+            return $this->response($response);
+        }
+
+        // Find allowed templates
+        $params = ['packageId' => $service->packageid];
+
+        $templates = Capsule::select("SELECT a.optionname as name FROM tblproductconfigoptionssub a INNER JOIN tblproductconfigoptions b ON b.id = a.configid INNER JOIN tblproductconfiglinks c ON c.gid = b.gid WHERE b.optionname LIKE '%template%' AND c.pid = :packageId", $params);
+
+        // List allowed templates
+        $allowdTemplates = [];
+
+        foreach ($templates as $template) {
+
+            $allowdTemplates[] = $template->name;
+        }
+
+        // Remove templates
+        foreach ($response->data as $category) {
+
+            foreach ($category->templates as $key => $template) {
+
+                $allowed = in_array($template->name, $allowdTemplates);
+
+                if (!$allowed) {
+
+                    unset($category->templates[$key]);
+                }
+            }
+        }
+
+        // Remove categories
+        foreach ($response->data as $key => $category) {
+
+            if (!$category->templates) {
+
+                unset($response->data[$key]);
+            }
+        }
+
+        return $this->response($response);
     }
 
     public function sendCategoriesRequest()
