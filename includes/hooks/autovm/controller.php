@@ -180,10 +180,30 @@ class AVMController
         $this->response($response);
     }
 
-    public function desiredCategories()
+    public function sendCategoriesRequest()
+    {
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
+
+        $BackendUrl = $this->BackendUrl;
+        $address = [
+            $BackendUrl, 'candy', 'frontend', 'common', 'template', 'categories'
+        ];
+
+        return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
+    }
+
+    public function templates()
+    {
+        $response = $this->sendTemplatesRequest();
+
+        $this->response($response);
+    }
+
+    public function desiredTemplates()
     {
         // Find templates
-        $response = $this->sendCategoriesRequest();
+        $response = $this->sendTemplatesRequest();
 
         $message = property_exists($response, 'message');
 
@@ -212,49 +232,16 @@ class AVMController
         }
 
         // Remove templates
-        foreach ($response->data as $category) {
+        foreach ($response->data as $key => $template) {
 
-            foreach ($category->templates as $key => $template) {
+            $allowed = in_array($template->name, $allowdTemplates);
 
-                $allowed = in_array($template->name, $allowdTemplates);
-
-                if (!$allowed) {
-
-                    unset($category->templates[$key]);
-                }
-            }
-        }
-
-        // Remove categories
-        foreach ($response->data as $key => $category) {
-
-            if (!$category->templates) {
-
+            if (!$allowed) {
                 unset($response->data[$key]);
             }
         }
 
         return $this->response($response);
-    }
-
-    public function sendCategoriesRequest()
-    {
-        $AdminToken = $this->AdminToken;
-        $headers = ['token' => $AdminToken];
-
-        $BackendUrl = $this->BackendUrl;
-        $address = [
-            $BackendUrl, 'candy', 'frontend', 'common', 'template', 'categories'
-        ];
-
-        return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
-    }
-
-    public function templates()
-    {
-        $response = $this->sendTemplatesRequest();
-
-        $this->response($response);
     }
 
     public function sendTemplatesRequest()
