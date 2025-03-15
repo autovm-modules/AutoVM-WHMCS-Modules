@@ -407,6 +407,19 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
     }
 
+    public function sendRotationRequest($machineId)
+    {
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
+
+        $BackendUrl = $this->BackendUrl;
+        $address = [
+            $BackendUrl, 'admin', 'machine', 'rotation', $machineId
+        ];
+
+        return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
+    }
+
     public function reboot()
     {
         $machineId = $this->getMachineIdFromService();
