@@ -694,6 +694,37 @@ function product_ChangePackage($params)
     return 'success';
 }
 
+function product_update_machine_address($service, $controller, $machineId)
+{
+    $response = $controller->sendShowRequest($machineId);
+
+    $success = property_exists($response, 'data');
+
+    if (!$success) {
+        return false; // Could not find machine
+    }
+
+    $response = $response->data;
+
+    // Find machine address
+    $address = null;
+
+    if ($response->reserve) {
+        $address = $response->reserve->address->address;
+    }
+
+    if (!$address) return false;
+
+    // Update address
+    $params = ['dedicatedip' => $address];
+
+    Capsule::table('tblhosting')
+        ->whereId($service->id)
+        ->update($params);
+
+    return true;
+}
+
 function product_AdminServicesTabFields($params)
 {
     $service = autovm_get_array('model', $params);
@@ -707,6 +738,9 @@ function product_AdminServicesTabFields($params)
 
     // Find the machine identity
     $machineId = $controller->getMachineIdFromService();
+
+    // Update machine address
+    product_update_machine_address($service, $controller, $machineId);
 
     // Show admin form
     ob_start();
@@ -735,14 +769,14 @@ function product_AdminServicesTabFieldsSave($params)
 
     if (empty($service)) {
 
-        return null; // We dont need to log anything here
+        return false; // We dont need to log anything here
     }
 
     $machineId = autovm_get_post('machineId');
 
     if (empty($machineId)) {
 
-        return null; // We dont need to log anything here
+        return false; // We dont need to log anything here
     }
 
     $params = [
@@ -753,16 +787,13 @@ function product_AdminServicesTabFieldsSave($params)
         ->where('order_id', $service->id)
         ->first();
 
-    if ($order) {
-
-        Capsule::table('autovm_order')
-            ->where('order_id', $service->id)
-            ->update($params);
-    } else {
-
-        Capsule::table('autovm_order')
-            ->insert($params);
+    if (!$order) {
+        return false; // Could not find order
     }
+
+    Capsule::table('autovm_order')
+        ->where('order_id', $service->id)
+        ->update($params);
 }
 
 function product_ClientArea($params)
@@ -775,6 +806,12 @@ function product_ClientArea($params)
     }
 
     $controller = new AVMController($service->id);
+
+    // Find machine identity
+    $machineId = $controller->getMachineIdFromService();
+
+    // Update machine address
+    product_update_machine_address($service, $controller, $machineId);
 
     // Find client's details
     $client = autovm_get_array('clientsdetails', $params);
