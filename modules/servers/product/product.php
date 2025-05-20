@@ -740,8 +740,10 @@ function product_AdminServicesTabFields($params)
     $machineId = $controller->getMachineIdFromService();
 
     // Update machine address
-    product_update_machine_address($service, $controller, $machineId);
-
+    if ($machineId) {
+        product_update_machine_address($service, $controller, $machineId);
+    }
+        
     // Show admin form
     ob_start();
 
@@ -811,8 +813,10 @@ function product_ClientArea($params)
     $machineId = $controller->getMachineIdFromService();
 
     // Update machine address
-    product_update_machine_address($service, $controller, $machineId);
-
+    if ($machineId) {
+        product_update_machine_address($service, $controller, $machineId);
+    }
+        
     // Find client's details
     $client = autovm_get_array('clientsdetails', $params);
 
