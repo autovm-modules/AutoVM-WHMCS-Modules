@@ -793,13 +793,16 @@ function product_AdminServicesTabFieldsSave($params)
         ->where('order_id', $service->id)
         ->first();
 
-    if (!$order) {
-        return false; // Could not find order
-    }
+    if ($order) {
 
-    Capsule::table('autovm_order')
-        ->where('order_id', $service->id)
-        ->update($params);
+        Capsule::table('autovm_order')
+            ->where('order_id', $service->id)
+            ->update($params);
+    } else {
+
+        Capsule::table('autovm_order')
+            ->insert($params);
+    }
 }
 
 function product_ClientArea($params)
