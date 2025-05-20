@@ -321,6 +321,20 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
     }
 
+    public function sendTrafficPassiveRequest($trafficId)
+    {
+        // Not required
+        $params = ['status' => 'passive'];
+
+        $headers = ['token' => $this->AdminToken];
+
+        $address = [
+            $this->BackendUrl, 'admin', 'traffic', 'passive', $trafficId
+        ];
+
+        return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
+    }
+
     public function sendTrafficRequest($machineId, $traffic, $remaining, $duration, $type)
     {
         $params = [
