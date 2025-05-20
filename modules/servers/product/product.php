@@ -698,6 +698,10 @@ function product_update_machine_address($service, $controller, $machineId)
 {
     $response = $controller->sendShowRequest($machineId);
 
+    if (!$response) {
+        return false; // Could not get response
+    }
+
     $success = property_exists($response, 'data');
 
     if (!$success) {
