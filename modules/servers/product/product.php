@@ -180,6 +180,13 @@ function product_CreateAccount($params)
         return 'Could not find the pool identity';
     }
 
+    // Customers can select a pool
+    $customPool = autovm_get_array('pool', $options);
+
+    if ($customPool) {
+        $poolId = $customPool;
+    }
+
     // Find memory size
     $memorySize = autovm_get_array('configoption2', $params);
 
