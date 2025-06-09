@@ -833,6 +833,21 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
     }
 
+    public function sendScaleRequest($machineId, $type, $value)
+    {
+        $params = [$type => $value];
+
+        $headers = [
+            'token' => $this->AdminToken
+        ];
+
+        $address = [
+            $this->BackendUrl, 'admin', 'machine', 'scale', $machineId
+        ];
+
+        return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
+    }
+
     public function updateMachinePhone($phone)
     {
         $machineId = $this->getMachineIdFromService();
