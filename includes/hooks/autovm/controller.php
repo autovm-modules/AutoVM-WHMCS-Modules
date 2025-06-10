@@ -833,9 +833,9 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
     }
 
-    public function sendScaleRequest($machineId, $type, $value)
+    public function sendScaleRequest($machineId, $type, $value, $reboot)
     {
-        $params = [$type => $value];
+        $params = [$type => $value, 'reboot' => $reboot];
 
         $headers = [
             'token' => $this->AdminToken

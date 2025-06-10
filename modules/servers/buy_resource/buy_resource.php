@@ -7,7 +7,7 @@ function buy_resource_MetaData()
 
 function buy_resource_ConfigOptions()
 {
-    return ['type' => ['FriendlyName' => 'Type', 'Type' => 'dropdown', 'Options' => ['memorySize' => 'Memory', 'cpuCore' => 'Core', 'diskSize' => 'Disk']], 'value' => ['FriendlyName' => 'Value', 'Type' => 'text']];
+    return ['type' => ['FriendlyName' => 'Type', 'Type' => 'dropdown', 'Options' => ['memorySize' => 'Memory', 'cpuCore' => 'Core', 'diskSize' => 'Disk']], 'value' => ['FriendlyName' => 'Value', 'Type' => 'text'], 'reboot' => ['FriendlyName' => 'Reboot', 'Type' => 'dropdown', 'Options' => ['active' => 'Active', 'passive' => 'Passive']]];
 }
 
 function buy_resource_CreateAccount($params)
@@ -46,8 +46,16 @@ function buy_resource_CreateAccount($params)
         return 'Could not find value';
     }
 
+    // Find reboot
+    $reboot = autovm_get_array('configoption3', $params);
+
+    if (empty($reboot)) {
+
+        return 'Could not find reboot';
+    }
+
     // Send request
-    $response = $controller->sendScaleRequest($machineId, $type, $value);
+    $response = $controller->sendScaleRequest($machineId, $type, $value, $reboot);
 
     if (empty($response)) {
 
