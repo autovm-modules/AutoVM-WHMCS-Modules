@@ -60,6 +60,8 @@ aria-hidden="false">
                                         <span class="text-primary px-0" v-if="confirmTitle == 'reboot'">{{ lang('rebootaction') }}</span>
                                         <span class="text-primary px-0" v-if="confirmTitle == 'stop'">{{ lang('stopaction') }}</span>
                                         <span class="text-primary px-0" v-if="confirmTitle == 'start'">{{ lang('startaction') }}</span>
+                                        <span class="text-primary px-0" v-if="confirmTitle == 'snapshot'">{{ lang('Take Snapshot') }}</span>
+                                        <span class="text-primary px-0" v-if="confirmTitle == 'revert snapshot'">{{ lang('Revert Snapshot') }}</span>
                                         {{ lang('yourmachine') }}
                                     </p>
                                 </div>
@@ -95,6 +97,8 @@ aria-hidden="false">
                                     <span class="text-primary px-0" v-if="confirmTitle == 'reboot'">{{ lang('rebootaction') }}</span>
                                     <span class="text-primary px-0" v-if="confirmTitle == 'stop'">{{ lang('stopaction') }}</span>
                                     <span class="text-primary px-0" v-if="confirmTitle == 'start'">{{ lang('startaction') }}</span>
+                                    <span class="text-primary px-0" v-if="confirmTitle == 'snapshot'">{{ lang('Take Snapshot') }}</span>
+                                    <span class="text-primary px-0" v-if="confirmTitle == 'revert snapshot'">{{ lang('Revert Snapshot') }}</span>
                                     {{ lang('hasdonesuccessfully') }}
                                 </p>
                             </div>
@@ -145,6 +149,8 @@ aria-hidden="false">
                                     <span v-if="confirmTitle == 'reboot'">{{ lang('rebootaction') }}</span>
                                     <span v-if="confirmTitle == 'stop'">{{ lang('stopaction') }}</span>
                                     <span v-if="confirmTitle == 'start'">{{ lang('startaction') }}</span>
+                                    <span class="text-primary px-0" v-if="confirmTitle == 'snapshot'">{{ lang('Take Snapshot') }}</span>
+                                    <span class="text-primary px-0" v-if="confirmTitle == 'revert snapshot'">{{ lang('Revert Snapshot') }}</span>
                                 </button>
                             </div>
 
@@ -156,6 +162,8 @@ aria-hidden="false">
                                         <span v-if="confirmTitle == 'reboot'">{{ lang('rebooting') }}</span>
                                         <span v-if="confirmTitle == 'stop'">{{ lang('stoping') }}</span>
                                         <span v-if="confirmTitle == 'start'">{{ lang('starting') }}</span>
+                                        <span v-if="confirmTitle == 'snapshot'">{{ lang('Taking Snapshot') }}</span>
+                                        <span v-if="confirmTitle == 'revert snapshot'">{{ lang('Reverting Snapshot') }}</span>
                                         
                                         <!-- spinner -->
                                         <span class="ps-3">
@@ -172,6 +180,8 @@ aria-hidden="false">
                                         <span v-if="confirmTitle == 'reboot'">{{ lang('rebootaction') }}</span>
                                         <span v-if="confirmTitle == 'stop'">{{ lang('stopaction') }}</span>
                                         <span v-if="confirmTitle == 'start'">{{ lang('startaction') }}</span>
+                                        <span v-if="confirmTitle == 'snapshot'">{{ lang('Take Snapshot') }}</span>
+                                        <span v-if="confirmTitle == 'revert snapshot'">{{ lang('Revert Snapshot') }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -186,6 +196,8 @@ aria-hidden="false">
                                     <span v-if="confirmTitle == 'reboot'">{{ lang('rebooting') }}</span>
                                     <span v-if="confirmTitle == 'stop'">{{ lang('stoping') }}</span>
                                     <span v-if="confirmTitle == 'start'">{{ lang('starting') }}</span>
+                                    <span v-if="confirmTitle == 'snapshot'">{{ lang('Taking Snapshot') }}</span>
+                                    <span v-if="confirmTitle == 'revert snapshot'">{{ lang('Reverting Snapshot') }}</span>
 
                                     <!-- spinner -->
                                     <span class="ps-3">

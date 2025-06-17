@@ -273,6 +273,9 @@ const app = Vue.createApp({
             else if (actionMethod == 'snapshot') {
                 return "snapshot";
             }
+            else if (actionMethod == 'revert') {
+                return "revert";
+            }
             else {
                 return actionMethod;
             }
@@ -977,6 +980,60 @@ const app = Vue.createApp({
                 }).toString()
 
                 return window.open([address, params].join('?'))
+            }
+        },
+
+        async doSnapshot() {
+
+            let accept = await this.openConfirmDialog(this.lang('Snapshot'), this.lang('Are you sure about this?'))
+
+            if (accept) {
+
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=snapshot', {
+                    params: {
+                        avmServiceId: this.serviceId
+                    }
+                })
+
+                response = response?.data
+
+                if (response?.message) {
+
+                    this.openMessageDialog(this.lang(response?.message))
+
+                }
+
+                if (response?.data) {
+                    this.doingAction = 'Snapshot'
+                    this.machine = response?.data
+                }
+            }
+        },
+
+        async doRevertSnapshot() {
+
+            let accept = await this.openConfirmDialog(this.lang('Revert Snapshot'), this.lang('Are you sure about this?'))
+
+            if (accept) {
+
+                let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=revert', {
+                    params: {
+                        avmServiceId: this.serviceId
+                    }
+                })
+
+                response = response?.data
+
+                if (response?.message) {
+
+                    this.openMessageDialog(this.lang(response?.message))
+
+                }
+
+                if (response?.data) {
+                    this.doingAction = 'Revert Snapshot'
+                    this.machine = response?.data
+                }
             }
         },
 

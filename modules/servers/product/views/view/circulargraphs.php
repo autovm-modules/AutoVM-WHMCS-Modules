@@ -94,7 +94,7 @@
                 </div>
 
                 <div @click="doConsole" data-bs-toggle="modal" data-bs-target="#processingModal"
-                    class="col-6 col-lg-6 m-0 p-0 px-1">
+                    class="col-6 col-lg-6 m-0 p-0 mb-2 px-1">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
                         <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/setupbtn.svg" width=35 alt="internet">
@@ -102,11 +102,29 @@
                     </div>
                 </div>
                 <div @click="doStart" data-bs-toggle="modal" data-bs-target="#processingModal"
-                    class="col-6 col-lg-6 m-0 p-0 ps-1">
+                    class="col-6 col-lg-6 m-0 p-0 mb-2 ps-1">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
                         <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/onbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('startaction') }}</p>
+                    </div>
+                </div>
+
+                <div @click="doSnapshot" data-bs-toggle="modal" data-bs-target="#actionsModal"
+                    class="col-6 col-lg-6 m-0 p-0 ps-1">
+                    <div
+                        class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/take_snapshot.svg" width=35 alt="internet">
+                        <p class="text-secondary m-0 p-0 pt-3">{{ lang('Take Snapshot') }}</p>
+                    </div>
+                </div>
+
+                <div @click="doRevertSnapshot" data-bs-toggle="modal" data-bs-target="#actionsModal"
+                    class="col-6 col-lg-6 m-0 p-0 ps-1">
+                    <div
+                        class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/revert_snapshot.svg" width=35 alt="internet">
+                        <p class="text-secondary m-0 p-0 pt-3">{{ lang('Revert Snapshot') }}</p>
                     </div>
                 </div>
             </div>
@@ -134,7 +152,7 @@
                 </div>
 
                 <div @click="doConsole" data-bs-toggle="modal" data-bs-target="#consoleModal"
-                    class="col-6 col-lg-6 m-0 p-0 px-1">
+                    class="col-6 col-lg-6 m-0 p-0 mb-2 px-1">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
                         <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/setupbtn.svg" width=35 alt="internet">
@@ -142,11 +160,29 @@
                     </div>
                 </div>
                 <div @click="doStart" data-bs-toggle="modal" data-bs-target="#actionsModal"
-                    class="col-6 col-lg-6 m-0 p-0 ps-1">
+                    class="col-6 col-lg-6 m-0 p-0 mb-2 ps-1">
                     <div
                         class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
                         <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/onbtn.svg" width=35 alt="internet">
                         <p class="text-secondary m-0 p-0 pt-3">{{ lang('startaction') }}</p>
+                    </div>
+                </div>
+
+                <div @click="doSnapshot" data-bs-toggle="modal" data-bs-target="#actionsModal"
+                    class="col-6 col-lg-6 m-0 p-0 ps-1">
+                    <div
+                        class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/take_snapshot.svg" width=35 alt="internet">
+                        <p class="text-secondary m-0 p-0 pt-3">{{ lang('Take Snapshot') }}</p>
+                    </div>
+                </div>
+
+                <div @click="doRevertSnapshot" data-bs-toggle="modal" data-bs-target="#actionsModal"
+                    class="col-6 col-lg-6 m-0 p-0 ps-1">
+                    <div
+                        class="border border-2 rounded-4 bg-white m-0 p-0 py-5 py-md-3 py-xl-5 px-3 mx-0 pt-md-5 text-center">
+                        <img class="btn p-0 m-0" src="<?php echo($PersonalRootDirectoryURL); ?>/modules/servers/product/views/view/assets/img/revert_snapshot.svg" width=35 alt="internet">
+                        <p class="text-secondary m-0 p-0 pt-3">{{ lang('Revert Snapshot') }}</p>
                     </div>
                 </div>
             </div>
