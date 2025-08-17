@@ -1281,7 +1281,7 @@ const app = Vue.createApp({
 
         async loadTemplates() {
 
-            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=templates', {
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=desiredTemplates', {
                 params: {
                     avmServiceId: this.serviceId
                 }
