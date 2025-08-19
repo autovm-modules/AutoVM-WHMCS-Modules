@@ -205,7 +205,7 @@
                         <!-- BTN -->
                         <div class="row m-0 p-0 text-end mt-5 pt-5" v-if="chargeAmountinWhmcs && chargingValidity == 'fine' && theChargingSteps == 0">
                             <div class="col-12 m-0 p-0 pt-5">
-                                <button class="btn btn-primary col-auto px-5"  @click="CreateUnpaidInvoice">
+                                <button class="btn btn-primary col-auto px-5"  @click="ChargeCloudAccount">
                                     <span>{{ lang('starttransferring') }}</span>
                                     <span class="px-1">({{ showChargeAmountWhmcsUnit(chargeAmountinWhmcs) }} {{ userCurrencySymbolFromWhmcs }})</span>
                                 </button>

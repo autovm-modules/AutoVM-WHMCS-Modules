@@ -501,6 +501,82 @@ class CloudController
         } 
     }
 
+    public function ChargeCloudAccount()
+    {
+        // Extract request params
+        $data = json_decode( file_get_contents('php://input'), true);
+
+        // Find amount
+        $whmcs = autovm_get_array('whmcs', $data);
+
+        if (!$whmcs) {
+            return $this->response(['message' => 'You should enter charge amount']);
+        }
+
+        // Find amount
+        $autovm = autovm_get_array('autovm', $data);
+
+        if (!$autovm) {
+            return $this->response(['message' => 'You should enter charge amount']);
+        }
+
+        // Find AutoVM user
+        $token = $this->getUserTokenFromClientId();
+
+        $response = $this->sendLoginRequest($token);
+
+        $success = property_exists($response, 'data');
+
+        if (!$success) {
+            return $this->response(['message' => 'Could not send login request']);
+        }
+
+        $user = $response->data;
+
+        // Create invoice
+        $currentDate = date('Y-m-d');
+
+        $params = [
+            'userid' => $this->clientId,
+            'itemdescription1' => 'Charge Cloud Account',
+            'itemamount1' => $whmcs,
+            'date' => $currentDate];
+
+        $response = localAPI('CreateInvoice', $params);
+
+        // Find invoice ID
+        $invoiceId = autovm_get_array('invoiceid', $response);
+
+        if (!$invoiceId) {
+            return $this->response(['message' => 'Could not create invoice']);
+        }
+
+        // Apply credit
+        $params = [
+            'invoiceid' => $invoiceId,
+            'amount' => $whmcs];
+
+        $response = localAPI('ApplyCredit', $params);
+
+        // Find status
+        $status = autovm_get_array('result', $response);
+
+        if ($status <> 'success') {
+            return $this->response(['message' => 'Could not apply credit to the invoice']);
+        }
+
+        // Charge AutoVM user
+        $response = $this->sendChargeCloudRequest($this->AdminToken, $user->id, $autovm);
+
+        $success = property_exists($response, 'data');
+
+        if (!$success) {
+            return $this->response(['message' => 'Could not charge account']);
+        }
+
+        return $this->response(['success' => true]);
+    }
+
     public function CreateUnpaidInvoice()
     {
         $requestData = json_decode(file_get_contents("php://input"), true);
@@ -555,7 +631,8 @@ class CloudController
             $this->response($results); 
     }
 
-    public function chargeCloud()
+    // Deprecated
+    protected function chargeCloud()
     {
         $requestData = json_decode(file_get_contents("php://input"), true);
 

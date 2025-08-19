@@ -188,7 +188,9 @@ let common = {
     "hostnameontable" : "Hostname",
     "templateontable" : "Template",
     "viewontable" : "View",
-    "statusontable" : "Status",    
+    "statusontable" : "Status",   
+    
+    "taketimetoseeresult": "It may take time to show your new balance",
 
 // new charging Module
     "cloudbalance" : "Cloud Balance",    

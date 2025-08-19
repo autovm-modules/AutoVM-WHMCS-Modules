@@ -438,6 +438,42 @@ app = createApp({
             }
         },
 
+        async ChargeCloudAccount() {
+
+            this.ConstChargeamountInWhmcs = Object.freeze({
+                value: this.chargeAmountinWhmcs
+            });
+
+            this.ConstChargeamountInAutoVM = Object.freeze({
+                value: this.ConverFromWhmcsToCloud(this.chargeAmountinWhmcs)
+            })
+
+            this.theChargingSteps = 1;
+            this.theStepStatus = 11;
+
+            let params = {
+                whmcs: this.ConstChargeamountInWhmcs.value,
+                autovm: this.ConstChargeamountInAutoVM.value
+            };
+
+            if (this.chargingValidity == 'fine') {
+
+                let response = await axios.post(this.PersonalRootDirectoryURL + '/index.php?m=cloud&action=ChargeCloudAccount', params)
+
+                response = response.data
+
+                if (response?.success) {
+
+                    this.theChargingSteps = 3;
+                    this.theStepStatus = 32;
+
+                    this.SuccessWindow();
+                } else {
+                    this.FailWindow();
+                }
+            }
+        },
+
         async CreateUnpaidInvoice() {
             this.ConstChargeamountInWhmcs = Object.freeze({value: this.chargeAmountinWhmcs});            
               

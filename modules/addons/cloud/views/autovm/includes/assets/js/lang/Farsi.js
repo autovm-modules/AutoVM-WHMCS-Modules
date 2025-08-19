@@ -157,6 +157,8 @@ let common = {
         "traffic" : "ترافیک",
     // end from Product
 
+        "taketimetoseeresult": "ممکن است نمایش موجودی کمی تاخیر داشته باشد",
+
     // Unique for this cloud
         "todeleteyourmachine" : "برای حذف ماشین‌تان، باید عبارت",
         "writedestroy" : "'destroy'",
