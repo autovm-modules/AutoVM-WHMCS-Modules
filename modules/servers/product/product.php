@@ -288,15 +288,7 @@ function product_CreateAccount($params)
 
     if (empty($duration)) {
 
-        return 'Could not find duration';
-    }
-
-    // Months
-    $months = floor($duration/30);
-
-    // Traffic
-    if ($traffic) {
-        $traffic = ($traffic * $months);
+        // Its not required
     }
 
     // Custom fields
@@ -337,7 +329,7 @@ function product_CreateAccount($params)
 
         sleep(1); // Wait one second
         
-        $trafficResponse = $controller->sendTrafficRequest($machine->id, $traffic, $remaining, $duration, 'main');
+        $trafficResponse = $controller->sendTrafficRequest($machine->id, $traffic, NULL, 30, 'main');
 
         if (empty($trafficResponse)) {
             return 'Could not create traffic';
@@ -419,13 +411,8 @@ function product_Renew($params)
         // Its not required
     }
 
-    // Calculate traffic
-    if ($duration) {
-        $traffic *= floor($duration/31);
-    }
-
     // Create traffic
-    $response = $controller->sendTrafficRequest($machineId, $traffic, $remaining, $remaining, 'refresh');
+    $response = $controller->sendTrafficRequest($machineId, $traffic, NULL, 30, 'refresh');
 
     if (empty($response)) {
         return 'Could not create traffic';
