@@ -221,7 +221,7 @@ class AVMController
         // Find allowed templates
         $params = ['packageId' => $service->packageid];
 
-        $templates = Capsule::select("SELECT a.optionname as name FROM tblproductconfigoptionssub a INNER JOIN tblproductconfigoptions b ON b.id = a.configid INNER JOIN tblproductconfiglinks c ON c.gid = b.gid WHERE b.optionname LIKE '%template%' AND c.pid = :packageId", $params);
+        $templates = Capsule::select("SELECT a.optionname as name FROM tblproductconfigoptionssub a INNER JOIN tblproductconfigoptions b ON b.id = a.configid INNER JOIN tblproductconfiglinks c ON c.gid = b.gid WHERE a.hidden=0 AND b.optionname LIKE '%template%' AND c.pid = :packageId", $params);
 
         // List allowed templates
         $allowdTemplates = [];
