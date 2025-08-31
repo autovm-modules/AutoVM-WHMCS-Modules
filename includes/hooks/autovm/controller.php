@@ -224,20 +224,24 @@ class AVMController
         $templates = Capsule::select("SELECT a.optionname as name FROM tblproductconfigoptionssub a INNER JOIN tblproductconfigoptions b ON b.id = a.configid INNER JOIN tblproductconfiglinks c ON c.gid = b.gid WHERE a.hidden=0 AND b.optionname LIKE '%template%' AND c.pid = :packageId", $params);
 
         // List allowed templates
-        $allowdTemplates = [];
+        $allowedTemplates = [];
+        $allowedTemplatesDisplayNames = [];
 
         foreach ($templates as $template) {
-
-            $allowdTemplates[] = $template->name;
+            $nameParts = explode('|', $template->name);
+            $allowedTemplates[] = $nameParts[0];
+            $allowedTemplatesDisplayNames[] = $nameParts[1] ?? $nameParts[0];
         }
 
         // Remove templates
         foreach ($response->data as $key => $template) {
 
-            $allowed = in_array($template->name, $allowdTemplates);
+            $allowed = in_array($template->name, $allowedTemplates);
 
             if (!$allowed) {
                 unset($response->data[$key]);
+            } else {
+                $response->data[$key]->display_name = $allowedTemplatesDisplayNames[array_search($template->name, $allowedTemplates)] ?? $template->name;
             }
         }
 
@@ -281,6 +285,22 @@ class AVMController
 
         // Send request
         $response = $this->sendShowRequest($machineId);
+
+        // Find service
+        $service = Service::find($this->serviceId);
+
+        $templateName = $response->data->template->name ?? null;
+
+        if ($service && $templateName) {
+            // Find template config option and retrieve the display name
+            $params = ['packageId' => $service->packageid, 'templateName' => $templateName.'|%'];
+            $template = Capsule::select("SELECT a.optionname as name FROM tblproductconfigoptionssub a INNER JOIN tblproductconfigoptions b ON b.id = a.configid INNER JOIN tblproductconfiglinks c ON c.gid = b.gid WHERE a.optionname LIKE :templateName AND b.optionname LIKE '%template%' AND c.pid = :packageId", $params);
+            if (is_array($template) && count($template) > 0 && isset($template[0]->name)) {
+                $nameParts = explode('|', $template[0]->name);
+                $templateDisplayName = $nameParts[1] ?? $nameParts[0];
+                $response->data->template->display_name = $templateDisplayName;
+            }
+        }
 
         $this->response($response);
     }
