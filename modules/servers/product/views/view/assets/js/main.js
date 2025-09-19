@@ -1,6 +1,10 @@
 const app = Vue.createApp({
     data() {
         return {
+            rotations: [],
+            rotating: false,
+            rotationPassword: null,
+
             Ipv6Address: null,
             IPV6AddressCopied: null,
             ipv6color: null,
@@ -95,6 +99,7 @@ const app = Vue.createApp({
         this.loadMachine()
         this.loadConsoleRoute()
         this.loadTraffic()
+        this.loadRotations()
 
         // Load detail
         this.loadDetail()
@@ -895,6 +900,9 @@ const app = Vue.createApp({
 
             // Load detail
             setInterval(this.loadDetail, 35000)
+
+            // Load rotaions
+            setInterval(this.loadRotations, 40000)
         },
 
         async loadTraffic() {
@@ -913,6 +921,49 @@ const app = Vue.createApp({
             if (response?.data) {
                 this.machineTraffic = response?.data
             }
+        },
+
+        async loadRotations() {
+
+            let response = await axios.get(this.PersonalRootDirectoryURL + '/index.php?avmAction=rotations', {
+                params: {
+                    avmServiceId: this.serviceId
+                }
+            })
+
+            response = response?.data
+            if (response?.message) {
+                // Its not ok to show message here
+            }
+
+            if (response?.data) {
+                this.rotations = response?.data
+            }
+        },
+
+        async rotate() {
+
+            this.rotating = true
+
+            let params = {
+                'password': this.rotationPassword
+            }
+
+            let response = await axios.post(`${this.PersonalRootDirectoryURL}/index.php?avmAction=rotate&avmServiceId=${this.serviceId}`, params)
+
+            response = response.data
+
+            if (response?.message) {
+                
+                alert(response.message)
+            }
+
+            if (response?.data) {
+
+                this.loadRotations()
+            }
+
+            this.rotating = false
         },
 
         async loadMachine() {

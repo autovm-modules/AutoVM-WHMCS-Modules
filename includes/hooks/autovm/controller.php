@@ -352,6 +352,67 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
     }
 
+    public function rotations()
+    {
+        $machineId = $this->getMachineIdFromService();
+
+        // Send request
+        $response = $this->sendRotationsRequest($machineId);
+
+        $this->response($response);
+    }
+
+    public function sendRotationsRequest($machineId)
+    {
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
+
+        $BackendUrl = $this->BackendUrl;
+        $address = [
+            $BackendUrl, 'admin', 'machine', 'rotations', $machineId
+        ];
+
+        return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
+    }
+
+    public function rotate()
+    {
+        $machineId = $this->getMachineIdFromService();
+
+        // Send request
+        $response = $this->sendRotateRequest($machineId);
+
+        $this->response($response);
+    }
+
+    public function sendRotateRequest($machineId)
+    {
+        $AdminToken = $this->AdminToken;
+
+        $headers = ['token' => $AdminToken];
+
+        $params = [
+            'ipv4' => 'passive', 'ipv6' => 'active', 'password' => $this->getJsonPost('password')
+        ];
+
+        $BackendUrl = $this->BackendUrl;
+
+        $address = [
+            $BackendUrl, 'admin', 'machine', 'rotation', $machineId
+        ];
+
+        return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
+    }
+
+    protected function getJsonPost($name)
+    {
+        $data = file_get_contents('php://input');
+
+        $data = json_decode($data, true);
+
+        return autovm_get_array($name, $data);
+    }
+
     public function setup()
     {
         $machineId = $this->getMachineIdFromService();
