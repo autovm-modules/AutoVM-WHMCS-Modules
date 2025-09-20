@@ -89,6 +89,18 @@ function product_CreateAccount($params)
         $name = autovm_generate_string();
     }
 
+    $password = autovm_get_array('password', $params);
+
+    // Check password
+    if ($password) {
+
+        $valid = preg_match('/[0-9]/', $password) && preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password);
+
+        if (!$valid) {
+            return 'Password must have numbers, lowercase and uppercase characters';
+        }
+    }
+
     $client = autovm_get_array('clientsdetails', $params);
 
     if (empty($client)) {
@@ -308,7 +320,7 @@ function product_CreateAccount($params)
     }
 
     // Send request
-    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6, $phone);
+    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6, $phone, $password);
 
     if (empty($response)) {
 
