@@ -532,6 +532,13 @@ function product_TerminateAccount($params)
         return $response->message;
     }
 
+    // Update service
+    $params = ['dedicatedip' => null];
+
+    Capsule::table('tblhosting')
+        ->whereId($service->id)
+        ->update($params);
+
     return 'success';
 }
 
