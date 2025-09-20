@@ -139,7 +139,13 @@ class Request
             $headers = $this->mergeHeaders();
         }
 
-        return $this->send($address, $headers, $this->params);
+        $params = [];
+
+        if ($this->params) {
+            $params = $this->mergeParams();
+        }
+
+        return $this->send($address, $headers, $params);
     }
 
     /**

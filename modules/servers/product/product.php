@@ -129,6 +129,24 @@ function product_CreateAccount($params)
         return 'Could not find service';
     }
 
+    // Find package identity
+    $packageId = autovm_get_array('packageid', $params);
+
+    if (!$packageId) {
+        return 'Could not find package';
+    }
+
+    // Find product
+    $product = Capsule::table('tblproducts')->where('id', $packageId)->first();
+
+    if (!$product) {
+        return 'Could not find product';
+    }
+
+    // Add product to reference
+    $reference = [
+        'product' => $product->name];
+
     $controller = new AVMController($service->id);
 
     // Find the machine identity
@@ -320,7 +338,7 @@ function product_CreateAccount($params)
     }
 
     // Send request
-    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6, $phone, $password);
+    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6, $phone, $password, $reference);
 
     if (empty($response)) {
 
