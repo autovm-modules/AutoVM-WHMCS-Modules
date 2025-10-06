@@ -89,18 +89,6 @@ function product_CreateAccount($params)
         $name = autovm_generate_string();
     }
 
-    $password = autovm_get_array('password', $params);
-
-    // Check password
-    if ($password) {
-
-        $valid = preg_match('/[0-9]/', $password) && preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password);
-
-        if (!$valid) {
-            return 'Password must have numbers, lowercase and uppercase characters';
-        }
-    }
-
     $client = autovm_get_array('clientsdetails', $params);
 
     if (empty($client)) {
@@ -148,6 +136,23 @@ function product_CreateAccount($params)
         'product' => $product->name];
 
     $controller = new AVMController($service->id);
+
+    // Validate password
+    $password = null;
+    
+    if ($controller->canCustomizePassword()) {
+        
+        $password = autovm_get_array('password', $params);
+
+        if ($password) {
+
+            $valid = preg_match('/[0-9]/', $password) && preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password);
+
+            if (!$valid) {
+                return 'Password must have numbers, lowercase and uppercase characters';
+            }
+        }
+    }
 
     // Find the machine identity
     $machineId = $controller->getMachineIdFromService();

@@ -30,9 +30,10 @@ function autovm_config()
             "BackendUrl" => array ("FriendlyName" => "Backend Url", "Type" => "text", "Size" => "31", "Description" => $BackendUrlLabel, "Default" => "http://backend.autovm.online"),
             "AdminToken" => array ("FriendlyName" => "Admin Token", "Type" => "text", "Size" => "31", "Description" => $AdminTokenLabel, "Default" => "xxxx"),
             "DefLang" => array ("FriendlyName" => "Default Language", "Type" => "dropdown", "Options" => $langiageOption, "Description" => $DefLangLabel, "Default" => "English"),
-            "CloudActivationStatus" => array ("FriendlyName" => "Enable Cloud Module", "Type" => "yesno", 'Description' => $CloudActivationStatusLabel, "Default" => ""),            
+            "CloudActivationStatus" => array ("FriendlyName" => "Enable Cloud Module", "Type" => "yesno", 'Description' => $CloudActivationStatusLabel, "Default" => ""),
             "ConsoleRoute" => array ("FriendlyName" => "Console Route", "Type" => "text", "Size" => "50", "Description" => $ConsoleRoute, "Default" => "https://mywhmcs.com/console"),
-            "RefreshTraffic" => array("FriendlyName" => "Refresh Traffic", "Type" => "dropdown", "Options" => array("active" => "Active", "passive" => "Passive"), "Description" => "Refresh Traffic By WHMCS", "Default" => "passive")
+            "RefreshTraffic" => array("FriendlyName" => "Refresh Traffic", "Type" => "dropdown", "Options" => array("active" => "Active", "passive" => "Passive"), "Description" => "Refresh Traffic By WHMCS", "Default" => "passive"),
+            "CustomizePassword" => array("FriendlyName" => "Customize Password", "Type" => "dropdown", "Options" => array("active" => "Active", "passive" => "Passive"), "Description" => "Customize VM Password by Client", "Default" => "passive")
         ));
         return $configarray;
 }

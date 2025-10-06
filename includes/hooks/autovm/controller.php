@@ -11,10 +11,16 @@ class AVMController
     protected $AdminToken;
     protected $ConsoleRoute;
     protected $RefreshTraffic;
+    protected $CustomizePassword;
 
     public function canRefreshTraffic()
     {
         return $this->RefreshTraffic;
+    }
+
+    public function canCustomizePassword()
+    {
+        return $this->CustomizePassword;
     }
 
     public function __construct($serviceId)
@@ -35,6 +41,7 @@ class AVMController
             $BackendUrl = $response['BackendUrl'];
             $ConsoleRoute = $response['ConsoleRoute'];
             $RefreshTraffic = $response['RefreshTraffic'];
+            $CustomizePassword = $response['CustomizePassword'];
         } 
         
         $this->serviceId = $serviceId;
@@ -42,6 +49,7 @@ class AVMController
         $this->AdminToken = $AdminToken;
         $this->ConsoleRoute = $ConsoleRoute;
         $this->RefreshTraffic = $RefreshTraffic;
+        $this->CustomizePassword = $CustomizePassword;
     }
 
     // Get Token From AutoVm module
@@ -75,6 +83,10 @@ class AVMController
 
                     if ($item->setting == 'RefreshTraffic'){
                         $RefreshTraffic = $item->value;
+                    }
+
+                    if ($item->setting == 'CustomizePassword'){
+                        $CustomizePassword = $item->value;
                     }
                 }
             }
@@ -119,12 +131,19 @@ class AVMController
             $RefreshTraffic = false;
         }
 
+        if ($CustomizePassword == 'active') {
+            $CustomizePassword = true;
+        } else {
+            $CustomizePassword = false;
+        }
+
         if(isset($AdminToken) && isset($BackendUrl) && isset($DefLang) && isset($ConsoleRoute)){
             $response['AdminToken'] = $AdminToken;
             $response['BackendUrl'] = $BackendUrl;
             $response['DefLang'] = $DefLang;
             $response['ConsoleRoute'] = $ConsoleRoute;
             $response['RefreshTraffic'] = $RefreshTraffic;
+            $response['CustomizePassword'] = $CustomizePassword;
             return $response;
         } 
     }
