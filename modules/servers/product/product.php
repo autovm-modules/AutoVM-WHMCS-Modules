@@ -818,7 +818,11 @@ function product_AdminServicesTabFieldsSave($params)
 
     if (empty($machineId)) {
 
-        return false; // We dont need to log anything here
+        Capsule::table('autovm_order')
+            ->where('order_id', $service->id)
+            ->delete();
+
+        return true;
     }
 
     $params = [
