@@ -1,7 +1,7 @@
 <!-- TITLE row -->
 <div class="d-flex flex-row justify-content-between align-items-center m-0 p-0 pb-5 ps-2">
     <!-- Hostname -->
-    <div class="text-start p-0 m-0" style="max-width: 225px;">
+    <div class="text-start p-0 m-0" style="max-width: 420px;">
         <div class="d-flex flex-row m-0 p-0">
 
             <span class="fs-5 fw-medium m-0 p-0">{{ lang('hostname') }}</span>
