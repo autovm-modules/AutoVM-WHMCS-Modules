@@ -29,7 +29,10 @@ function autovm_get_user_token($userId)
 {
     $params = ['userId' => $userId];
     $user = Capsule::selectOne('SELECT token FROM autovm_user WHERE user_id = :userId', $params);
-    return current($user);
+    if ($user) {
+        return current($user);
+    }
+    return null;
 }
 
 
