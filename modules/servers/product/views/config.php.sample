@@ -1,6 +1,7 @@
-<!-- Different -->
-
 <?php
+
+// Enable or disable AutoVM IP rotation feature
+//define('AUTOVM_ROTATION', true);
 
 // In case you changed the root directory, put the directoy name here
 // Otherwise leave it empty

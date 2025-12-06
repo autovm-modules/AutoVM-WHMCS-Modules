@@ -11,10 +11,16 @@ class AVMController
     protected $AdminToken;
     protected $ConsoleRoute;
     protected $RefreshTraffic;
+    protected $CustomizePassword;
 
     public function canRefreshTraffic()
     {
         return $this->RefreshTraffic;
+    }
+
+    public function canCustomizePassword()
+    {
+        return $this->CustomizePassword;
     }
 
     public function __construct($serviceId)
@@ -35,6 +41,7 @@ class AVMController
             $BackendUrl = $response['BackendUrl'];
             $ConsoleRoute = $response['ConsoleRoute'];
             $RefreshTraffic = $response['RefreshTraffic'];
+            $CustomizePassword = $response['CustomizePassword'];
         } 
         
         $this->serviceId = $serviceId;
@@ -42,6 +49,7 @@ class AVMController
         $this->AdminToken = $AdminToken;
         $this->ConsoleRoute = $ConsoleRoute;
         $this->RefreshTraffic = $RefreshTraffic;
+        $this->CustomizePassword = $CustomizePassword;
     }
 
     // Get Token From AutoVm module
@@ -75,6 +83,10 @@ class AVMController
 
                     if ($item->setting == 'RefreshTraffic'){
                         $RefreshTraffic = $item->value;
+                    }
+
+                    if ($item->setting == 'CustomizePassword'){
+                        $CustomizePassword = $item->value;
                     }
                 }
             }
@@ -119,12 +131,19 @@ class AVMController
             $RefreshTraffic = false;
         }
 
+        if ($CustomizePassword == 'active') {
+            $CustomizePassword = true;
+        } else {
+            $CustomizePassword = false;
+        }
+
         if(isset($AdminToken) && isset($BackendUrl) && isset($DefLang) && isset($ConsoleRoute)){
             $response['AdminToken'] = $AdminToken;
             $response['BackendUrl'] = $BackendUrl;
             $response['DefLang'] = $DefLang;
             $response['ConsoleRoute'] = $ConsoleRoute;
             $response['RefreshTraffic'] = $RefreshTraffic;
+            $response['CustomizePassword'] = $CustomizePassword;
             return $response;
         } 
     }
@@ -261,10 +280,10 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
     }
 
-    public function sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6, $phone = null)
+    public function sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6, $phone = null, $password = null, $reference = null)
     {
         $params = [
-            'poolId' => $poolId, 'templateId' => $templateId, 'memorySize' => $memorySize, 'memoryLimit' => $memoryLimit, 'diskSize' => $diskSize, 'cpuCore' => $cpuCore, 'cpuLimit' => $cpuLimit, 'name' => $name, 'email' => $email, 'publicKey' => $publicKey, 'autoSetup' => true, 'ipv4' => $ipv4, 'ipv6' => $ipv6, 'phone' => $phone 
+            'poolId' => $poolId, 'templateId' => $templateId, 'memorySize' => $memorySize, 'memoryLimit' => $memoryLimit, 'diskSize' => $diskSize, 'cpuCore' => $cpuCore, 'cpuLimit' => $cpuLimit, 'name' => $name, 'email' => $email, 'publicKey' => $publicKey, 'autoSetup' => true, 'ipv4' => $ipv4, 'ipv6' => $ipv6, 'phone' => $phone, 'password' => $password, 'reference' => $reference
         ];
         
         $AdminToken = $this->AdminToken;
@@ -276,7 +295,6 @@ class AVMController
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
-
     }
 
     public function show()
@@ -370,6 +388,67 @@ class AVMController
         ];
 
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
+    }
+
+    public function rotations()
+    {
+        $machineId = $this->getMachineIdFromService();
+
+        // Send request
+        $response = $this->sendRotationsRequest($machineId);
+
+        $this->response($response);
+    }
+
+    public function sendRotationsRequest($machineId)
+    {
+        $AdminToken = $this->AdminToken;
+        $headers = ['token' => $AdminToken];
+
+        $BackendUrl = $this->BackendUrl;
+        $address = [
+            $BackendUrl, 'admin', 'machine', 'rotations', $machineId
+        ];
+
+        return Request::instance()->setAddress($address)->setHeaders($headers)->getResponse()->asObject();
+    }
+
+    public function rotate()
+    {
+        $machineId = $this->getMachineIdFromService();
+
+        // Send request
+        $response = $this->sendRotateRequest($machineId);
+
+        $this->response($response);
+    }
+
+    public function sendRotateRequest($machineId)
+    {
+        $AdminToken = $this->AdminToken;
+
+        $headers = ['token' => $AdminToken];
+
+        $params = [
+            'ipv4' => 'passive', 'ipv6' => 'active', 'password' => $this->getJsonPost('password')
+        ];
+
+        $BackendUrl = $this->BackendUrl;
+
+        $address = [
+            $BackendUrl, 'admin', 'machine', 'rotation', $machineId
+        ];
+
+        return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
+    }
+
+    protected function getJsonPost($name)
+    {
+        $data = file_get_contents('php://input');
+
+        $data = json_decode($data, true);
+
+        return autovm_get_array($name, $data);
     }
 
     public function setup()

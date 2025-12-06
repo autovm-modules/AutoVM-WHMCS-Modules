@@ -117,7 +117,42 @@ function product_CreateAccount($params)
         return 'Could not find service';
     }
 
+    // Find package identity
+    $packageId = autovm_get_array('packageid', $params);
+
+    if (!$packageId) {
+        return 'Could not find package';
+    }
+
+    // Find product
+    $product = Capsule::table('tblproducts')->where('id', $packageId)->first();
+
+    if (!$product) {
+        return 'Could not find product';
+    }
+
+    // Add product to reference
+    $reference = [
+        'product' => $product->name];
+
     $controller = new AVMController($service->id);
+
+    // Validate password
+    $password = null;
+    
+    if ($controller->canCustomizePassword()) {
+        
+        $password = autovm_get_array('password', $params);
+
+        if ($password) {
+
+            $valid = preg_match('/[0-9]/', $password) && preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password);
+
+            if (!$valid) {
+                return 'Password must have numbers, lowercase and uppercase characters';
+            }
+        }
+    }
 
     // Find the machine identity
     $machineId = $controller->getMachineIdFromService();
@@ -308,7 +343,7 @@ function product_CreateAccount($params)
     }
 
     // Send request
-    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6, $phone);
+    $response = $controller->sendCreateRequest($poolId, $templateId, $memorySize, $memoryLimit, $diskSize, $cpuCore, $cpuLimit, $name, $email, $publicKey, $ipv4, $ipv6, $phone, $password, $reference);
 
     if (empty($response)) {
 
@@ -531,6 +566,13 @@ function product_TerminateAccount($params)
     if ($message) {
         return $response->message;
     }
+
+    // Update service
+    $params = ['dedicatedip' => null];
+
+    Capsule::table('tblhosting')
+        ->whereId($service->id)
+        ->update($params);
 
     return 'success';
 }
@@ -776,7 +818,11 @@ function product_AdminServicesTabFieldsSave($params)
 
     if (empty($machineId)) {
 
-        return false; // We dont need to log anything here
+        Capsule::table('autovm_order')
+            ->where('order_id', $service->id)
+            ->delete();
+
+        return true;
     }
 
     $params = [

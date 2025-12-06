@@ -117,7 +117,12 @@ function admin_get_user_token_from_database($WhUserId)
 {
     $params = ['userId' => $WhUserId];
     $user = Capsule::selectOne('SELECT token FROM autovm_user WHERE user_id = :userId', $params);
-    return current($user);
+    
+    if ($user) {
+        return current($user);
+    }
+
+    return null;
 }
 
 

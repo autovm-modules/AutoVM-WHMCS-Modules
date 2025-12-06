@@ -37,6 +37,15 @@
                             data-bs-target="#network-tab-pane" type="button" role="tab"
                             aria-controls="network-tab-pane" aria-selected="false">{{ lang('network') }}</button>
                     </li>
+
+                    <?php if(defined('AUTOVM_ROTATION')) {?>
+                    <!-- Rotation -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="rotation-tab" data-bs-toggle="tab"
+                            data-bs-target="#rotation-tab-pane" type="button" role="tab"
+                            aria-controls="rotation-tab-pane" aria-selected="false">{{ lang('Rotation') }}</button>
+                    </li>
+                    <?php }?>
                 
                     <!-- Events -->
                     <li class="nav-item" role="presentation">
@@ -87,6 +96,14 @@
                     aria-labelledby="network-tab" tabindex="0">
                     <?php include('network.php'); ?>
                 </div>
+
+                <?php if(defined('AUTOVM_ROTATION')) {?>
+                <!-- Rotation -->
+                <div class="m-0 p-0 tab-pane fade px-1 px-md-3 px-lg-5" id="rotation-tab-pane" role="tabpanel"
+                    aria-labelledby="rotation-tab" tabindex="0">
+                    <?php include('rotation.php'); ?>
+                </div>
+                <?php }?>
 
                 <!-- Events -->
                 <div class="m-0 p-0 tab-pane fade px-1 px-md-3 px-lg-5" id="events-tab-pane" role="tabpanel"
