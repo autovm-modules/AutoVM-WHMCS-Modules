@@ -446,8 +446,14 @@ function product_Renew($params)
         // Its not required
     }
 
+    $days = 30;
+
+    if ($remaining) {
+        $days += $remaining;
+    }
+
     // Create traffic
-    $response = $controller->sendTrafficRequest($machineId, $traffic, NULL, 30, 'refresh');
+    $response = $controller->sendTrafficRequest($machineId, $traffic, $days, $days, 'refresh');
 
     if (empty($response)) {
         return 'Could not create traffic';
