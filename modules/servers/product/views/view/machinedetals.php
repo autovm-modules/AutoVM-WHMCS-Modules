@@ -133,7 +133,10 @@
                     <img v-if="tempIcon != null" :src="tempIcon" alt="templateicon" width="23">
                     <img v-if="softIcon != null" :src="softIcon" alt="templateicon" width="23">
                 </div>
-                <span v-if="tempName" class="m-0 p-0 fs-4 ms-2">
+                <span v-if="tempDisplayName" class="m-0 p-0 fs-4 ms-2">
+                    {{ tempDisplayName }}
+                </span>
+                <span v-if="tempName && !tempDisplayName" class="m-0 p-0 fs-4 ms-2">
                     {{ tempName }}
                 </span>
                 <span v-if="softName" class="m-0 p-0 fs-4 ms-2">
