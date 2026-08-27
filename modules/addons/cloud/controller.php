@@ -520,6 +520,30 @@ class CloudController
             return $this->response(['message' => 'You should enter charge amount']);
         }
 
+        // Find WHMCS client
+        $params = [
+            'clientid' => $this->clientId
+        ];
+
+        $response = localAPI('GetClientsDetails', $params);
+
+        $client = autovm_get_array('client', $response);
+
+        if (!$client) {
+            return $this->response(['message' => 'Could not find client']);
+        }
+
+        // Check balance
+        $credit = autovm_get_array('credit', $client);
+
+        if (!$credit) {
+            return $this->response(['message' => 'Could not find credit']);
+        }
+
+        if ($credit < $whmcs) {
+            return $this->response(['message' => 'Your credit is not enough']);
+        }
+
         // Find AutoVM user
         $token = $this->getUserTokenFromClientId();
 
