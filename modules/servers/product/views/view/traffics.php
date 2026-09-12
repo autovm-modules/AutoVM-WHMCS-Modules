@@ -76,7 +76,7 @@
                 <li class="d-flex flex-row justify-content-between py-1">
                     <span class="text-secondary">{{ lang('remainingtime') }}</span>
                     <span class="">
-                        <span v-if="traffic.remaining">{{ traffic.remaining }} {{ lang('days') }}</span>
+                        <span v-if="traffic.remaining">{{ (traffic.minutes / 60 / 24).toFixed(0) }} {{ lang('days') }}</span>
                         <span v-else-if="!traffic.remaining">---</span>
                     </span>
                 </li>
@@ -90,7 +90,11 @@
                     </span>
                 </li>
                 <li class="d-flex flex-row justify-content-between py-1">
-                    
+                    <span class="text-secondary">{{ lang('status') }}</span>
+                    <span class="">
+                        <span v-if="traffic.status == 'active' && traffic.minutes > 0 && (traffic.trafficUsage / 1073741824) < traffic.traffic" class="text-success">{{ lang('active') }}</span>
+                        <span v-else class="text-danger">{{ lang('passive') }}</span>
+                    </span>
                 </li>
             </ul>
             </div>
