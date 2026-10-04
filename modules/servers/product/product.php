@@ -849,6 +849,14 @@ function product_AdminServicesTabFieldsSave($params)
         Capsule::table('autovm_order')
             ->insert($params);
     }
+
+    $controller = new AVMController($service->id);
+
+    $date = autovm_get_post('nextduedate');
+
+    if ($date) {
+        $controller->sendTrafficDateRequest($machineId, $date);
+    }
 }
 
 function product_ClientArea($params)

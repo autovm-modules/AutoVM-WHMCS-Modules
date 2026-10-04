@@ -370,6 +370,19 @@ class AVMController
         return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
     }
 
+    public function sendTrafficDateRequest($machineId, $date)
+    {
+        $params = ['date' => $date];
+
+        $headers = ['token' => $this->AdminToken];
+        
+        $address = [
+            $this->BackendUrl, 'admin', 'machine', 'trafficDate', $machineId
+        ];
+
+        return Request::instance()->setAddress($address)->setHeaders($headers)->setParams($params)->getResponse()->asObject();
+    }
+
     public function rotations()
     {
         $machineId = $this->getMachineIdFromService();
