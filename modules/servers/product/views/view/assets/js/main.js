@@ -338,6 +338,28 @@ const app = Vue.createApp({
 
         },
 
+        findTemplateDisplayName() {
+
+            let cats = this.categories
+
+            let id = this.templateId
+
+            for (let i = 0; i < cats.length; i++) {
+
+                let temp = cats[i].templates
+
+                for (let j = 0; j < temp.length; j++) {
+                    if (temp[j].id == id) {
+                        this.tempDisplayNameSetup = temp[j].name
+                        return temp[j].name;
+                    }
+                }
+            }
+
+            return 'er';
+
+        },
+
         findTemplateIcon() {
 
             let cats = this.categories
@@ -560,6 +582,12 @@ const app = Vue.createApp({
             let tempName = null
             tempName = this.getMachineProperty('template.name')
             return tempName
+        },
+
+        tempDisplayName() {
+            let tempDisplayName = null
+            tempDisplayName = this.getMachineProperty('template.display_name')
+            return tempDisplayName
         },
 
         tempIcon() {
@@ -2095,8 +2123,10 @@ const app = Vue.createApp({
             }
 
             let templateName = templates.find(findname).name
+            let templateDisplayName = templates.find(findname).display_name
             let templateIcon = templates.find(findname).icon.address
             this.tempNameSetup = templateName
+            this.tempDisplayNameSetup = templateDisplayName
             this.tempIconSetup = templateIcon
 
         },

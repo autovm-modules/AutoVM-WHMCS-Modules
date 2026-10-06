@@ -22,7 +22,7 @@
                     <div class="py-1 pe-3 flex-grow-1" style="min-width:190px;">
                         <select v-model="templateId" class="form-select">
                             <option v-for="template in category.templates" :value="template.id">
-                                {{ template.name }}
+                                {{ template.display_name || template.name }}
                             </option>
                         </select>
                     </div>
